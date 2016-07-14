@@ -1,0 +1,333 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+			xmlns:ui="http://java.sun.com/jsf/facelets"
+			xmlns:f="http://java.sun.com/jsf/core"
+			xmlns:h="http://java.sun.com/jsf/html"
+			xmlns:a4j="http://richfaces.org/a4j"
+			xmlns:c="http://java.sun.com/jsp/jstl/core"
+			xmlns:rich="http://richfaces.org/rich"
+			xmlns:s="http://jboss.com/products/seam/taglib">
+
+<h:head>
+	<title>Airometric Wireless</title>
+	 
+	 <style>
+	.fontlabel {
+		font-family: Arial, Helvetica, Sans-Serif; 
+		font-size: 10pt;
+		color:black;
+	}
+	.successlabel {
+		font-family: Arial, Helvetica, Sans-Serif; 
+		font-size: 10pt;
+		font-weight:bold;
+		color:green;
+		
+	}
+	.failurelabel {
+		font-family: Arial, Helvetica, Sans-Serif; 
+		font-size: 10pt;
+		font-weight:bold;
+		color:red;
+	}
+	</style>
+	
+
+</h:head>
+    
+<ui:composition template="template/common/configLayout.xhtml">
+   <ui:define name="content">
+    	<body style="background-color: #f3f3f3;" onload="loadValues();active();" >
+			<div id="wrap">
+				<div id="container" class="container" style="text-align: left;">
+					 <h:form name="editConfigForm" id="editConfigForm"  method="post">
+					<div id="row1" class="row">
+							<div class="tab-content" id="holder" style="position: relative;top: -70px;height:650px;left:100px;">
+					          	<rich:panel header="Edit Configuration" >
+									<h:panelGrid id="testNameEditPanel" columns="2" width="60%"  class="testCaseField">
+										
+										<c:if test="#{sessionScope['loggedInUserRoleID']=='superadmin'}">
+										<h:outputText value="Enterprise*" styleClass="fontlabel" />
+										<h:selectOneMenu id="operator"
+											value="#{testCaseAction.selectedOperatorID}" onchange="submit()"
+											style="width:172px;height:25px;"
+											valueChangeListener="#{testCaseAction.getTestconfigOnOperatorValueChanged}">
+											<f:selectItems value="#{sessionScope['operatorMaplist']}" />
+											<f:validator validatorId="com.validator.AssignConfigValidator" />
+										</h:selectOneMenu>
+										</c:if>
+										<h:outputText value="Select Config File*:"/>
+										<h:selectOneMenu id="selectedTestConfig" name="selectedTestConfigId"
+										style="width:152px;height:25px;"
+										   value="#{testCaseAction.selectedTestConfigId}">
+								   			<f:selectItems value="#{sessionScope['testConfigMapList']}" />
+								   		</h:selectOneMenu>
+
+										<h:commandLink style="top:-20px;" 
+										     action="#{testCaseAction.editConfiguration}" 
+								   		       partialSubmit="true">		
+											<h:graphicImage library="images" name="action_forward.gif" />
+											<font style="width:70px;position:relative;" color="green"><b>Edit</b></font> 
+										</h:commandLink>
+
+								   		<h:commandLink  
+								   		             action="#{testCaseAction.deleteConfiguration}" 
+								   		       partialSubmit="true">		
+											<h:graphicImage library="images" name="delete.png" />
+											<font style="width:70px;position:relative;" color="green"><b>Delete</b></font> 
+										</h:commandLink>
+										
+							        </h:panelGrid>
+							   
+							        <font  style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;white-space: nowrap;">#{requestScope['failuremessage']}</font>
+							        <font  style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: green;white-space: nowrap;">#{requestScope['successmessage']}</font>
+							        <font  style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;white-space: nowrap;">#{requestScope['deleteSucessmessage']}</font>
+							        <font  style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;white-space: nowrap;">#{requestScope['deleteFailuremessage']}</font> 	 	 	 	
+							   </rich:panel>
+							   
+							   <br></br><br></br>
+							  <c:if test="#{testCaseAction.action == 'edit'}">   
+							  <rich:tabPanel switchType="ajax" id="tp"  headerPosition="top" headerLocation="center" >
+					            <rich:tab header="Config Name" >
+					             <br></br>
+					                <rich:panel id="testPanel" header="Setup Test Config" 
+									    style="width: 800px; height:155px;position: relative;bottom: 19px;" >
+										<h:panelGrid id="testNamePanel" columns="3" class="testCaseField">
+											<font color="black">Test Name*</font>
+											<h:inputText id="testName" name="testName" 
+												style="width:172px;height:25px;"
+												value="#{testCaseAction.testName}" >
+											</h:inputText>	
+											   <h:message for="testName" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;position:relative;left: 9px;"/> 
+								            <h:outputText value=" * - is mandatory field" 
+								            	style="position: relative;float: right;left:550px;top:50px;
+								            	font-family: Arial, Helvetica, Sans-Serif;color:black;"/>
+								
+										</h:panelGrid>
+										     <h:panelGrid id="marketGrid" columns="3" class="testCaseField">
+											<font color="black" >Market Name</font>
+												<h:selectOneListbox class="form-control" id="existingConfigName" name="existingConfigName" 
+								               	value="#{testCaseAction.marketId}" 
+								               	size="1" style="position:relative;left:28px;"  >
+								               	<f:selectItems value="#{sessionScope['marketMap']}" /> 
+								 	  		</h:selectOneListbox >	
+										</h:panelGrid>
+									</rich:panel>
+					            </rich:tab>
+					            <rich:tab header="MO Test">
+					             <br></br>
+					                <rich:panel id="moPanel" header="Setup MO Test" 
+							  			    style="width: 800px; height:200px;position: relative;bottom: 19px;" >
+												<h:panelGrid id="moTestPanel" columns="3" class="testCaseField"	>
+													<font color="black">Phone Number*</font>
+													<h:inputText id="phoneNumber" name="phoneNumber" 
+														style="width:172px;height:25px;" 
+														value="#{testCaseAction.moTestCase.phoneNumber}" >
+													</h:inputText>	
+													<h:message for="phoneNumber" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;position:relative;left: 9px;"/>
+													
+													<font color="black">Call Duration (in mins)*</font>
+													<h:inputText id="callDuration" name="callDuration" 
+														style="width:172px;height:25px;" 
+														value="#{testCaseAction.moTestCase.callDuration}">
+													</h:inputText>
+													 <h:message for="callDuration" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;position:relative;left: 9px;" /> 
+													
+													<font color="black">Pause Time (in secs)*</font>
+													<h:inputText id="pauseTime" name="pauseTime" 
+														style="width:172px;height:25px;" 
+														binding="#{callDurationValue}" 
+														value="#{testCaseAction.moTestCase.pauseTime}" >
+													</h:inputText>
+													<h:message for="pauseTime" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;position:relative;left: 9px;" />
+													<font color="black">Test Duration (in mins)*</font>
+													<h:inputText id="testDuration" name="testDuration" 
+														style="width:172px;height:25px;" 
+														value="#{testCaseAction.moTestCase.testDuration}" >																	
+													</h:inputText>
+													<h:message for="testDuration" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;position:relative;left: 9px;" /> 												
+													<br></br>
+													<br></br>
+								            <h:outputText value=" * - is mandatory field" 
+								            	style="position: relative;float: right;left:450px;
+								            	font-family: Arial, Helvetica, Sans-Serif;color:black;"/>																		
+											</h:panelGrid>
+										</rich:panel>
+					            </rich:tab>
+					            <rich:tab header="MT Test">
+					             <br></br>
+					              <rich:panel id="mtPanel"  header="Setup MT Test" 
+							  			style="width: 800px;height: 122px;position: relative;bottom: 19px;"  >
+										<h:panelGrid id="mtTestPanel" columns="3" class="testCaseField" >
+											<font color="black">Call Duration (in mins)*</font>
+												<h:inputText id="callDurationMt" name="callDurationMt" 
+														style="width:172px;height:25px;" immediate="true"
+														value="#{testCaseAction.mtTestCase.callDurationMt}">
+												</h:inputText>
+											<h:message for="callDurationMt" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;position:relative;left: 9px;" /> 												
+								            <font color="black">Test Duration (in mins)*</font>
+											<h:inputText id="testDurationMt" name="testDurationMt" 
+												style="width:172px;height:25px;" 
+												value="#{testCaseAction.mtTestCase.testDurationMt}" >
+											</h:inputText>
+											<h:message for="testDurationMt" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;position:relative;left: 9px;"/> 
+								            <h:outputText value=" * - is mandatory field" 
+								            	style="position: relative;float: right;left:450px;
+								            	font-family: Arial, Helvetica, Sans-Serif;color:black;"/>											
+										</h:panelGrid>
+										</rich:panel>
+					            </rich:tab>
+					            <rich:tab header="FTP Test">
+					             <br></br>
+					               	<rich:panel id="ftpPanel"  header="Setup FTP Test" 
+							  			style="width: 800px; height:290px;position: relative;bottom: 19px;">
+										<h:panelGrid id="ftpTestPanel" columns="3" class="testCaseField" >
+											<font color="black">FTP URL*</font>
+											<h:inputText id="ftpServerURL" name="ftpServerURL" 
+												style="width:172px;height:25px;" 
+												value="#{testCaseAction.ftpTestCase.ftpServerURL}" >
+											</h:inputText>
+											 <h:message for="ftpServerURL" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;position:relative;left: 9px;"/> 
+											
+											<font color="black">Username*</font>
+											<h:inputText id="ftpUsername" name="ftpUsername" 
+												style="width:172px;height:25px;" 
+												value="#{testCaseAction.ftpTestCase.ftpUsername}" >
+											</h:inputText>
+											<h:message for="ftpUsername" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;position:relative;left: 9px;"/>
+											
+											<font color="black">Password*</font>
+											<h:inputSecret id="ftpPassword" name="ftpPassword" 
+												style="width:172px;height:25px;" 
+												value="#{testCaseAction.ftpTestCase.ftpPassword}" redisplay="true">
+											</h:inputSecret>
+											<h:message for="ftpPassword" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;position:relative;left: 9px;"/>
+
+											<font color="black">No of Cycles*</font>
+											<h:inputText id="noOfRepeatCycles" name="noOfRepeatCycles" 
+												style="width:172px;height:25px;"
+												value="#{testCaseAction.ftpTestCase.noOfRepeatCycles}" >
+											</h:inputText>
+											<h:message for="noOfRepeatCycles" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;position:relative;left: 9px;"/>
+											
+											<font color="black">Upload File Path*</font>
+											<h:inputText id="uploadFilePath" name="uploadFilePath" 
+												style="width:172px;height:25px;" 
+												value="#{testCaseAction.ftpTestCase.uploadFilePath}" >
+											</h:inputText>
+											<h:message for="uploadFilePath" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;position:relative;left: 9px;"/> 
+											
+											<font color="black">File to download*</font>
+											<h:inputText id="fileDownloadPath" name="fileDownloadPath" 
+												style="width:172px;height:25px;" 
+												value="#{testCaseAction.ftpTestCase.fileDownloadPath}" >
+											</h:inputText>
+											<h:message for="fileDownloadPath" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;position:relative;left: 9px;"/> 
+											<br></br>
+								            <h:outputText value=" * - is mandatory field" 
+								            	style="position: relative;float: right;left:450px;
+								            	font-family: Arial, Helvetica, Sans-Serif;color:black;"/>															
+										</h:panelGrid>
+							                  </rich:panel>
+					            </rich:tab>
+					            
+					              <rich:tab header="VoIP Test">
+					               <br></br>
+					              <rich:panel id="voipPanel" header="Setup VOIP Test" 
+										    style="width: 800px; height:85px;position: relative;bottom: 19px;" >
+												<h:panelGrid id="voipTestPanel" columns="3" class="testCaseField">
+													<font color="black">Test Duration (in mins)*</font>
+													<h:inputText id="testDurationVoip" name="testDurationVoip" 
+														style="width:172px;height:25px;" 
+														value="#{testCaseAction.voipTestCase.testDurationVoip}" >		
+													</h:inputText>
+													<h:message for="testDurationVoip" style="color:red;position:relative;left: 9px;" /> 																		
+													<br></br>
+													<br></br>
+													<h:outputText value=" * - is mandatory field" 
+														style="position: relative;float: right;left:450px;
+														font-family: Arial, Helvetica, Sans-Serif;color:black;"/>																		
+													</h:panelGrid>
+												</rich:panel>
+					              </rich:tab>
+					              <rich:tab  header="Setup External">
+					               <br></br>
+					              <rich:panel id="externalPanel" header="Setup External" 
+										    style="width: 780px; height:85px;position: relative;bottom: 19px;">
+												<h:panelGrid id="externalTestPanel" columns="3" class="testCaseField">
+											<input type="checkbox" name="isExternal" id= "isExternal"  checked="#{sessionScope['isExternal']}"/> Is test External
+													<h:outputText value=" * - is mandatory field" 
+														style="position: relative;float: right;left:450px;
+														font-family: Arial, Helvetica, Sans-Serif;color:black;"/>																		
+													</h:panelGrid>
+												</rich:panel>
+					              </rich:tab>
+					              
+                              </rich:tabPanel>
+		                       
+		                       <h:commandLink style="position: relative;left: 342px;top: 7px;" 
+										     action="#{testCaseAction.updateConfiguration}">		
+								<h:graphicImage library="images" name="action_forward.gif" />
+								<font style="width:70px;position:relative;" color="green"><b>Update</b></font> 
+							  </h:commandLink>
+
+							 </c:if>			
+							 <rich:popupPanel id="popup" modal="true" resizeable="true" 
+												         onmaskclick="#{rich:component('popup')}.hide()">
+							        <f:facet name="header">
+							            <h:outputText value="Delete Panel" />
+							        </f:facet>
+							         <f:facet name="controls">
+							            <h:outputLink value="#" onclick="#{rich:component('popup')}.hide(); return false;">
+							                X
+							            </h:outputLink>
+							        </f:facet>
+							        <p>#{requestScope['configmessage']}</p>
+							        <p>
+								   		<h:commandLink action="#{testCaseAction.deleteConfig}" partialSubmit="true">		
+										  <h:graphicImage library="images" name="delete.png" />
+											Proceed
+										</h:commandLink>
+										&nbsp;&nbsp;
+										<h:graphicImage library="images" name="action_forward.gif" />
+							            <a href="#" onclick="#{rich:component('popup')}.hide()">Cancel</a>
+							        </p>
+							   </rich:popupPanel>
+							</div>
+							</div>
+				<div id="bottom" class="bottomSpacerDiv"></div>
+			   </h:form>
+			</div>
+		</div>
+		        <script type="text/javascript">	 
+	   function loadValues(){
+		   var status="#{requestScope['configmessage']}"
+		   if(status!=""){
+			   #{rich:component('popup')}.show();
+		   }
+	   }  
+		   function active(){
+			   document.getElementById("EditConfig").className='active';
+			   var role = "#{sessionScope['loggedInUserRoleID']}";
+			    
+		   }
+	</script>
+		<script>window.jQuery || document.write(' <h:outputScript library="js" name="jquery-1.9.0.min.js" />')</script>
+        <h:outputScript library="js" name="plugins.js" />
+        <h:outputScript library="js" name="main.js" />
+		<h:outputScript library="js" name="bootstrap.js" />
+		<h:outputScript library="js" name="jquery-1.9.0.min.js" />
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+
+		   </body> 
+		</ui:define>
+		</ui:composition>	
+        
+
+</html>

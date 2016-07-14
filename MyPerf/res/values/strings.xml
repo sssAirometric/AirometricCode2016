@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MyPerf</string>
+    <string name="version">1.0.2</string>
+    <string name="build_date">17/09/2015</string>
+    <string name="termsofusage">This application will be collecting Device and User identification information to determine performance metrics of the device for the duration of the use of the application.</string>
+    <string name="mo_test_finished">Mo Test Completed</string>
+    <string name="mo_test_running">Mo Test Running</string>
+    <string name="ftp_test_running">FTP Test Running</string>
+    <string name="test_finished">Test Completed</string>
+    <string name="test_running">Test Running</string>
+    <string name="release_note">1.0.0 (17-09-2015)
+	        &gt;&gt; network type and manual file upload</string>
+
+    <string-array name="marketplace">
+        <item>JAYANAGAR MARKET</item>
+        <item>M.G Road Market</item>
+    </string-array>
+
+    <string name="str_server_ip">Server IP</string>
+    <string name="title_activity_task_completed">TaskCompletedActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="test_completed">Test Completed</string>
+    <string name="go_to_map">View results in google map</string>
+    <string name="go_to_browser">open in browser</string>
+    <string name="title_activity_google_maps">GoogleMapsActivity</string>
+	<string name="enterkey">Enter Key</string>
+	<string name="shareImageFailed">image share failed!</string>
+</resources>

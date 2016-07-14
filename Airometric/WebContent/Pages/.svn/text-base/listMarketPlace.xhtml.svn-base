@@ -1,0 +1,239 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+	   xmlns:ui="http://java.sun.com/jsf/facelets"
+	   xmlns:f="http://java.sun.com/jsf/core"
+	   xmlns:h="http://java.sun.com/jsf/html"
+	   xmlns:a4j="http://richfaces.org/a4j"
+	   xmlns:c="http://java.sun.com/jsp/jstl/core"
+	   xmlns:rich="http://richfaces.org/rich">
+<h:head>
+	<title>List Market Place</title>
+	 
+	        <style type="text/css">
+		      /* html { height: 100% } */
+		      /* body { height: 90%; margin: 1; padding: 0 }  */
+		      #map_canvas { height: 100% }	
+		      
+	.scroll_div{
+	 overflow: scroll;
+	 width:100%;
+	 height:260px;
+	}
+	.fontlabel{
+	  cursor: pointer;none;
+	} 	
+		   	
+    </style>
+    <script type="text/javascript"> 
+
+	</script>
+   </h:head>
+   
+
+    <ui:composition template="template/common/commonLayout.xhtml">
+    	<ui:define name="content">
+    	<body style="background-color: #f3f3f3!important ;" onload="active();">
+			<div id="wrap">
+				<div id="container" class="container" style="text-align: left;">
+			 		<h:form id="operatorForm">
+					<div id="row1" class="row">
+							<div class="tab-content" style="position: relative;height:550px;top: -20px;" >
+								<c:if test="#{sessionScope['margetPlaceListSize']!='0'}">		
+									<rich:panel header="Market Place List" style="width: 98%;height: 300px;bottom: 11px;position: relative;;top: 15px;z-index: 999;">	
+										<div id="scroll_div" >
+										 <rich:extendedDataTable value="#{sessionScope['margetPlaceListdetails']}"
+															var="market" id="table" 
+															sortPriority="#{carsSortingBean.sortPriorities}"
+															selectionMode="none"  style="height:255px;">                  
+										
+										<rich:column sortBy="#{market.slno}" width="40px"    sortOrder="#{carsSortingBean.sortsOrders['slno']}" sortType="custom">
+											<f:facet name="header">
+												<h:panelGrid columns="2"   >
+													<a4j:commandLink execute="@this" value="S.NO" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="slno"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['slno']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['slno']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+										  #{market.slno}
+										</rich:column>
+										
+											
+										<rich:column sortBy="#{market.marketName}" width="150px"    sortOrder="#{carsSortingBean.sortsOrders['marketName']}" sortType="custom">
+											<f:facet name="header">
+												<h:panelGrid columns="2"   >
+													<a4j:commandLink execute="@this" value="MARKET NAME" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="marketName"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['marketName']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['marketName']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+										  #{market.marketName}
+										</rich:column>
+									
+<!--  										<rich:column sortBy="#{market.cityName}" width="90px"    sortOrder="#{carsSortingBean.sortsOrders['cityName']}" sortType="custom">
+											<f:facet name="header" >
+												<h:panelGrid columns="2" >
+													<a4j:commandLink execute="@this" value="CITY" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="cityName"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['cityName']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['cityName']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+											#{market.cityName}
+										</rich:column>
+															
+										<rich:column sortBy="#{market.stateName}" width="90px"    sortOrder="#{carsSortingBean.sortsOrders['stateName']}" sortType="custom">
+											<f:facet name="header" >
+												<h:panelGrid columns="2" >
+													<a4j:commandLink execute="@this" value="STATE" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="stateName"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['stateName']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['stateName']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+											#{market.stateName}
+										</rich:column> -->
+										
+										<rich:column sortBy="#{market.countryName}" width="70px"    sortOrder="#{carsSortingBean.sortsOrders['countryName']}" sortType="custom">
+											<f:facet name="header" >
+												<h:panelGrid columns="2" >
+													<a4j:commandLink execute="@this" value="COUNTRY" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="countryName"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['countryName']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['countryName']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+											#{market.countryName}
+										</rich:column> 
+																																								
+										<rich:column sortBy="#{market.statusString}" width="70px"     sortOrder="#{carsSortingBean.sortsOrders['statusString']}" sortType="custom">
+											<f:facet name="header" >
+												<h:panelGrid columns="2" >
+													<a4j:commandLink execute="@this" value="STATUS" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="statusString"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['statusString']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['statusString']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+											#{market.statusString}
+										</rich:column>
+										
+ 										<rich:column sortBy="#{market.createdBy}" width="90px"     sortOrder="#{carsSortingBean.sortsOrders['createdBy']}" sortType="custom">
+											<f:facet name="header" >
+												<h:panelGrid columns="2" >
+													<a4j:commandLink execute="@this" value="CREATED BY" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="createdBy"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['createdBy']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['createdBy']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+											#{market.createdBy}
+										</rich:column>
+										
+										<rich:column sortBy="#{market.createdDate}" width="100px"     sortOrder="#{carsSortingBean.sortsOrders['createdDate']}" sortType="custom">
+											<f:facet name="header" >
+												<h:panelGrid columns="2" >
+													<a4j:commandLink execute="@this" value="CREATED DATE" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="createdDate"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['createdDate']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['createdDate']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+											#{market.createdDate}
+										</rich:column> 	
+
+										<rich:column sortBy="#{market.buttonLable}" width="170px"     sortOrder="#{carsSortingBean.sortsOrders['buttonLable']}" sortType="custom">
+											<f:facet name="header" >
+												<h:panelGrid columns="2" >
+													<a4j:commandLink execute="@this" value="ACTIVATE / DEACTIVATE" render="table"  
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="buttonLable"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['buttonLable']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['buttonLable']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+											<h:commandLink action="#{marketPlaceBean.goToActiveDeactiveMarket}" value="#{market.buttonLable}" immediate="true" > 
+										        <f:param name="marketId" value="#{market.marketId}" />           
+							     			</h:commandLink>
+										</rich:column>
+																																					 
+									</rich:extendedDataTable>	
+									</div>
+						<h:outputText id="messageId1" name="messageId1" 
+							style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: green;position: relative;float: right;bottom: -15px;white-space: nowrap;" 
+							value="#{marketPlaceBean.successMessage}">
+						</h:outputText>
+						<h:outputText id="messageId2" name="messageId2" 
+							style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position: relative;float: right;bottom: -15px;white-space: nowrap;" 
+							value="#{marketPlaceBean.errorMessage}">
+						</h:outputText>
+									</rich:panel>	
+								</c:if>  
+							</div>
+						</div>
+				<div id="bottom" class="bottomSpacerDiv"></div>
+		      </h:form>
+		      </div>
+		    </div>
+			    <script type="text/javascript"> 
+	   function active(){
+		   document.getElementById("ListMarket").className='active';
+	   }
+	   </script>		    
+	<script>window.jQuery || document.write(' <h:outputScript library="js" name="jquery-1.9.0.min.js" />')</script>
+        <h:outputScript library="js" name="plugins.js" />
+        <h:outputScript library="js" name="main.js" />
+		<h:outputScript library="js" name="bootstrap.js" />
+		<h:outputScript library="js" name="jquery-1.9.0.min.js" />
+		
+        <script>
+        
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+            </script>
+          
+
+   </body>
+		</ui:define>
+	</ui:composition>
+        
+</html>

@@ -1,0 +1,86 @@
+package com.airometric.parser;
+
+import java.util.LinkedHashMap;
+import java.util.StringTokenizer;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+import android.app.Activity;
+
+import com.airometric.classes.LoginResponse;
+import com.airometric.config.StringUtils;
+import com.airometric.utility.L;
+
+public class Parser {
+
+	private static Activity activity;
+
+	public static LoginResponse parseLoginResponse(String sResponse,
+			Activity objActivity) {
+
+		LoginResponse response = null;
+		activity = objActivity;
+
+		String status = null, level = null, terms_accepted = null, sMarketplace = null;
+		try {
+			StringTokenizer tokenizer = new StringTokenizer(sResponse, ",");
+			/*
+			 * while (tokenizer.hasMoreElements()) { String token = (String)
+			 * tokenizer.nextElement(); Log.i("Tokenizer", token); }
+			 */
+			/*
+			 * if (sResponse.indexOf(",") != -1) { status =
+			 * sResponse.substring(0, sResponse.indexOf(",")); level =
+			 * sResponse.substring(sResponse.indexOf(",") + 1,
+			 * sResponse.lastIndexOf(",")); terms_accepted =
+			 * sResponse.substring( sResponse.lastIndexOf(",") + 1,
+			 * sResponse.length());
+			 */
+			if (tokenizer.countTokens() == 4) {
+				status = (String) tokenizer.nextElement();
+				level = (String) tokenizer.nextElement();
+				terms_accepted = (String) tokenizer.nextElement();
+				sMarketplace = (String) tokenizer.nextElement();
+				parseMarketplace(sMarketplace);
+			} else
+				status = sResponse;
+		} catch (Exception e) {
+			L.error(e);
+		}
+		response = new LoginResponse(status, level, terms_accepted,
+				sMarketplace);
+		return response;
+	}
+
+	private static void parseMarketplace(String sMarketplaces) {
+		ConfigXMLParser configXMLParser = new ConfigXMLParser(activity);
+		Document marketplaceDocument = configXMLParser
+				.getDomElement(sMarketplaces);
+		NodeList marketplaceNames = marketplaceDocument
+				.getElementsByTagName("marketName");
+		NodeList marketplaceIds = marketplaceDocument
+				.getElementsByTagName("marketId");
+		// Log.d("Marketplace Names count: ",
+		// Integer.toString(marketplaceNames.getLength()));
+		if (StringUtils.MARKET_PLACES_MAP == null)
+			StringUtils.MARKET_PLACES_MAP = new LinkedHashMap<String, String>(
+					marketplaceNames.getLength());
+		else
+			StringUtils.MARKET_PLACES_MAP.clear();
+		for (int i = 0; i < marketplaceNames.getLength(); i++) {
+			StringUtils.MARKET_PLACES_MAP.put(marketplaceNames.item(i)
+					.getChildNodes().item(0).getNodeValue(), marketplaceIds
+					.item(i).getChildNodes().item(0).getNodeValue());
+		}
+
+		/*
+		 * Iterator<Entry<String, String>> marketplacesIterator =
+		 * StringUtils.MARKET_PLACES_MAP.entrySet().iterator(); while
+		 * (marketplacesIterator.hasNext()) { Entry<String,String> entry =
+		 * (Entry<String,String>) marketplacesIterator.next();
+		 * //Log.d("Marketplaces", "Name: " + entry.getKey() + " Id: " +
+		 * entry.getValue()); }
+		 */
+	}
+}

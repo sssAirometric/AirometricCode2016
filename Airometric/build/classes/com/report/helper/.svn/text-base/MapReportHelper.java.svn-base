@@ -1,0 +1,150 @@
+package com.report.helper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.report.to.ThrougputDataTO;
+import com.to.DeviceInfoTO;
+import com.to.ReportBean;
+
+public class MapReportHelper {
+
+	
+	public ThrougputDataTO getThroughtPutDataForMap(List<DeviceInfoTO> throughputDeviceresults,List<String> deviceInfotimeStampForEachSampleList){
+		ThrougputDataTO througputDataTO = new ThrougputDataTO();
+		String latitudes = "";
+		String longitudes = "";
+		String testName="";
+		String signalStrength = "";
+		String signalStrengthRating= "";
+		String networkType="";
+		String cellLocationCID="";
+		String timeStampForEachSample = "";
+        String signalStrengthLTT = "";
+        String network="";
+        String eventName="";
+		List lattitudeList = new ArrayList() ;
+		List longitudeList = new ArrayList() ;
+		List testNameList=new ArrayList() ;
+		List signalStrengthList=new ArrayList() ;
+		List networkTypeList=new ArrayList() ;
+		List eventNameList=new ArrayList() ;
+		List cellLocationList=new ArrayList() ;
+		List timeStampForEachSampleList=new ArrayList() ;
+		List throughputList=new ArrayList(deviceInfotimeStampForEachSampleList.size());
+		for(int i=0;i<deviceInfotimeStampForEachSampleList.size();i++){
+			throughputList.add(0);
+			eventNameList.add("");
+		}
+		System.out.println("throughputList---------"+throughputList.size());
+		System.out.println("deviceInfotimeStampForEachSampleList---------"+deviceInfotimeStampForEachSampleList.size());
+		List signalStrengthListRating=new ArrayList() ;
+		List signalStrengthLt=new ArrayList() ;
+		String networkName ="";
+		for(int i=0;i<throughputDeviceresults.size();i++){
+			DeviceInfoTO deviceInfo =throughputDeviceresults.get(i);
+			networkName= deviceInfo.getNetworkType();
+			lattitudeList.add(deviceInfo.getLattitude());
+			longitudeList.add(deviceInfo.getLongitude());
+			testNameList.add(deviceInfo.getTestName());
+			network=deviceInfo.getNetworkType().trim();
+			networkTypeList.add(network);
+			cellLocationList.add(deviceInfo.getCellLocationCID());
+			timeStampForEachSampleList.add(deviceInfo.getTimeStampForEachSample());
+			eventName=deviceInfo.getEventName();
+			if(networkName.matches("GSM")){
+				if(deviceInfo.getSignalStrength().equals("Empty") || deviceInfo.getSignalStrength().equals("")){
+					int signalStrengthGSM=Integer.parseInt("0");
+					int signalStrengthGSMValue= -Integer.parseInt(ReportBean.SIGNALSTRENGTH_GSM)+ Integer.parseInt(ReportBean.SIGNALSTRENGTH_GSM1) * signalStrengthGSM;
+					signalStrengthList.add(String.valueOf(signalStrengthGSMValue+"dBm."));
+					int signalStrengthLtvalue=-Integer.parseInt(ReportBean.SIGNALSTRENGTH_GSM)+ Integer.parseInt(ReportBean.SIGNALSTRENGTH_GSM1) * signalStrengthGSM;
+					signalStrengthLt.add(String.valueOf(signalStrengthLtvalue).substring(1, String.valueOf(signalStrengthLtvalue).length()));
+				}else{
+					int signalStrengthGSM=Integer.parseInt(deviceInfo.getSignalStrength());
+					int signalStrengthGSMValue= -Integer.parseInt(ReportBean.SIGNALSTRENGTH_GSM)+ Integer.parseInt(ReportBean.SIGNALSTRENGTH_GSM1) * signalStrengthGSM;
+					signalStrengthList.add(String.valueOf(signalStrengthGSMValue+"dBm."));
+					int signalStrengthLtvalue=-Integer.parseInt(ReportBean.SIGNALSTRENGTH_GSM)+ Integer.parseInt(ReportBean.SIGNALSTRENGTH_GSM1) * signalStrengthGSM;
+					signalStrengthLt.add(String.valueOf(signalStrengthLtvalue).substring(1, String.valueOf(signalStrengthLtvalue).length()));
+				}
+				signalStrengthListRating.add(deviceInfo.getSignalStrength());
+			}else if(networkName.matches("CDMA")){
+				if(deviceInfo.getSignalStrengthCDMA().equals("Empty") || deviceInfo.getSignalStrengthCDMA().equals("")){
+					signalStrengthList.add("0");
+					signalStrengthLt.add("0");
+				}else{
+					signalStrengthList.add(deviceInfo.getSignalStrengthCDMA());
+					signalStrengthLt.add(deviceInfo.getSignalStrengthCDMA());
+				}
+				signalStrengthListRating.add(deviceInfo.getSignalStrengthCDMA());
+			}else if(networkName.matches("EVDO")){
+				if(deviceInfo.getSignalStrengthEVDO().equals("Empty") || deviceInfo.getSignalStrengthEVDO().equals("")){
+					signalStrengthList.add("0");
+					signalStrengthLt.add("0");
+				}else{
+					signalStrengthLt.add(deviceInfo.getSignalStrengthEVDO());
+					signalStrengthList.add(deviceInfo.getSignalStrengthEVDO());
+				}
+				signalStrengthListRating.add(deviceInfo.getSignalStrengthEVDO());
+			}else if(networkName.equalsIgnoreCase("LTE (4G)")){
+				if(deviceInfo.getSignalStrengthLTE().equals("Empty") || deviceInfo.getSignalStrengthLTE().equals("")){
+					int signalStrengthLTE=Integer.parseInt("0");
+					int signalStrengthLTEValue= signalStrengthLTE;
+					signalStrengthList.add(String.valueOf(signalStrengthLTEValue+"dBm."));
+//					signalStrengthLt.add(String.valueOf(deviceInfo.getSignalStrengthLTERSRP()).substring(1, String.valueOf(deviceInfo.getSignalStrengthLTERSRP()).length()));
+					signalStrengthLt.add(String.valueOf(signalStrengthLTEValue).substring(1, String.valueOf(signalStrengthLTEValue).length()));
+				}else{
+					int signalStrengthLTE=Integer.parseInt(deviceInfo.getSignalStrengthLTE());
+					int signalStrengthLTEValue=  signalStrengthLTE;
+					signalStrengthList.add(String.valueOf(signalStrengthLTEValue+"dBm."));
+//					signalStrengthLt.add(String.valueOf(deviceInfo.getSignalStrengthLTERSRP()).substring(1, String.valueOf(deviceInfo.getSignalStrengthLTERSRP()).length()));
+					signalStrengthLt.add(String.valueOf(signalStrengthLTEValue).substring(1, String.valueOf(signalStrengthLTEValue).length()));
+				}
+				signalStrengthListRating.add(deviceInfo.getSignalStrengthLTE());
+			}else{
+				if(deviceInfo.getSignalStrength().equals("Empty") || deviceInfo.getSignalStrength().equals("")){
+					int signalStrengthGSM=Integer.parseInt("0");
+					int signalStrengthGSMValue= -Integer.parseInt(ReportBean.SIGNALSTRENGTH_GSM)+ Integer.parseInt(ReportBean.SIGNALSTRENGTH_GSM1) * signalStrengthGSM;
+					signalStrengthList.add(String.valueOf(signalStrengthGSMValue+"dBm."));
+					signalStrengthLt.add(String.valueOf(signalStrengthGSMValue).substring(1, String.valueOf(signalStrengthGSMValue).length()));
+				}else{
+					int signalStrengthGSM=Integer.parseInt(deviceInfo.getSignalStrength());
+					int signalStrengthGSMValue= -Integer.parseInt(ReportBean.SIGNALSTRENGTH_GSM)+ Integer.parseInt(ReportBean.SIGNALSTRENGTH_GSM1) * signalStrengthGSM;
+					signalStrengthList.add(String.valueOf(signalStrengthGSMValue+"dBm."));
+					signalStrengthLt.add(String.valueOf(signalStrengthGSMValue).substring(1, String.valueOf(signalStrengthGSMValue).length()));
+				}
+				signalStrengthListRating.add(deviceInfo.getSignalStrength());
+			}
+			System.out.println("deviceInfo.getThroughputmain()--------"+deviceInfo.getThroughputmain());
+		   throughputList.set(deviceInfotimeStampForEachSampleList.indexOf(deviceInfo.getTimeStampForEachSample()),new Float(deviceInfo.getThroughputmain())*8);
+		   eventNameList.set(deviceInfotimeStampForEachSampleList.indexOf(deviceInfo.getTimeStampForEachSample()),deviceInfo.getEventName());
+		}
+		
+		 latitudes = lattitudeList.toString();
+		    longitudes = longitudeList.toString();
+		    eventName = eventNameList.toString();
+		    testName = testNameList.toString();
+		    signalStrength=signalStrengthList.toString();
+		    signalStrengthRating=signalStrengthListRating.toString();
+		    networkType=networkTypeList.toString();
+		    timeStampForEachSample=timeStampForEachSampleList.toString(); 
+		    String throughput = throughputList.toString(); 
+		    cellLocationCID=cellLocationList.toString();
+		    signalStrengthLTT=signalStrengthLt.toString();
+		    System.out.println("eventNameList----------"+eventNameList.size());
+		    System.out.println("throughput------------"+throughputList);
+		    througputDataTO.setEventName(eventName);
+		    System.out.println("eventNameList----------"+lattitudeList.size());
+		    througputDataTO.setLattitudes(latitudes);
+		    througputDataTO.setLongitudes(longitudes);
+		    througputDataTO.setSignalStrength(signalStrength);
+		    througputDataTO.setSignalStrengthRating(signalStrengthRating);
+		    througputDataTO.setNetworkType(networkType);
+		    througputDataTO.setTimeStampForEachSample(timeStampForEachSample);
+		    througputDataTO.setCellLocationCID(cellLocationCID);
+		    througputDataTO.setSignalStrengthLTT(signalStrengthLTT);
+		    througputDataTO.setThroughput(throughput);
+		    througputDataTO.setTestName(testName);
+		    System.out.println(lattitudeList);
+		return througputDataTO;
+	}
+}

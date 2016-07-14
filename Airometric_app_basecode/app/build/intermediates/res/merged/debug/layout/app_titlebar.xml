@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <TextView
+            android:id="@+id/txtviewTitle"
+            style="@style/app_title_text"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/app_name" >
+        </TextView>
+
+        <Button
+            android:id="@+id/btnLogout"
+            style="@style/app_button_normal"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center|right"
+            android:text="Logout"
+            android:textSize="13sp"
+            android:visibility="invisible" />
+
+    </FrameLayout>
+
+</LinearLayout>

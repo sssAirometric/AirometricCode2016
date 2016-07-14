@@ -1,0 +1,74 @@
+package com.dao;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import com.to.DeviceInfoTO;
+import com.to.MarketInfo;
+import com.to.UserBean;
+import com.to.UserDeviceInfo;
+
+public interface UserDao {
+	public String validateUser(String userName,String passWord,String imei);
+	public UserBean validateUserInfo(String userName,String passWord);
+	public UserBean validateUserInformation(String userName,String passWord);
+	public Map<String,String> getActiveUserBelongsToOperator(String selOperatorID);
+	public Map<String,String> getActiveUserBelongsToManager(String selOperatorID,String userId);
+	public Map<String,String> getImeiBelongsToUser(String selUserID);
+	public String createUser(UserBean userBean);
+	public String getOperator(String userId);
+	public List<UserBean> listUser(String userIdLogged,String roleName);
+	public List<UserBean> listUserBasedOnOperator(String role,String userIdLogged);
+	public UserBean getUserDetails(String userId);
+	public Map<String, String> getActiveRoleInMap(String roleName);
+	public Map<String, String> getActiveEditRoleInMap(String roleName);
+	public void editUser(String userId,String email,String role,int reportingTo,int userStatus,String operatorId,List<UserDeviceInfo> userDeviceInfo,String password,String[] marketId,String countryId,String imeiLimit,int imeiCount);
+	public void profileEditUser(String userId,String email, String role, int userStatus,
+			String operatorId, List<UserDeviceInfo>  userDeviceInfo,String password,String userrole,String[] marketId,String countryId);
+	public List<DeviceInfoTO> getAllDeviceInfo (String testName,String marketmapId,String testtype,String freqPlan);
+	public List<DeviceInfoTO> getAllDeviceInfoForVQT (String testName,String marketmapId,String testtype,List<String>vqtlist);
+	public List<DeviceInfoTO> getAllMultiplDeviceInfo (String testName,String marketmapId,String testtype);
+	public List<DeviceInfoTO> getAllMultiplDeviceInfoForLTE(String testCaseName,String marketmapId,String testtype);
+	public List<DeviceInfoTO> getAllDeviceInfoForLTE(String testCaseName,String marketId,String testtype);
+	public List<String> getAllDeviceInfoCallDropList(String testName,String marketmapId,String test_type);
+	public String getUserOperator(String username);
+	public List<String> getAllMultipleDeviceInfoCallDropList(String testName,String marketmapId,String test_type);
+	public List<String> getAllVoiceQualitySignalStrengthList(String testName,String market,String test_type);
+	public List<String> getAllVoiceQualityMarketSignalStrengthList(String testName,String market);
+	public List<String> getAllVoiceQualityNetworkTypeList(String testCaseName,String market,String test_type);
+	public List<String> getAllVoiceQualityMarketNetworkTypeList(String testCaseName,String market);
+	public List<String> getAllVoiceQualitySourceCellIdList(String testCaseName,String market,String test_type);
+	public List<String> getAllVoiceQualityMarketSourceCellIdList(String testCaseName,String market);
+	public List<String> getAllVoiceQualityMultipleSourceCellIdList(String testCaseName,String marketId);
+	public List<String> getAllVoiceQualityMultipleNetworkTypeList(String testCaseName,String marketId);
+	public List<String> getAllVoiceQualityMarketMultipleSourceCellIdList(String testCaseName,String market);
+	public List<String> getAllVoiceQualityMarketMultipleNetworkTypeList(String testCaseName,String market);
+	public List<String> getAllVoiceQualityTimeStampList(String testCaseName);
+	public List<String> getAllVoiceQualityLatitudeList(String testCaseName,String market,String test_type);
+	public List<String> getAllVoiceQualityMarketLatitudeList(String testCaseName,String market);
+	public List<String> getAllVoiceQualityMarketMultipleSignalStrengthList(String testName,String market);
+	public List<String> getAllVoiceQualityMultipleSignalStrengthList(String testName,String marketId);
+	public List<String> getAllVoiceQualityMultipleLatitudeList(String testName,String marketId);
+	public List<String> getAllVoiceQualityMarketMultipleLatitudeList(String testName,String market);
+	public List<DeviceInfoTO> getAllDeviceInfoTimeStampList(String testCaseName);
+	public List<DeviceInfoTO> getAllDeviceInfoReportList(String testCaseName);
+	public String removeDeviceFromDb(String deviceId);
+	public String removeDeviceFromDbStatus(String deviceId);
+	public boolean deleteUser(String userId);
+	public String updateTermsAndConditions(String userName);
+	public UserBean getLoginUserDetails(String userId,String userrole);
+	public String  getUserName(String userId);
+	public String addOperator(String userId,String operatorName,int operatorStatus);
+	public List<UserBean> getOperatorList();
+	public List<String> getRatingList(String testCaseName,String marketId);
+	public List<String> getMultipleRatingList(String testCaseName,String marketId);
+	public List<MarketInfo> getMarket_Operator(String userId);
+	public boolean checkOperatorExists(String operatorName);
+	public String updateIMEICount(String adminId,int imeiLimit);
+	public Set<String> getUsersOfSuperior(String userId, String userRole);
+	public int getIMEICountValue(String userId);
+	public boolean AuthenticateUserDevice(String Userid,String deviceId);
+	public int getSuperiorUserIdbyuserid(String userid);
+	
+}

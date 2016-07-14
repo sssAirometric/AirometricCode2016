@@ -1,0 +1,427 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:rich="http://richfaces.org/rich">
+
+<h:head>
+	<title>Airometric Wireless</title>
+
+	<style>
+.fontlabel {
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 10pt;
+	color: black;
+}
+
+.successlabel {
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 10pt;
+	font-weight: bold;
+	color: green;
+}
+
+.failurelabel {
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 10pt;
+	font-weight: bold;
+	color: red;
+}
+.checkbox1 {
+    outline: thick solid ;
+}
+</style>
+
+
+</h:head>
+
+<ui:composition template="template/common/configLayout.xhtml">
+	<ui:define name="content">
+		<body style="background-color: #f3f3f3;" onload="loadValues(); active();">
+		<div id="wrap">
+		<div id="container" class="container" style="text-align: left;">
+		 
+			<div id="row1" class="row">
+			<div class="tab-content" id="holder" style="position: relative;top: -80px;margin-left:120px;">
+			<rich:panel
+				header="Assign Config File"
+				style="width: 850px; height:196px;position:relative;top:12px;">
+				<h:form name="reportGenForm" id="reportGenForm" method="post">
+				<h:panelGrid id="testNamePanel" columns="4" width="100%"
+					class="testCaseField">
+					<c:if test="#{sessionScope['loggedInUserRoleID']=='superadmin'}">
+						<h:outputText value="Enterprise*" styleClass="fontlabel" />
+						<h:selectOneMenu id="operator"
+							value="#{testCaseAction.selectedOperatorID}" onchange="submit()"
+							style="width:172px;height:25px;"
+							valueChangeListener="#{testCaseAction.operatorValueChanged}">
+							<f:selectItems value="#{sessionScope['operatorMaplist']}" />
+							<f:validator validatorId="com.validator.AssignConfigValidator" />
+						</h:selectOneMenu>
+					</c:if>
+					<h:outputText value="Config Files*" styleClass="fontlabel" />
+					<h:selectOneMenu id="configFile" style="width:172px;height:25px;"
+						value="#{testCaseAction.selectedTestConfigId}">
+						<f:selectItems value="#{sessionScope['testConfigMapList']}" />
+						<f:validator validatorId="com.validator.AssignConfigValidator" />
+					</h:selectOneMenu>
+
+							<h:outputText value="Usernames*" styleClass="fontlabel"
+								style="position: relative;top: 10px;" />
+							<h:selectOneMenu id="user" value="#{testCaseAction.selUserID}"
+								onchange="submit()"
+								style="position: relative;top: 10px;width:172px;height:25px;"
+								valueChangeListener="#{testCaseAction.userValueChanged}">
+								<f:selectItems value="#{testCaseAction.userMap}" />
+								<f:selectItems value="#{sessionScope['userMaplist']}" />
+							</h:selectOneMenu>
+					<c:if test="#{sessionScope['isGuestUser']!='active'}">
+					<h:outputText value="IMEI*" styleClass="fontlabel"
+						style="position: relative;top: 10px;" />
+						<h:selectManyListbox id="selImei" name="selImei" value="#{testCaseAction.selImei}"
+						style="position: relative;top: 10px;width:172px;height:75px;">
+							<f:selectItems value="#{testCaseAction.imeiMap}" />
+							<f:validator validatorId="com.validator.AssignConfigValidator" />
+				   		 </h:selectManyListbox>
+				   		 </c:if>
+					<c:if test="#{sessionScope['loggedInUserRoleID']=='manager'}">
+						<td colspan="2"></td>
+					</c:if>
+					<br></br>
+					<br></br>
+					<c:if test="#{sessionScope['testConfigMapSize']!='0'}">
+						<!-- <c:if test="#{sessionScope['loggedInUserRoleID']=='admin'||sessionScope['loggedInUserRoleID']=='superadmin'}"> -->
+							<h:commandLink
+								style="position: relative;left: 184px;top: 29px;width: 93px;"
+								action="#{testCaseAction.assignTestConfig}">
+								<h:graphicImage library="images" name="application_go.png" />
+								<font style="width: 70px; position: relative;" color="green"><b>Assign</b></font>
+							</h:commandLink>
+					<!-- 	</c:if> -->
+						
+					</c:if>
+				</h:panelGrid>
+
+				<br></br>
+				<h:message for="operator"
+					style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;" />
+				<br></br>
+				<h:message id="config" for="configFile"
+					style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;" />
+				<br></br>
+				<h:message for="user"
+					style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;" />
+				<br></br>
+				<h:message for="imei"
+					style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;" />
+				<br></br>
+
+				<c:if test="#{sessionScope['testConfigMapSize']=='0'}">
+					<style>
+#outerWrapper #contentWrapper #content {
+	margin: 0 1em 0 20em;
+	padding: 10px 30px 675px 70px;
+}
+</style>
+					<font
+						style="font-family: Arial, Helvetica, Sans-Serif; font-size: 10pt; font-weight: bold; color: red; position: relative; left: 7px; top:-90px; white-space: nowrap;">#{requestScope['testConfigMessage']}</font>
+				</c:if>
+				<font
+					style="font-family: Arial, Helvetica, Sans-Serif; font-size: 10pt; font-weight: bold; color: green; position: relative; left: 7px; top:-90px; white-space: nowrap;">#{requestScope['message']}</font>
+				<div
+					style="position: relative; float: right; right: 126px; bottom: 42px;">
+				<h:outputText value=" * - is mandatory field" styleClass="fontlabel" />
+				
+				</div></h:form>
+			</rich:panel> <br />
+			<c:if test="#{sessionScope['assignListTestSize']!='0'}">
+				<h:form name="StartTestForm" id="StartTestForm" method="post">
+				<rich:panel header="Assign Configuration page"
+					style="width: 850px;position:relative;height:382px; margin-left: 2px; top: 0px;z-index:999;">
+					<c:if test="#{sessionScope['loggedInUserRoleID']=='superadmin' || sessionScope['loggedInUserRoleID']=='admin'}">
+						<div style="width: 180px;margin-left: 540px;">
+					<h:commandLink style="width: 80px;" 
+								action="#{testCaseAction.StartAutoTest}" id="startbtn" >
+								<h:graphicImage library="images" name="application_go.png" />
+								<font style="width: 70px; position: relative;" color="green"><b>Start Test</b></font>
+								<f:param name="startparam" value="START" />
+							</h:commandLink>
+							<h:commandLink style="width: 80px;margin-left: 20px;"
+								action="#{testCaseAction.StartAutoTest}" id="stopbtn" >
+								<h:graphicImage library="images" name="application_go.png" />
+								<font style="width: 70px; position: relative;" color="green"><b>Stop Test</b></font>
+								<f:param name="startparam" value="STOP" />
+							</h:commandLink>
+							<font
+					style="font-family: Arial, Helvetica, Sans-Serif; font-size: 10pt; font-weight: bold; color: red; position: relative; left:-235px; top:0px; 
+											white-space: nowrap;">#{requestScope['FailureMsg']}</font>
+					</div>
+					</c:if>
+					<rich:extendedDataTable
+						value="#{sessionScope['assignListTestConfig']}" var="car"
+						id="table" sortPriority="#{carsSortingBean.sortPriorities}"
+						style="width:816px;position: relative; margin-top:5px; height: 325px; "
+						selectionMode="none" rowKeyVar="row">
+					<rich:column sortBy="#{car.testConfigId}" width="60px"
+							sortOrder="#{carsSortingBean.sortsOrders['slNO']}"
+							sortType="custom">
+							<f:facet name="header">
+								<h:panelGrid columns="2">
+									<a4j:commandLink execute="@this" value="SLNO" render="table"
+										action="#{carsSortingBean.sort}">
+										<f:param name="sortProperty" value="testConfigId" />
+									</a4j:commandLink>
+									<h:graphicImage value="/resources/images/down_icon.gif"
+										rendered="#{carsSortingBean.sortsOrders['slNO']=='descending'}" />
+									<h:graphicImage value="/resources/images/up_icon.gif"
+										rendered="#{carsSortingBean.sortsOrders['slNO']=='ascending'}" />
+								</h:panelGrid>
+							</f:facet>
+							 #{car.slNO} 
+							 </rich:column>
+
+						<rich:column sortBy="#{car.user_Name}" width="200px"
+							sortOrder="#{carsSortingBean.sortsOrders['user_Name']}"
+							sortType="custom">
+							<f:facet name="header">
+								<h:panelGrid columns="2">
+									<a4j:commandLink execute="@this" value="USER_NAME"
+										render="table" action="#{carsSortingBean.sort}">
+										<f:param name="sortProperty" value="user_Name" />
+									</a4j:commandLink>
+									<h:graphicImage value="/resources/images/down_icon.gif"
+										rendered="#{carsSortingBean.sortsOrders['user_Name']=='descending'}" />
+									<h:graphicImage value="/resources/images/up_icon.gif"
+										rendered="#{carsSortingBean.sortsOrders['user_Name']=='ascending'}" />
+								</h:panelGrid>
+							</f:facet>
+							#{car.user_Name}
+						</rich:column>
+
+						<rich:column sortBy="#{car.testConfigName}" width="200px"
+							sortOrder="#{carsSortingBean.sortsOrders['testConfigName']}"
+							sortType="custom">
+							<f:facet name="header">
+								<h:panelGrid columns="2">
+									<a4j:commandLink execute="@this" value="TEST CONFIG_NAME"
+										render="table" action="#{carsSortingBean.sort}">
+										<f:param name="sortProperty" value="testConfigName" />
+									</a4j:commandLink>
+									<h:graphicImage value="/resources/images/down_icon.gif"
+										rendered="#{carsSortingBean.sortsOrders['testConfigName']=='descending'}" />
+									<h:graphicImage value="/resources/images/up_icon.gif"
+										rendered="#{carsSortingBean.sortsOrders['testConfigName']=='ascending'}" />
+								</h:panelGrid>
+							</f:facet> #{car.testConfigName}
+							</rich:column>
+
+						<rich:column sortBy="#{car.imei}" width="200px"
+							sortOrder="#{carsSortingBean.sortsOrders['imei']}"
+							sortType="custom">
+							<f:facet name="header">
+								<h:panelGrid columns="2">
+									<a4j:commandLink execute="@this" value="IMEI" render="table"
+										action="#{carsSortingBean.sort}">
+										<f:param name="sortProperty" value="imei" />
+									</a4j:commandLink>
+									<h:graphicImage value="/resources/images/down_icon.gif"
+										rendered="#{carsSortingBean.sortsOrders['imei']=='descending'}" />
+									<h:graphicImage value="/resources/images/up_icon.gif"
+										rendered="#{carsSortingBean.sortsOrders['imei']=='ascending'}" />
+								</h:panelGrid>
+							</f:facet>#{car.imei} 
+							 </rich:column>
+					<c:if test="#{sessionScope['loggedInUserRoleID']=='superadmin' || sessionScope['loggedInUserRoleID']=='admin'}">
+					<rich:column sortBy="#{car.imei}" width="60px"
+							sortOrder="#{carsSortingBean.sortsOrders['imei']}"
+							sortType="custom">
+							<f:facet name="header">
+								<h:panelGrid columns="2">
+									<a4j:commandLink execute="@this" value="Start Test" render="table"
+										action="#{carsSortingBean.sort}">
+										<f:param name="sortProperty" value="imei" />
+									</a4j:commandLink>
+									<h:graphicImage value="/resources/images/down_icon.gif"
+										rendered="#{carsSortingBean.sortsOrders['imei']=='descending'}" />
+									<h:graphicImage value="/resources/images/up_icon.gif"
+										rendered="#{carsSortingBean.sortsOrders['imei']=='ascending'}" />
+								</h:panelGrid>
+							</f:facet>
+							<h:selectBooleanCheckbox id="StartTest" value="#{car.selected}" onclick="enablecheckbox()" >
+							<f:ajax listener="#{testCaseAction.ajaxListener}" event="change" ajaxSingle="true" />
+							</h:selectBooleanCheckbox>
+							</rich:column>
+		
+		<rich:column sortBy="#{car.imei}" width="60px"
+							sortOrder="#{carsSortingBean.sortsOrders['imei']}"
+							sortType="custom">
+							<f:facet name="header">
+								<h:panelGrid columns="2">
+									<a4j:commandLink execute="@this" value="Stop Test" render="table"
+										action="#{carsSortingBean.sort}">
+										<f:param name="sortProperty" value="imei" />
+									</a4j:commandLink>
+									<h:graphicImage value="/resources/images/down_icon.gif"
+										rendered="#{carsSortingBean.sortsOrders['imei']=='descending'}" />
+									<h:graphicImage value="/resources/images/up_icon.gif"
+										rendered="#{carsSortingBean.sortsOrders['imei']=='ascending'}" />
+								</h:panelGrid>
+							</f:facet>
+							<h:selectBooleanCheckbox id="StopTest" onclick="enablecheckboxStop(this.id)" >
+							<f:ajax listener="#{testCaseAction.ajaxListener1}" event="change" ajaxSingle="true"/>
+							</h:selectBooleanCheckbox>
+							</rich:column>
+							</c:if>
+			</rich:extendedDataTable>
+			
+				</rich:panel>
+				</h:form>
+			</c:if></div>
+			</div>
+			<div id="bottom" class="bottomSpacerDiv">
+			
+			</div>
+		</div>
+		</div>
+		<script type="text/javascript">
+		   function active(){
+			   document.getElementById("AssignConfig").className='active';
+				 var role = "#{sessionScope['loggedInUserRoleID']}";
+				   if(role !="admin"){
+					   document.getElementById("holder").style.left = "100px";
+				   }
+		   }
+	   function loadValues(){
+		   var action="#{sessionScope['assignType']}";
+		   var userStatus="#{sessionScope['userStatus']}";
+		   if(action == "view"){
+				 document.getElementById("reportGenForm:operator").value="0";
+				 document.getElementById("reportGenForm:configFile").value="0";
+		   }
+		   if(userStatus == "Active"){
+				 document.getElementById("reportGenForm:config").style.display="none";
+			
+		   }
+		   
+		   
+		   var size="#{sessionScope['assignListTestSize']}";
+		   
+		   console.log(size);
+		   var i;
+		   for(i=0; i&lt;size;i++)
+		   { 
+		   
+		   console.log("ye kya he"+i+ document.getElementById("StartTestForm:table:"+i+":StartTest").checked);
+		  
+		  if(document.getElementById("StartTestForm:table:"+i+":StartTest").checked)
+			   {
+			   document.getElementById("StartTestForm:table:"+i+":StopTest").disabled = false;
+			   document.getElementById("StartTestForm:table:"+i+":StartTest").disabled = true;
+			   //document.getElementById("StartTestForm:startbtn").disabled = false;
+			   }
+		   else 
+		  	 {
+			   document.getElementById("StartTestForm:table:"+i+":StopTest").disabled = true;
+			   document.getElementById("StartTestForm:table:"+i+":StartTest").disabled = false;
+		  	 }
+		    
+		   }
+		   
+		   
+		   var FailedStartedAutotest="#{requestScope['FailedStartedAutotest']}";
+		   FailedStartedAutotest = FailedStartedAutotest.substr(1,FailedStartedAutotest.length-2);
+		   FailedStartedAutotest = FailedStartedAutotest.split(",");
+		   console.log("FailedStartedAutotest.length "+FailedStartedAutotest.length);
+		   if(FailedStartedAutotest[0]!=""){
+		   for(j=0; j&lt;FailedStartedAutotest.length;j++)
+			  {
+				console.log("FailedStartedAutotest-"+j+" "+FailedStartedAutotest[j].trim());
+				document.getElementById("StartTestForm:table:"+FailedStartedAutotest[j].trim()+":StartTest").disabled = false;
+				document.getElementById("StartTestForm:table:"+FailedStartedAutotest[j].trim()+":StartTest").checked = false;
+				document.getElementById("StartTestForm:table:"+FailedStartedAutotest[j].trim()+":StartTest").style.outline = "solid 1px red"; 
+			} 
+		   }
+		 
+		  
+	   }
+	   function enablecheckbox()
+	   {
+		   var size="#{sessionScope['assignListTestSize']}";
+		   console.log(size);
+		   var i;
+		   for(i=0; i&lt;size;i++)
+		   {
+		   if(document.getElementById("StartTestForm:table:"+i+":StartTest").checked)
+			   {
+			   document.getElementById("StartTestForm:table:"+i+":StopTest").disabled = false;
+			   //document.getElementById("StartTestForm:table:"+i+":StartTest").readonly = true;
+			   document.getElementById("StartTestForm:startbtn").disabled = false;
+			   }
+		   else 
+		  	 {
+			   document.getElementById("StartTestForm:table:"+i+":StopTest").disabled = true;
+			  // document.getElementById("StartTestForm:table:"+i+":StartTest").readonly = false;
+		   }
+		   }
+	 }
+	   function enablecheckboxStop(id)
+	   {
+		   var a = id.split(":", 4);
+		   if(document.getElementById("StartTestForm:table:"+a[2]+":StopTest").checked)
+		   {
+		   document.getElementById("StartTestForm:table:"+a[2]+":StartTest").disabled = false;
+		   }
+		   else 
+		  	 {
+			   document.getElementById("StartTestForm:table:"+a[2]+":StartTest").disabled = true;
+			 }
+		   /* var size="#{sessionScope['assignListTestSize']}";
+		   
+		   var j;
+		   for(j=0; j&lt;size;j++)
+		   {
+		   if(document.getElementById("StartTestForm:table:"+j+":StopTest").checked)
+			   {console.log(str);
+			   document.getElementById("StartTestForm:table:"+j+":StartTest").disabled = true;
+			   //document.getElementById("StartTestForm:table:"+i+":StartTest").readonly = true;
+			   //document.getElementById("StartTestForm:stopbtn").disabled = false;
+			   }
+		   else 
+		  	 {
+			   document.getElementById("StartTestForm:table:"+j+":StartTest").disabled = false;
+			  // document.getElementById("StartTestForm:table:"+i+":StartTest").readonly = false;
+		   }
+		   } */
+	 }
+	   function showfailtest()
+	   {
+		  var FailedStartedAutotest='#{requestScope['FailedStartedAutotest']}';
+		   for(j=0; j&lt;FailedStartedAutotest.length;j++)
+			  {
+				console.log("FailedStartedAutotest-"+j+" "+FailedStartedAutotest[j]);
+				document.getElementById("StartTestForm:table:"+FailedStartedAutotest[j]+":StartTest").checked = false;
+				document.getElementById("StartTestForm:table:"+FailedStartedAutotest[j]+":StartTest").style.outline = "solid 1px red"; 
+			 } 
+	   }
+	   
+	</script>
+		<script>window.jQuery || document.write(' <h:outputScript library="js" name="jquery-1.9.0.min.js" />')</script>
+		<h:outputScript library="js" name="plugins.js" />
+		<h:outputScript library="js" name="main.js" />
+		<h:outputScript library="js" name="bootstrap.js" />
+		<h:outputScript library="js" name="jquery-1.9.0.min.js" />
+		<script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+		</body>
+	</ui:define>
+</ui:composition>
+
+</html>

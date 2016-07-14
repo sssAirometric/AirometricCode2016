@@ -1,0 +1,34 @@
+[
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\titlebar_gradient.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\drawable\\titlebar_gradient.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\arrow.png",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\drawable\\arrow.png"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\normal_button.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\drawable\\normal_button.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\rounded_corner.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\drawable\\rounded_corner.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\button_text_color.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\drawable\\button_text_color.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\logo.png",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\drawable\\logo.png"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\seperator.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\drawable\\seperator.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\app_bg_gradient.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\drawable\\app_bg_gradient.xml"
+    }
+]

@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Session Timeout  Page</title>
+</h:head>
+    <body style="background-color: #f3f3f3;">
+		<div id="wrap">
+	       <ui:include src="layout/header_session.xhtml" />
+			<div id="container" class="container" style="text-align: left;">
+			  <h:form>
+			    <div align="center" style="position: relative;top: 205px;left: 44px;">
+					<rich:panel header="Session Timed Out" style="width: 300px; height:265px">
+					<h:panelGroup>                
+					    <h:outputLabel value="Session has Timed Out" class="logoutLabel"></h:outputLabel><br/><br/>
+						<h:commandLink action="#{userBean.logoutSessionUser}" >	
+							 <h:outputLabel value="Please Click Here to Login" class="logoutLabel" ></h:outputLabel> 
+						</h:commandLink>
+				    </h:panelGroup>
+				    </rich:panel>
+			    </div>
+				<div id="bottom" class="bottomSpacerDiv" ></div>
+		      </h:form>
+		    </div>
+			<div id="push"></div>
+		</div>	
+	    <ui:include src="layout/footer.xhtml" />		
+        <h:outputScript library="js" name="plugins.js" />
+        <h:outputScript library="js" name="main.js" />
+		<h:outputScript library="js" name="bootstrap.js" />
+		<h:outputScript library="js" name="jquery-1.9.0.min.js" />
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+   </body> 
+</html>

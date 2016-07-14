@@ -1,0 +1,33 @@
+package com.airometric.classes;
+
+import java.io.Serializable;
+
+public class FTPTestConfig implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5664986537590829266L;
+	public String sServerURL, sUsername, sPassword, sTestCyles, sUploadPath,
+			sFileToDownload;
+
+	public FTPTestConfig(String sServerURL, String sUsername, String sPassword,
+			String sTestCyles, String sUploadPath, String sFileToDownload) {
+		this.sServerURL = sServerURL;
+		this.sUsername = sUsername;
+		this.sPassword = sPassword;
+		this.sTestCyles = sTestCyles;
+		this.sUploadPath = sUploadPath;
+		this.sFileToDownload = sFileToDownload;
+
+	}
+
+	@Override
+	public String toString() {
+		String toString = "FTPTestConfig() :: Server URL = " + sServerURL
+				+ ",  Username = " + sUsername + ",  Password = " + sPassword
+				+ ",  Cycles = " + sTestCyles + ",  Upload path = "
+				+ sUploadPath + ",  File to download = " + sFileToDownload;
+		return toString;
+	}
+}

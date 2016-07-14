@@ -1,0 +1,237 @@
+package com.airometric;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Html;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.airometric.api.APIManager;
+import com.airometric.api.ResponseCodes;
+import com.airometric.classes.LoginResponse;
+import com.airometric.config.Constants;
+import com.airometric.config.Messages;
+import com.airometric.config.StringUtils;
+import com.airometric.dialogs.AppAlert;
+import com.airometric.dialogs.ExitAlert;
+import com.airometric.parser.Parser;
+import com.airometric.storage.Preferences;
+import com.airometric.utility.DeviceUtil;
+import com.airometric.utility.L;
+import com.airometric.utility.Validator;
+
+public class LoginActivity extends AppActivity {
+
+	private Button btnSignIn, btnSignUp;
+	private EditText txtUsername, txtPassword;
+	private TextView lblForgotPassword;
+	private Thread thrdLogin;
+	private String sUsername, sPassword;
+
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// To setup the title bar
+		setAppTitle(R.layout.login);
+
+		activity = this;
+
+		initLayouts();
+	}
+
+	/**
+	 * To initialize the layout and assign listeners for that fields.
+	 */
+
+	private void initLayouts() {
+		L.log("Initialize Layouts...");
+
+		btnSignIn = (Button) findViewById(R.id.linearSubContent);
+		btnSignUp = (Button) findViewById(R.id.btnSignUp);
+
+		btnSignIn.setOnClickListener(clickListener);
+		// btnSignUp.setOnClickListener(clickListener);
+
+		txtUsername = (EditText) findViewById(R.id.txtUsername);
+		txtPassword = (EditText) findViewById(R.id.txtPassword);
+		lblForgotPassword = (TextView) findViewById(R.id.lblForgotPassword);
+
+		lblForgotPassword
+				.setText(Html
+						.fromHtml("<font color=\"#0000FF\"><u>Forgot Password</u></font>"));
+		lblForgotPassword.setOnClickListener(clickListener);
+
+		if (Constants.FILL_DATA) {
+			txtUsername.setText(Constants.TEST_USERNAME);
+			txtPassword.setText(Constants.TEST_PASSWORD);
+		}
+		txtPassword
+				.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+
+					@Override
+					public boolean onEditorAction(TextView arg0, int actionId,
+							KeyEvent arg2) {
+						if (actionId == EditorInfo.IME_ACTION_DONE
+								|| actionId == EditorInfo.IME_ACTION_GO
+								|| actionId == EditorInfo.IME_ACTION_SEND) {
+							doSignin();
+						}
+						return false;
+					}
+				});
+	}
+
+	private View.OnClickListener clickListener = new View.OnClickListener() {
+
+		@Override
+		public void onClick(View view) {
+
+			if (view == btnSignIn) {
+				doSignin();
+			} else if (view == btnSignUp) {
+				showActivity(TermsOfUsageActivity.class);
+			} else if (view == lblForgotPassword) {
+				showActivity(ForgotPasswordActivity.class);
+			}
+
+		}
+
+	};
+
+	void doSignin() {
+
+		sUsername = txtUsername.getText().toString();
+		sPassword = txtPassword.getText().toString();
+
+		if (Validator.isEmpty(sUsername)) {
+			alert("Please enter valid Username");
+		} else if (Validator.isEmpty(sPassword)) {
+			alert("Please enter valid Password");
+		} else {
+
+			String sIMEI = new DeviceUtil(activity).getIMEI();
+			doLogin(sUsername, sPassword, sIMEI);
+		}
+	}
+
+	private void doLogin(final String strUserName, final String strPassword,
+			final String strIMEI) {
+
+		showLoading(Messages.PLZ_WAIT_AUTHENTICATE);
+
+		thrdLogin = new Thread() {
+			@Override
+			public void run() {
+
+				Message msg = new Message();
+				Bundle bndle = new Bundle();
+				LoginResponse response = null;
+
+				String sResponseCode = "", sResponseDesc = "";
+
+				try {
+					APIManager apiClient = new APIManager(activity);
+
+					APIManager.Status status = apiClient.processLogin(
+							strUserName, strPassword, strIMEI);
+
+					if (status == APIManager.Status.ERROR) {
+						sResponseCode = StringUtils.ERROR_CODE;
+						sResponseDesc = apiClient.getErrorMessage();
+					} else {
+						String sResponse = apiClient.getResponse();
+						debug("Login Response :: " + sResponse);
+						response = Parser.parseLoginResponse(sResponse);
+						Preferences preferences = new Preferences(activity);
+						preferences.saveMarketplaces(StringUtils.MARKET_PLACES_MAP);
+						debug("Login Parsed Response :: " + response.toString());
+						if (response.getStatus().trim()
+								.equalsIgnoreCase(ResponseCodes.SUCCESS)) {
+							sResponseCode = ResponseCodes.SUCCESS;
+							sResponseDesc = "Files uploaded!";
+						} else {
+							sResponseCode = response.getStatus();
+							sResponseDesc = sResponse;
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					sResponseCode = StringUtils.ERROR_CODE;
+					sResponseDesc = Messages.err(e);
+				}
+
+				bndle.putString(StringUtils.CODE, sResponseCode);
+				bndle.putString(StringUtils.DESC, sResponseDesc);
+				bndle.putSerializable(StringUtils.RESP_LOGIN, response);
+				msg.setData(bndle);
+				progressHandler.sendMessage(msg);
+			}
+		};
+
+		thrdLogin.start();
+	}
+	
+	/**
+	 * Handling the message while progressing
+	 */
+
+	private Handler progressHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+
+			try {
+				thrdLogin.interrupt();
+			} catch (Exception e) {
+			}
+
+			// ###################
+
+			String sResponseCode = msg.getData().getString(StringUtils.CODE);
+			String sResponseDesc = msg.getData().getString(StringUtils.DESC);
+			LoginResponse response = (LoginResponse) msg.getData()
+					.getSerializable(StringUtils.RESP_LOGIN);
+
+			if (sResponseCode.equals(ResponseCodes.SUCCESS)) {
+				pref.setLoggedInStatus(true);
+				settings.saveLogin(sUsername, sPassword);
+				pref.saveUserLevel(response.getLevel());
+
+				if (response.getAcceptedTerms().equals(
+						ResponseCodes.TERMS_ACCEPTED_YES))
+					pref.setAsTermsOfUsageAccepted(true);
+				else
+					pref.setAsTermsOfUsageAccepted(false);
+
+				if (pref.isAcceptedTermsOfUsage())
+					showActivity(TestTypeActivity.class);
+				else
+					showActivity(TermsOfUsageActivity.class);
+
+			} else if (sResponseCode.equals(ResponseCodes.AUTH_FAILED)) {
+				alert(Messages.INVALID_USERNAME_PWD);
+			} else if (sResponseCode.equals(ResponseCodes.ACCESS_DENIED)) {
+				alert(Messages.ACCESS_DENIED);
+			} else if (sResponseCode.equals(ResponseCodes.FAILURE)) {
+				alert("Invalid username/password!");
+			} else {
+
+				if (sResponseCode.equals(StringUtils.ERROR_CODE))
+					error(sResponseDesc);
+				else
+					new AppAlert(activity, sResponseCode, sResponseDesc);
+			}
+			hideLoading();
+		}
+	};
+
+	@Override
+	public void goBack() {
+		new ExitAlert(activity);
+	}
+}

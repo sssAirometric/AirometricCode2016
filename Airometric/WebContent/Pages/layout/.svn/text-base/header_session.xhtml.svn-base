@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:a4j="http://richfaces.org/a4j"
+		xmlns:rich="http://richfaces.org/rich">
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputStylesheet library="css" name="bootstrap-responsive.css" />
+	<h:outputStylesheet library="css" name="style.css" />	
+	<h:outputStylesheet library="css" name="Stickyfooter.css" />
+	<h:outputStylesheet library="css" name="normalize.css" />
+	<h:outputStylesheet library="css" name="main.css" />
+	<h:outputStylesheet library="css" name="table-style.css" />
+</h:head>
+<body>
+<h:form>
+	<div style="height: 105px; width: 100%;background: url('../resources/images/headerBg.png') top left repeat-x;background-alpha: 0;">
+		<div style="position: relative; margin: 0 auto;width: 990px;">
+			<h:graphicImage library="images" name="airometriclogo-100x150.png"  style="position: absolute;left: -43px;top: -1px;width: 151px;" />
+		</div>
+	</div>
+</h:form>
+</body>
+</html>			

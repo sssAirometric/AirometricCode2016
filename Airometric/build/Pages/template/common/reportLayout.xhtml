@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+
+	<h:head>
+		<h:outputStylesheet name="common-style.css" library="css" />
+	</h:head>
+    <h:body>
+	<div id="page">
+		<div id="header">
+			<ui:insert name="header" >
+				<ui:include src="../../layout/header.xhtml" />
+			</ui:insert>
+	    </div>
+	    <div id="left" style="position: relative;float: left;height: 680px;z-index: 99;left: 35px;">
+		   	<ui:insert name="sidebar" >
+		   		<ui:include src="../../template/common/reportSidebar.xhtml" />
+		   	</ui:insert>
+	    </div>
+	    <div id="footer">
+	    	<ui:insert name="footer" >
+	    		<ui:include src="../../layout/footer.xhtml" />
+	    	</ui:insert>
+	    </div>		    
+	    <div id="content" style="position: relative;margin-top: 70px;margin-left: 175px;margin-right: 160px;">
+		   	<ui:insert name="content" >
+		   		<ui:include src="../../template/common/commonContent.xhtml" />
+		   	</ui:insert>
+	    </div>
+    </div>
+    </h:body>
+</html>

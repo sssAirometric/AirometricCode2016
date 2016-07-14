@@ -1,0 +1,173 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+	   xmlns:ui="http://java.sun.com/jsf/facelets"
+	   xmlns:f="http://java.sun.com/jsf/core"
+	   xmlns:h="http://java.sun.com/jsf/html"
+	   xmlns:a4j="http://richfaces.org/a4j"
+	   xmlns:c="http://java.sun.com/jsp/jstl/core"
+	   xmlns:rich="http://richfaces.org/rich">
+	   
+<h:head>
+	<title>Airometric Wireless</title>
+	<style type="text/css">
+	.fontlabel {
+		font-family: Arial, Helvetica, Sans-Serif; 
+		font-size: 15pt;
+		color:black;
+	}
+	.line-separator{
+		height:1px;
+		width: 100%;
+		background:#86a3ac;
+     } 
+	</style>
+	
+	<h:outputStylesheet library="css" name="Style_Dashboard.css" />
+
+</h:head>
+<ui:composition template="template/common/reportLayout.xhtml">
+   <ui:define name="content">
+    <body style="background-color: #f3f3f3;" onload="getpath(); active();">
+		<div id="wrap">
+			<div id="container" class="container" style="text-align: left;">
+			  <h:form id="voice"  onkeypress="onSubmit();">
+					<div id="row1" class="row" style="height: 650px !important;">
+						<div class="tab-content" style="width: 850px;height:664px;position: absolute;top: -68px;left: 100px;"> 
+						<rich:panel header="VQT TestReports">
+						 <h:outputText value="TestName* " styleClass="fontlabel"/>
+						 <h:selectOneListbox id="testCaseName" name="testCaseName" value="#{reportBean.testCaseName}" size="1" style="width:25%;height:25px;">
+			   					<f:selectItems value="#{sessionScope['testNameExcelMap']}" />     					  							
+						 </h:selectOneListbox>
+						 
+						 <h:commandLink style="width:70px;position:relative;left:100px;" action="#{reportBean.generateExcelReport}">		
+							<h:graphicImage library="images" name="page_right.gif" />
+							<font style="width:70px;position:relative;" color="green"><b>Generate</b></font> 
+						 </h:commandLink>				 
+						 </rich:panel>
+						  <font  style="font-family: Arial, Helvetica, Sans-Serif;font-weight: bold;color: red;float: left;white-space: nowrap;position: relative;top: -19;left: 480px;">#{requestScope['datamessage']}</font>
+						  <br/><br/><br/>
+						 	<c:if test="#{sessionScope['STGVQTReportListSize']!='0'}">		
+								<h:commandLink  action="#{reportBean.excelReport}" >
+								   <h:graphicImage library="images" name="page_white_excel.png" 
+								        style="position: relative;top: -30px;float: right;left: -42px;"/>
+								   <font style="position: absolute;left: 812px;top: 87px;">
+								   <h:outputText value="Export"/>
+								   </font>
+								</h:commandLink>			
+									<div class="line-separator" style="position: relative;top: -11px;"></div>
+									<br/>	
+										<rich:panel header="STGVQTReportList" style="width: 99.5%;height: 270px;bottom: 11px;position: relative;">	
+											
+											 <rich:extendedDataTable value="#{sessionScope['STGVQTReportList']}"
+																var="car" id="table" 
+																sortPriority="#{carsSortingBean.sortPriorities}"
+																selectionMode="none"  style="height:230px;">                  
+										
+										<rich:column sortBy="#{car.slno}" width="70px"    sortOrder="#{carsSortingBean.sortsOrders['slno']}" sortType="custom">
+											<f:facet name="header">
+												<h:panelGrid columns="2"   >
+													<a4j:commandLink execute="@this" value="SLNO" render="table" action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="slno"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['slno']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['slno']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+										  #{car.slno}
+										</rich:column>
+										
+											
+										<rich:column sortBy="#{car.time_stamp}" width="230px"    sortOrder="#{carsSortingBean.sortsOrders['time_stamp']}" sortType="custom">
+											<f:facet name="header">
+												<h:panelGrid columns="2"   >
+													<a4j:commandLink execute="@this" value="TIMESTAMP" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="time_stamp"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['time_stamp']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['time_stamp']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+										  #{car.time_stamp}
+										</rich:column>
+										
+										<rich:column sortBy="#{car.signalStrength}" width="220px"     sortOrder="#{carsSortingBean.sortsOrders['signalStrength']}" sortType="custom">
+											<f:facet name="header" >
+												<h:panelGrid columns="2" >
+													<a4j:commandLink execute="@this" value="SignalStrength" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="signalStrength"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['signalStrength']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['signalStrength']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+											#{car.signalStrength}
+										</rich:column>
+										
+										<rich:column sortBy="#{car.throughput}" width="220px"    sortOrder="#{carsSortingBean.sortsOrders['throughput']}" sortType="custom">
+											<f:facet name="header" >
+												<h:panelGrid columns="2" >
+													<a4j:commandLink execute="@this" value="THROUGHPUT" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="throughput"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['throughput']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['throughput']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+											#{car.throughput}
+										</rich:column>
+									</rich:extendedDataTable>	
+								</rich:panel>	
+							</c:if>  
+					   </div>	
+					</div>
+				<div id="bottom" class="bottomSpacerDiv"></div>
+				<h:inputHidden id="hidden_path" name="hidden_path"  value="#{sessionScope['stringfullpath']}" />
+		      </h:form>
+		    </div>	 
+		</div>
+			 <script type="text/javascript">
+	   function onSubmit(){ 	
+		 document.getElementById("voice:submitLink").click();
+		} 
+	   function active(){
+		   document.getElementById("vqReport").className='active';
+	   }
+
+		function getpath(){
+			 var path="#{sessionScope['stringfullpath']}";
+			 if(path!=""){
+				 var newpath = path;
+				 var windowName = "mywindow"+Math.random()+"";
+				 window.open (newpath,windowName,"menubar=1,resizable=1,width=1200,height=400"); 
+
+			 }
+		}
+	 </script>
+        <script>window.jQuery || document.write(' <h:outputScript library="js" name="jquery-1.9.0.min.js" />')</script>
+        <h:outputScript library="js" name="plugins.js" />
+        <h:outputScript library="js" name="main.js" />
+		<h:outputScript library="js" name="bootstrap.js" />
+		<h:outputScript library="js" name="jquery-1.9.0.min.js" />
+        <script>
+        
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+            </script>
+   </body>
+   </ui:define>
+   </ui:composition>
+</html>

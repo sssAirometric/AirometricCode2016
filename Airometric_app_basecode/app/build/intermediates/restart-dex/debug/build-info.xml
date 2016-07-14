@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="armeabi-v7a,armeabi"
+    api-level="23"
+    density="xxhdpi"
+    format="7"
+    timestamp="78645978409995"
+    token="-6171221252901209010" >
+
+    <task
+        name="javac"
+        duration="1126" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="910" />
+    <task
+        name="verifier"
+        duration="250" />
+
+    <artifact
+        location="E:\Android_studio\Airometric\app\build\outputs\apk\app-debug.apk"
+        type="MAIN" />
+
+    <build timestamp="78645978409995" >
+        <artifact
+            location="E:\Android_studio\Airometric\app\build\outputs\apk\app-debug.apk"
+            type="MAIN" />
+    </build>
+
+</instant-run>

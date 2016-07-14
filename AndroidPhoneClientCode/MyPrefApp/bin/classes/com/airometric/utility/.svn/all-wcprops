@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/MobileProjects/!svn/ver/183/Android/Airometric/src/com/airometric/utility
+END
+TimeUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/TimeUtil.java
+END
+NotificationUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/NotificationUtil.java
+END
+FileLogger.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/FileLogger.java
+END
+L.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/L.java
+END
+Utility.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/Utility.java
+END
+ContactUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/ContactUtil.java
+END
+FTP.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/FTP.java
+END
+CallUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/CallUtil.java
+END
+DBUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/DBUtil.java
+END
+FileUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/FileUtil.java
+END
+ImageUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/ImageUtil.java
+END
+LogEvents.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/LogEvents.java
+END
+XMLUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/XMLUtils.java
+END
+DeviceUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/MobileProjects/!svn/ver/181/Android/Airometric/src/com/airometric/utility/DeviceUtil.java
+END
+UDPSender.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/UDPSender.java
+END
+Sender.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/Sender.java
+END
+AlarmUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/AlarmUtil.java
+END
+Validator.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/Validator.java
+END

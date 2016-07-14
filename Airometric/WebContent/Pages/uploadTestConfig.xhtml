@@ -1,0 +1,295 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+			xmlns:ui="http://java.sun.com/jsf/facelets"
+			xmlns:f="http://java.sun.com/jsf/core"
+			xmlns:h="http://java.sun.com/jsf/html"
+			xmlns:a4j="http://richfaces.org/a4j"
+			xmlns:c="http://java.sun.com/jsp/jstl/core"
+			xmlns:rich="http://richfaces.org/rich"
+			xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Airometric Wireless</title>
+	 
+	 <h:outputStylesheet library="css" name="please_wait.css"  /> 
+	  <h:outputScript library="js" name="please_wait.js" />
+	 <style>
+	.fontlabel {
+		font-family: Arial, Helvetica, Sans-Serif; 
+		font-size: 10pt;
+		color:black;
+	}
+	.successlabel {
+		font-family: Arial, Helvetica, Sans-Serif; 
+		font-size: 10pt;
+		font-weight:bold;
+		color:green;
+		
+	}
+	.failurelabel {
+		font-family: Arial, Helvetica, Sans-Serif; 
+		font-size: 10pt;
+		font-weight:bold;
+		color:red;
+	}
+
+	.radioright td input {
+	    float: left;
+	}
+	
+	     #overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #000;
+                filter:alpha(opacity=70);
+                -moz-opacity:0.7;
+                -khtml-opacity: 0.7;
+                opacity: 0.9;
+                z-index: 100;
+                display: none;
+                padding-left: 550px;
+                padding-top: 130px;
+            }
+</style>
+</h:head>
+<ui:composition template="template/common/configLayout.xhtml">
+   <ui:define name="content">
+    <body style="background-color: #f3f3f3;" onload="active();">
+     <ui:insert name="pleaseWait">
+	<ui:include src="../..#{request.contextPath}/Pages/pleaseWait/pleaseWait.xhtml"/>
+	</ui:insert> 
+		<div id="wrap">
+			<div id="container" class="container" style="text-align: left;">
+				 <h:form enctype="multipart/form-data" prependId="false">
+					    <div  class="tabbable tabs-left" style="font-size: 14px;"> <!-- Only required for left/right tabs -->
+							<div class="tab-content" id="holder" style="height: 414px;position: relative;top: -80px;">	
+								<rich:panel header="" style="width: 850px; height:396px;position:relative;top:12px;z-index:999;">
+								
+								  <div id="test" style="display:none;">
+								  <b>Mark Test Status</b>
+								  <br/>
+								  
+									 <h:outputText value="TestName to Process*: " style="size: 10pt;font-family: Arial, Helvetica, Sans-Serif;color:
+									  black;"/>
+						  	  	<h:selectOneListbox class="form-control" id="testCaseNametoprocess" name="testCaseNametoprocess" size="1" value="#{reportBean.testCaseNametoprocess}"
+									style="width: 25%;">
+										<f:selectItems value="#{sessionScope['testNameMap']}"/>   
+										<f:ajax listener="#{reportBean.isTestPreCalculated}" event="change" render="processStatus frequencyPlan" />
+					  			   </h:selectOneListbox >
+					  			  
+					  			   	<h:commandLink id="precalculate" style="display:none;width:70px;position:relative;right: -20px;" action="#{reportBean.precalculateTest}">		
+									<font style="width:70px;position:relative;" color="green"><b>Mark </b></font> 
+										</h:commandLink>
+										
+										<h:outputText id="processStatus" name="processStatus" 
+											style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: grey;width:70px;position:relative;right: -30px;;white-space: nowrap;" 
+											value="#{sessionScope['processStatus']}">
+										</h:outputText>
+										<br/><br/>
+										 <h:outputText value="Frequency Plan: " style="size: 10pt;font-family: Arial, Helvetica, Sans-Serif;color:
+									  black;" styleClass="fontlabel"/>
+								<h:selectOneListbox class="form-control" id="frequencyPlan" name="frequencyPlan" size="1" value="#{reportBean.frequencyPlan}"
+								style="width: 25%;height: 25px;">
+								<f:selectItem itemValue="0" itemLabel="Select Freq Band" />
+			 					<f:selectItems value="#{sessionScope['freqBandMap']}"/>  
+				 				 </h:selectOneListbox >	
+				 				 <a onclick="confirmPrecalculation()" style="width:70px;position:relative;right: -16px;cursor: pointer;">
+										<h:graphicImage library="images" name="page_right.gif" />
+										Mark Complete</a>
+										<br/>
+										<br/>
+										<h:outputText id="precalculationmessage" name="precalculationmessage" 
+											style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: green;width:70px;position:relative;right: -30px;;white-space: nowrap;" 
+											value="#{sessionScope['precalculationmessage']}">
+										</h:outputText>
+										<h:outputText id="ChangeTimeStampmessage" name="ChangeTimeStampmessage" 
+											style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: green;width:70px;position:relative;right: -30px;;white-space: nowrap;" 
+											value="#{sessionScope['ChangeTimeStampmessage']}">
+										</h:outputText>
+										<br/>
+										<b>Upload Files</b>
+										<br/>
+										    <font color="black">Test Name* :</font>
+								   <h:inputText id="testCaseName" name="testCaseName" 
+										style="width:172px;height:25px;" value="#{fileUploadBean.testCaseName}" >
+									</h:inputText>
+								  </div>
+									<div id="marketName" style="display:none;position: relative;float: right;top: 3px;right: 300px;">
+									 <h:outputText value="TestName*: " style="size: 10pt;font-family: Arial, Helvetica, Sans-Serif;color:
+									  black;position: relative;float: left;right: 78px;top: 3px;"/>
+									 <h:selectOneListbox id="testName" name="testName" value="#{fileUploadBean.testName}" 
+									 size="1" style="width: 25%;height: 25px;position: relative;float: left;right:69px;">
+						   					<f:selectItems value="#{sessionScope['testNameMap']}" />   
+						   				<f:ajax listener="#{fileUploadBean.devicecaseListener}" event="change"  render="deviceId" />    
+									 </h:selectOneListbox>
+					            	 <br/> 
+					                <h:outputText value="Device Model*" style="size: 10pt;font-family: Arial, Helvetica, Sans-Serif;color:black;position: relative;top: -14PX;left: -36PX;" />
+									<h:selectOneListbox class="form-control" id="deviceId" name="deviceId" size="1" value="#{fileUploadBean.deviceId}"
+											style="width: 31%;height: 25px;position: relative;top: -13px;left: -30px;">
+											<f:selectItem itemValue="0" itemLabel="Select Device" />
+						 					<f:selectItems value="#{sessionScope['deviceSelectNameMap']}"/>  
+							  		 </h:selectOneListbox >
+				  		 
+									 <h:outputText value="Market Name*: " style="size: 10pt;font-family: Arial, Helvetica, Sans-Serif;color:
+									  black;position: relative;float: left;left: 373px;bottom: 36px;"/>
+									 <h:selectOneListbox id="marketId" name="marketId" value="#{testCaseAction.marketId}" 
+								      	 size="1" style="width:140px;height:25px;position: relative;bottom: 26px;bottom: 39px;left: 380px">
+								   		<f:selectItems value="#{sessionScope['margetPlaceListdetails']}" />
+									 </h:selectOneListbox>
+									 <div>
+									 	 <h:selectOneListbox id="vqType" name="vqType" 
+								      	 size="1" style="width:140px;height:25px;position: relative;bottom: 26px;bottom: 39px;">
+								   		<f:selectItem itemValue="Polqa" itemLabel="Polqa" />
+								   		<f:selectItem itemValue="Pesq" itemLabel="Pesq" />
+								   		<f:selectItem itemValue="CallEvents" itemLabel="Call Events" />
+								   		<f:selectItem itemValue="NetTest" itemLabel="Net Tests" />
+									 </h:selectOneListbox>
+									  <h:selectOneListbox id="diffHours" name="diffHours" 
+								      	 size="1" style="width:140px;height:25px;position: relative;bottom: 26px;bottom: 39px;">
+								   		<f:selectItems value="#{sessionScope['differnceHours']}" />
+									 </h:selectOneListbox>
+									<h:commandLink id="Export" style="height:25px;position: relative;bottom: 26px;bottom: 39px;" action="#{reportBean.migrateAccessToMysql}">
+									 			migrate
+							 		</h:commandLink>
+							 		<h:commandLink id="ChangeTime" style="height:25px;position: relative;bottom: 26px;bottom: 39px;" action="#{reportBean.changeVquadTimeStamp}">
+									 			Change Time
+							 		</h:commandLink>
+									 </div>
+								 
+									 </div>	
+									 <div id="space" style="display: none;">
+									  <br/><br/><br/><br/>	
+									 </div>
+									 
+									 <!-- fixes for upload Frequency Plans . starts -->  
+									 
+								  <div id="frequencyDiv" style="display:none; right: 300px;">
+								  <br/>
+							
+								    <font color="black">Frequency Plan Name* :</font>
+								   	<h:inputText id="frequencyPlanName" name="frequencyPlanName" 
+										style="width:172px;height:25px;" value="#{fileUploadBean.frequencyPlanName}" >
+										<f:ajax listener="#{fileUploadBean.devicecaseListener1}" event="change" render="PlanNameExist" />
+									</h:inputText>
+								  </div>									 
+									 
+							
+									 <!-- fixes for upload Frequency Plans  . ends -->
+									 
+									  <h:selectOneRadio value="LogFile" styleClass="radioright"  onclick="dataTableSelectOneRadio(this.value);" >
+										<f:selectItem itemLabel="&nbsp;LOG/XML File &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" itemValue="LogFile" style="color=black;"/>
+										<f:selectItem itemLabel="&nbsp;VQT File &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" itemValue="VQTFile" style="color=black;"/>
+										<f:selectItem itemLabel="&nbsp;&nbsp;&nbsp;QXDM File &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" itemValue="QXDMFile" style="color=black;"/>
+										<f:selectItem itemLabel="&nbsp;&nbsp;&nbsp;Frequency Plans &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" itemValue="FrequencyPlans" style="color=black;"/>
+						             </h:selectOneRadio>
+									
+								    <p:fileUpload fileUploadListener="#{fileUploadBean.handleFileUpload}" 
+								            mode="advanced"
+								            update="messages" type="submit"
+								            sizeLimit="300000000" style="width:800px;" id="OverwriteFBPlanName">
+								       <f:param name="testCaseName" value="#{fileUploadBean.testCaseName}" />   
+								       <f:param name="marketId" value="#{fileUploadBean.marketId}" />  
+								       <f:param name="frequencyPlanName" value="#{fileUploadBean.frequencyPlanName}" /> 
+								       <f:param name="hiddenReportType" value="#{fileUploadBean.hiddenReportType}" />
+								       
+								     </p:fileUpload>         
+								    <p:growl id="messages" showDetail="true"/>
+								</rich:panel>	
+						  </div>
+				</div>
+				<div id="bottom" class="bottomSpacerDiv"></div>
+				<h:inputHidden id="hiddenReportType" name="hiddenReportType" />
+				<h:inputHidden value="#{sessionScope['PlanNameExist']}" id="PlanNameExist" name="PlanNameExist" />
+				<h:inputHidden id="overWritePlan" name="overWritePlan" value="#{fileUploadBean.overWritePlan}" />
+			   </h:form>
+			</div>
+		</div>	
+	<script type="text/javascript"> 
+	   function active(){
+		   document.getElementById("Upload").className='active';
+		   document.getElementById("overWritePlan").value ='';
+		   document.getElementById("test").style.display='';
+		   var role = "#{sessionScope['loggedInUserRoleID']}";
+		   if(role !="admin"){
+			   document.getElementById("holder").style.left = "100px";
+		   }
+		   document.getElementById("hiddenReportType").value = "LogFile";
+	   }
+	   function dataTableSelectOneRadio(radioButton){
+		   if(radioButton=="VQTFile"){
+		    	document.getElementById("marketName").style.display='';
+		    	document.getElementById("test").style.display='none';
+		    	document.getElementById("space").style.display='';
+		    	document.getElementById("frequencyDiv").style.display='none';
+		    	document.getElementById("hiddenReportType").value = "VQTFile";
+		    }
+		   if(radioButton=="LogFile"){
+		    	document.getElementById("marketName").style.display='none';
+		    	document.getElementById("test").style.display='';
+		    	document.getElementById("frequencyDiv").style.display='none';
+		    	document.getElementById("hiddenReportType").value = "LogFile";
+		    }
+		   if(radioButton=="QXDMFile"){
+		    	document.getElementById("marketName").style.display='none';
+		    	document.getElementById("test").style.display='';
+		    	document.getElementById("frequencyDiv").style.display='none';
+		    	document.getElementById("hiddenReportType").value = "QXDMFile";
+		    }
+		    if(radioButton=="FrequencyPlans"){
+		    	document.getElementById("frequencyDiv").style.display='';
+		    	document.getElementById("marketName").style.display='none';
+		    	document.getElementById("test").style.display='none';
+		    	document.getElementById("space").style.display='none';
+		    	document.getElementById("hiddenReportType").value = "FrequencyPlans";
+		    	document.getElementById("frequencyPlanName").value ='';
+		    }
+	   }
+
+	   function confirmPrecalculation(){
+		   var status = document.getElementById("processStatus").innerHTML;
+		   var button = document.getElementById("precalculate");
+		   if(status=="Completed"){
+			   if(confirm("Preprocess Test")){
+				   button.click();
+				  // pleaseWait(true, true);
+				}
+		   }
+		   else{
+			   button.click();
+			  // pleaseWait(true, true);
+		   }
+			
+	   }
+	   function ExistPlanName(){console.log("helllo");
+	   var PlanNameExist = document.getElementById("PlanNameExist");
+	   //var button = document.getElementById("OverwriteFBPlanName");
+	   var overWritePlan = document.getElementById("overWritePlan");
+	   if(PlanNameExist.value =="PlanNameAlreadyExist"){console.log("helllo iffffff");
+		   if(confirm("Plan Name already exists. Do you want to over write?")){
+			   overWritePlan.value = "overWritePlan";
+			    //button.click();
+			  // pleaseWait(true, true);
+			}else{ overWritePlan.value = "DontOverWritePlan";}
+	   }
+		
+   }
+	</script>
+        <script>window.jQuery || document.write(' <h:outputScript library="js" name="jquery-1.9.0.min.js" />')</script>
+        <h:outputScript library="js" name="plugins.js" />
+        <h:outputScript library="js" name="main.js" />
+		<h:outputScript library="js" name="bootstrap.js" />
+		<h:outputScript library="js" name="jquery-1.9.0.min.js" />
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+   </body> 
+   </ui:define>
+   </ui:composition>
+</html>

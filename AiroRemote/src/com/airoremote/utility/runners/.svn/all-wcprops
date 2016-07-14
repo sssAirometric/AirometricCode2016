@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MobileProjects/!svn/ver/183/Android/Airometric/src/com/airometric/utility/runners
+END
+Runner.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/runners/Runner.java
+END
+ResultUploader.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/runners/ResultUploader.java
+END
+MTTestRunner.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/runners/MTTestRunner.java
+END
+WebviewActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/MobileProjects/!svn/ver/180/Android/Airometric/src/com/airometric/utility/runners/WebviewActivity.java
+END
+FTPTestRunner.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/MobileProjects/!svn/ver/183/Android/Airometric/src/com/airometric/utility/runners/FTPTestRunner.java
+END
+MOTestRunner.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/runners/MOTestRunner.java
+END
+PingTestRunner.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/runners/PingTestRunner.java
+END
+TestUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/runners/TestUtil.java
+END
+UDPTestRunner.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/runners/UDPTestRunner.java
+END
+TestRunner.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/runners/TestRunner.java
+END
+VOIPTestRunner.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/utility/runners/VOIPTestRunner.java
+END

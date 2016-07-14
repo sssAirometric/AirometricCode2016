@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AiroRemote</string>
+    <string name="version">1.0.1</string>
+    <string name="build_date">07/07/2016</string>
+    <string name="termsofusage">This application will be collecting Device and User identification information to determine performance metrics of the device for the duration of the use of the application.</string>
+    <string name="mo_test_finished">Mo Test Completed</string>
+    <string name="mo_test_running">Mo Test Running</string>
+    <string name="ftp_test_running">FTP Test Running</string>
+    <string name="test_finished">Test Completed</string>
+    <string name="test_running">Test Running</string>
+    <string name="release_note">1.0.1 (07-07-2016)
+	        &gt;&gt; network type and manual file upload</string>
+
+    <string-array name="marketplace">
+        <item>JAYANAGAR MARKET</item>
+        <item>M.G Road Market</item>
+    </string-array>
+
+    <string name="str_server_ip">Server IP</string>
+    <string name="title_activity_permissions">PermissionsActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <!-- push notifications -->
+    <string name="menu_settings">Settings</string>
+    <string name="error_config">Please set the %1$s constant and recompile the app.</string>
+    <string name="already_registered">Device is already registered on server.</string>
+    <string name="gcm_registered">From GCM: device successfully registered!</string>
+    <string name="gcm_unregistered">From GCM: device successfully unregistered!</string>
+    <string name="gcm_message">From GCM: you got message!</string>
+    <string name="gcm_error">From GCM: error (%1$s).</string>
+    <string name="gcm_recoverable_error">From GCM: recoverable error (%1$s).</string>
+    <string name="gcm_deleted">From GCM: server deleted %1$d pending messages!</string>
+    <string name="server_registering">Trying (attempt %1$d/%2$d) to register device on Demo Server.</string>
+    <string name="server_registered">From Airometric Server: successfully added device!</string>
+    <string name="server_unregistered">From Airometric Server: successfully removed device!</string>
+    <string name="server_register_error">Could not register device on Airometric Server after %1$d attempts.</string>
+    <string name="server_unregister_error">Could not unregister device on Demo Server (%1$s).</string>
+    <string name="options_register">Register</string>
+    <string name="options_unregister">Unregister</string>
+    <string name="options_clear">Clear</string>
+    <string name="options_exit">Exit</string>
+    <string name="title_activity_new">NewActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_auto_start">AutoStartActivity</string>
+
+</resources>

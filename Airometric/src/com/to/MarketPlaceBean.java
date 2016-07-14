@@ -1,0 +1,368 @@
+package com.to;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.faces.component.UIOutput;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
+
+import com.dao.MarketPlaceDao;
+import com.dao.impl.MarketPlaceDaoImpl;
+
+
+public class MarketPlaceBean implements Serializable{
+	private static long serialVersionUID = 1L;
+	private String marketId;
+	private String marketName;
+	private String cityId;
+	private String stateId;
+	private String countryId;
+	private String status;
+	private String createdBy;
+	private String createdDate;
+	private String updatedBy;
+	private String updatedDate;
+	private String cityName;
+	private String stateName;
+	private String countryName;
+	private String statusString;
+	private String slno;
+	private String operatorId;
+	private String operatorName;
+	private String buttonLable;
+	private String successMessage;
+	private String errorMessage;
+	private List<MarketPlaceBean> margetPlaceList;
+	private List<MarketPlaceBean> marketOperatorList;
+	private List<MarketPlaceBean> countryList;
+	
+	Map<String, String> countryMap = new LinkedHashMap<String, String>();
+	Map<String, String> marketPlaceMap = new LinkedHashMap<String, String>();
+	Map<String, String> operatorMap = new LinkedHashMap<String, String>();
+	
+	public String getSuccessMessage() {
+		return successMessage;
+	}
+	public void setSuccessMessage(String successMessage) {
+		this.successMessage = successMessage;
+	}
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+	public Map<String, String> getCountryMap() {
+		return countryMap;
+	}
+	public void setCountryMap(Map<String, String> countryMap) {
+		this.countryMap = countryMap;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public static void setSerialversionuid(long serialversionuid) {
+		serialVersionUID = serialversionuid;
+	}
+	public String getMarketId() {
+		return marketId;
+	}
+	public void setMarketId(String marketId) {
+		this.marketId = marketId;
+	}
+	public String getMarketName() {
+		return marketName;
+	}
+	public void setMarketName(String marketName) {
+		this.marketName = marketName;
+	}
+	public String getCityId() {
+		return cityId;
+	}
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
+	}
+	public String getStateId() {
+		return stateId;
+	}
+	public void setStateId(String stateId) {
+		this.stateId = stateId;
+	}
+	public String getCountryId() {
+		return countryId;
+	}
+	public void setCountryId(String countryId) {
+		this.countryId = countryId;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public String getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
+	}
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	public String getUpdatedDate() {
+		return updatedDate;
+	}
+	public void setUpdatedDate(String updatedDate) {
+		this.updatedDate = updatedDate;
+	}	
+	public String getCityName() {
+		return cityName;
+	}
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+	public String getStateName() {
+		return stateName;
+	}
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+	public String getCountryName() {
+		return countryName;
+	}
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}
+	public List<MarketPlaceBean> getMargetPlaceList() {
+		return margetPlaceList;
+	}
+	public void setMargetPlaceList(List<MarketPlaceBean> margetPlaceList) {
+		this.margetPlaceList = margetPlaceList;
+	}
+	public String getStatusString() {
+		return statusString;
+	}
+	public void setStatusString(String statusString) {
+		this.statusString = statusString;
+	}
+	public String getSlno() {
+		return slno;
+	}
+	public void setSlno(String slno) {
+		this.slno = slno;
+	}
+	public List<MarketPlaceBean> getCountryList() {
+		return countryList;
+	}
+	public void setCountryList(List<MarketPlaceBean> countryList) {
+		this.countryList = countryList;
+	}
+	public String getOperatorId() {
+		return operatorId;
+	}
+	public void setOperatorId(String operatorId) {
+		this.operatorId = operatorId;
+	}
+	public String getOperatorName() {
+		return operatorName;
+	}
+	public void setOperatorName(String operatorName) {
+		this.operatorName = operatorName;
+	}
+	public List<MarketPlaceBean> getMarketOperatorList() {
+		return marketOperatorList;
+	}
+	public void setMarketOperatorList(List<MarketPlaceBean> marketOperatorList) {
+		this.marketOperatorList = marketOperatorList;
+	}
+	public Map<String, String> getMarketPlaceMap() {
+		return marketPlaceMap;
+	}
+	public void setMarketPlaceMap(Map<String, String> marketPlaceMap) {
+		this.marketPlaceMap = marketPlaceMap;
+	}
+	public Map<String, String> getOperatorMap() {
+		return operatorMap;
+	}
+	public void setOperatorMap(Map<String, String> operatorMap) {
+		this.operatorMap = operatorMap;
+	}
+	public String getButtonLable() {
+		return buttonLable;
+	}
+	public void setButtonLable(String buttonLable) {
+		this.buttonLable = buttonLable;
+	}
+	public String listMarketPlace(){
+		successMessage= "";
+		errorMessage ="";
+		FacesContext context = FacesContext.getCurrentInstance();
+		MarketPlaceBean marketPlaceBean = (MarketPlaceBean)context.getExternalContext().getSessionMap().get("marketPlaceBean");
+		MarketPlaceDao marketPlaceDao = new MarketPlaceDaoImpl();
+		margetPlaceList=marketPlaceDao.getMarketPlaceList();
+		marketPlaceBean.setSuccessMessage(successMessage);
+		marketPlaceBean.setErrorMessage(errorMessage);
+		context.getExternalContext().getSessionMap().remove("margetPlaceListSize");
+		context.getExternalContext().getSessionMap().remove("margetPlaceListdetails");
+		context.getExternalContext().getSessionMap().put("margetPlaceListSize", margetPlaceList.size());
+		context.getExternalContext().getSessionMap().put("margetPlaceListdetails", margetPlaceList);
+		context.getExternalContext().getSessionMap().remove("marketPlaceBean");
+		context.getExternalContext().getSessionMap().put("marketPlaceBean",marketPlaceBean);
+		return "listMarketPlacePage";
+	}
+	
+	public String goToMarket(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		//MarketPlaceBean marketPlaceBean =new MarketPlaceBean();
+		MarketPlaceDao marketPlaceDao = new MarketPlaceDaoImpl();
+		//marketPlaceBean.setMarketName("");
+		margetPlaceList=marketPlaceDao.getMarketList();
+		countryMap=marketPlaceDao.getCountryMap();
+		context.getExternalContext().getSessionMap().remove("marketPlaceBean");
+		context.getExternalContext().getSessionMap().remove("margetPlaceListSize");
+		context.getExternalContext().getSessionMap().remove("margetPlaceListdetails");
+		context.getExternalContext().getSessionMap().remove("countryMapList");
+		context.getExternalContext().getSessionMap().put("countryMapList", countryMap);
+		context.getExternalContext().getSessionMap().put("margetPlaceListSize", margetPlaceList.size());
+		context.getExternalContext().getSessionMap().put("margetPlaceListdetails", margetPlaceList);
+		return "goToMarketPage";
+	}
+	public String createMarket(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		boolean status=false;
+		String userId =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+		MarketPlaceDao marketPlaceDao = new MarketPlaceDaoImpl();
+		
+		status=marketPlaceDao.checkMarketExists(marketName,countryId);
+		if(status== true){
+			context.getExternalContext().getRequestMap().put("failuremessage", "Market already exists");
+			return "createMarketPageFailed";
+		}
+		String marketStatus = marketPlaceDao.addMarket(userId,marketName,countryId,stateId,cityId);
+		if (marketStatus.equalsIgnoreCase("success")) {
+			context.getExternalContext().getRequestMap().put("message", "New Market created.");
+		} else {
+			context.getExternalContext().getRequestMap().put("failuremessage", "Market Creation failed");
+		}
+		margetPlaceList=marketPlaceDao.getMarketList();
+		countryMap=marketPlaceDao.getCountryMap();
+		context.getExternalContext().getSessionMap().remove("margetPlaceListSize");
+		context.getExternalContext().getSessionMap().remove("margetPlaceListdetails");
+		context.getExternalContext().getSessionMap().remove("countryMapList");
+		context.getExternalContext().getSessionMap().put("countryMapList", countryMap);
+		context.getExternalContext().getSessionMap().put("margetPlaceListSize", margetPlaceList.size());
+		context.getExternalContext().getSessionMap().put("margetPlaceListdetails", margetPlaceList);
+		return "goToMarketPage";
+	}
+	
+	public String goToMarketOperator(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		//MarketPlaceBean marketPlaceBean =new MarketPlaceBean();
+		MarketPlaceDao marketPlaceDao = new MarketPlaceDaoImpl();
+		//marketPlaceBean.setMarketName("");
+		marketOperatorList=marketPlaceDao.getMarketOperatorList();
+		operatorMap=marketPlaceDao.getOperatorMap();
+		marketPlaceMap=marketPlaceDao.getMarketPlaceMap();
+		
+		context.getExternalContext().getSessionMap().remove("operatorMapList");
+		context.getExternalContext().getSessionMap().remove("marketPlaceMapList");
+		context.getExternalContext().getSessionMap().remove("marketOperatorListSize");
+		context.getExternalContext().getSessionMap().remove("marketOperatorListdetails");
+		context.getExternalContext().getSessionMap().put("marketOperatorListSize", marketOperatorList.size());
+		context.getExternalContext().getSessionMap().put("marketOperatorListdetails", marketOperatorList);
+		context.getExternalContext().getSessionMap().put("operatorMapList", operatorMap);
+		context.getExternalContext().getSessionMap().put("marketPlaceMapList", marketPlaceMap);
+		return "goToMarketOperatorPage";
+	}
+	
+	public String assignMarket(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		boolean status=false;
+		String userId =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+		MarketPlaceDao marketPlaceDao = new MarketPlaceDaoImpl();
+		
+		//status=marketPlaceDao.checkMarketExists(marketName);
+		/*if(status== true){
+			context.getExternalContext().getRequestMap().put("failuremessage", "Market already exists");
+			return "createMarketPageFailed";
+		}*/
+		String assignMarketStatus = marketPlaceDao.assignMarket(userId,marketId,operatorId);
+		if (assignMarketStatus.equalsIgnoreCase("success")) {
+			context.getExternalContext().getRequestMap().put("message", "Assigning Market Successful.");
+		} else {
+			context.getExternalContext().getRequestMap().put("failuremessage", "Assigning Market failed");
+		}
+		marketOperatorList=marketPlaceDao.getMarketOperatorList();
+		operatorMap=marketPlaceDao.getOperatorMap();
+		marketPlaceMap=marketPlaceDao.getMarketPlaceMap();
+		context.getExternalContext().getSessionMap().remove("operatorMapList");
+		context.getExternalContext().getSessionMap().remove("marketPlaceMapList");
+		context.getExternalContext().getSessionMap().remove("marketOperatorListSize");
+		context.getExternalContext().getSessionMap().remove("marketOperatorListdetails");
+		context.getExternalContext().getSessionMap().put("marketOperatorListSize", marketOperatorList.size());
+		context.getExternalContext().getSessionMap().put("marketOperatorListdetails", marketOperatorList);
+		context.getExternalContext().getSessionMap().put("operatorMapList", operatorMap);
+		context.getExternalContext().getSessionMap().put("marketPlaceMapList", marketPlaceMap);
+		return "assignMarketPage";
+	}
+		public String goToActiveDeactiveMarket(){
+		successMessage= "";
+		errorMessage ="";
+		FacesContext context = FacesContext.getCurrentInstance();	
+		String marketId =  context.getExternalContext().getRequestParameterMap().get("marketId").toString();
+		MarketPlaceDao marketPlaceDao = new MarketPlaceDaoImpl();
+		String activationStatus = marketPlaceDao.getMarketDetail(marketId);
+//		System.out.println("activationStatus==="+activationStatus);
+		listMarketPlace();
+		if(activationStatus.equalsIgnoreCase("failure")){
+			errorMessage = "Market already assigned to user. Can't change the status.";
+//			System.out.println("error message :"+ errorMessage);
+		}else{
+			successMessage = "Market status sucessfully changed.";
+		}
+		return "listMarketPlacePage";	
+ 	}
+	
+	  public void listener(AjaxBehaviorEvent event) {
+	        String result = "called by " + event.getComponent().getClass().getName();
+	        Map<String, String> stateIdMap = new HashMap<String, String>();
+	        
+			FacesContext context = FacesContext.getCurrentInstance();
+			String newValue =  (String) ((UIOutput)event.getSource()).getValue();
+			MarketPlaceDao marketPlaceDao = new MarketPlaceDaoImpl();
+			stateIdMap = marketPlaceDao.getStateIdsForCountry(newValue);
+			context.getExternalContext().getSessionMap().put("stateIdMap",
+					stateIdMap);
+	    }
+	  
+	  public void cityListener(AjaxBehaviorEvent event) {
+	        String result = "called by " + event.getComponent().getClass().getName();
+	        Map<String, String> cityIdMap = new HashMap<String, String>();
+	        
+			FacesContext context = FacesContext.getCurrentInstance();
+			String newValue =  (String) ((UIOutput)event.getSource()).getValue();
+			MarketPlaceDao marketPlaceDao = new MarketPlaceDaoImpl();
+			cityIdMap = marketPlaceDao.getCityIdsForState(newValue);
+			context.getExternalContext().getSessionMap().put("cityIdMap",cityIdMap);
+	    }
+	
+}

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/app_bg"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/lblScreenTitle"
+            style="@style/title_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Voice Call Test" />
+
+        <TextView
+            android:id="@+id/lblMoSetTestConfig"
+            style="@style/label_text_no_item"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Set Test Config"
+            android:clickable="true"
+            android:textStyle="normal|bold"
+            android:visibility="gone" />
+        
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/textView"
+                        style="@style/label_text"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dip"
+                        android:text="Phone number :" >
+                    </TextView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <EditText
+                            android:id="@+id/txtTestPhonenumber"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:digits="+1234567890"
+                            android:inputType="phone"
+                            android:maxLength="20"
+                            android:singleLine="true" />
+
+                        <Button
+                            android:id="@+id/btnGetFromContacts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=">>" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/CallDuration "
+                        style="@style/label_text"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dip"
+                        android:text="Call Duration (in mins):"
+                        android:visibility="gone" >
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/txtCallDuration"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:digits="1234567890"
+                        android:inputType="number|numberSigned"
+                        android:maxLength="2"
+                        android:singleLine="true"
+                        android:editable="false"
+                        android:enabled="false"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/Pausetime"
+                        style="@style/label_text"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dip"
+                        android:text="Pause time (in secs):"
+                        android:editable="false"
+                        android:enabled="false"
+                        android:visibility="gone" >
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/txtTestPauseTime"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:digits="1234567890"
+                        android:inputType="number|numberSigned"
+                        android:maxLength="2"
+                        android:singleLine="true"
+                        android:editable="false"
+                        android:enabled="false"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/TestDuration"
+                        style="@style/label_text"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dip"
+                        android:text="Test Duration(in mins) :"
+                        android:editable="false"
+                        android:enabled="false"
+                        android:visibility="gone" >
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/txtTestDuration"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:digits="1234567890"
+                        android:inputType="number|numberSigned"
+                        android:maxLength="2"
+                        android:singleLine="true"
+                        android:editable="false"
+                        android:enabled="false"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_root1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/btnCancel"
+                        style="@style/app_button_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cancel" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical" >
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnStart"
+                        style="@style/app_button_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" Save " />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</LinearLayout>

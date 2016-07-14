@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:a4j="http://richfaces.org/a4j"
+		xmlns:rich="http://richfaces.org/rich">
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputStylesheet library="css" name="bootstrap-responsive.css" />
+	<h:outputStylesheet library="css" name="style.css" />	
+	<h:outputStylesheet library="css" name="Stickyfooter.css" />
+	<h:outputStylesheet library="css" name="normalize.css" />
+	<h:outputStylesheet library="css" name="main.css" />
+	<h:outputStylesheet library="css" name="table-style.css" />
+	<h:outputScript library="js" name="FusionCharts.js" />
+</h:head>
+<h:form>
+	<div style="height: 113px; width: 100%;background: url('../resources/images/headerBg.png') top left repeat-x;background-alpha: 0;">
+		<div style="position: relative; margin: 0 auto;width: 990px;">
+			<h:commandLink action="#{userBean.welcomePage}">
+				<h:graphicImage library="images" name="airometriclogo-100x150.png"  style="position: absolute;left: -43px;top: -1px;width: 151px;" />
+			</h:commandLink>	
+ 				<div style="position: absolute; right: 80px; top: 50px;" id="buttonGroupSignIn">
+					<div class="btn-toolbar">
+						<div class="btn-group">
+							<h:commandLink action="#{userBean.loginuserPage}" > 
+								<button class="btn btn-small dropdown-toggle" >
+									#{sessionScope['loginName']}
+								</button>								
+								<f:param name="editUserId" value="#{sessionScope['loggedInUserID']}" />           
+							</h:commandLink>							
+						</div> 
+					</div>
+				</div> 
+ 
+				<div style="position: absolute; right: 10px; top: 50px;" id="logOut">
+					<div class="btn-toolbar">
+					<h:panelGroup>
+						<h:commandLink id="logOut" action="#{userBean.logoutUser}">		
+							<button class="btn btn-small dropdown-toggle" type="button">Logout</button>
+						</h:commandLink>
+					</h:panelGroup>
+					</div>
+				</div>
+		</div>
+	</div>
+</h:form>
+</html>			

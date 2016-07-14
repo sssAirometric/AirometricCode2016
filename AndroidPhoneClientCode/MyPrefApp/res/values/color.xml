@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="title_bg">#92D050</color>
+	<color name="app_bg">#F2F2F2</color> <!-- #E7E7E7 -->
+	<color name="splash_color">#FFF</color>
+	<color name="spalsh_bottom">#B00000</color>
+	<color name="link_back_color">#CCFFFF</color> 
+
+	<color name="translucent_red">#80ff0000</color>
+	<color name="black">#ff000000</color>
+	<color name="white">#ffffffff</color>
+	<color name="blue">#0B0B61</color>
+	<color name="green">#088A4B</color>
+	<color name="gray_dark">#C0C0C0</color>
+	<color name="gray_light">#E0E0E0</color> 
+	<color name="blue_light">#D0D8E8</color>
+	<color name="blue_verylight">#E9EDF4</color>
+	<color name="green_pale">#92D01E</color>
+	<color name="red">#FF0000</color>
+	
+	<color name="link_text_color">#FFF</color>
+	<color name="title_text_fg">#000</color>
+	<color name="title_text_bg">#404040</color>
+	<color name="sub_title_text_fg">#000</color>
+	<color name="label_text_fg">#000000</color>
+	<color name="list_divider">#000</color>
+	
+	<color name="button_light">#39ACDE</color>
+	<color name="button_dark">#1284B6</color>
+	<color name="button_stroke">#006699</color>
+	
+	
+	<color name="button_disabled_light">#888e89</color>
+	<color name="button_disabled_dark">#606168</color>
+	<color name="button_disabled_stroke">#8b8f8f</color>
+	
+	
+</resources>

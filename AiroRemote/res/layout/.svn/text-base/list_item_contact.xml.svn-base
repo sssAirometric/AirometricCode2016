@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="fill_parent"
+	android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+	android:padding="2dip" android:gravity="center_vertical">
+
+	<LinearLayout android:layout_weight="1" android:layout_width="fill_parent" android:id="@+id/lytContact"
+		android:orientation="vertical" android:layout_height="wrap_content" android:gravity="center_vertical">
+		<TextView android:id="@+id/text1" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:gravity="center_vertical"
+			android:paddingLeft="6dip" android:text="Text" style="@style/label_text" />
+		<TextView android:id="@+id/text2" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:gravity="center_vertical"
+			android:paddingLeft="6dip" android:text="Text" style="@style/sub_label_text" />
+	</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+  <h:head>
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputStylesheet library="css" name="bootstrap-responsive.css" />
+	<h:outputStylesheet library="css" name="style.css" />	
+	<h:outputStylesheet library="css" name="Stickyfooter.css" />
+	<h:outputStylesheet library="css" name="normalize.css" />
+	<h:outputStylesheet library="css" name="main.css" />
+	  <title>Airometric Wireless</title>
+	  <script type="text/javascript">
+	  	  function validate(){
+			 document.getElementById("login:loginUserName").focus();
+	  	  }
+	      function enter2tab(){ 
+			  if(window.event.keyCode == 13){
+				  document.getElementById("login:loginLink").click();
+			  } 
+		  } 
+
+	      document.onkeydown = checkKeycode;
+			function checkKeycode(e) {
+				var keycode;
+				if (window.event) keycode = window.event.keyCode;
+				else if (e) keycode = e.which;
+				if(keycode == 13){
+					 document.getElementById("login:loginLink").click();
+				}else{
+					void(0);
+				}	
+			}
+	  </script>
+  </h:head>
+
+	<body style="background-color: #f3f3f3;" onload="validate();">
+		<div id="wrap">
+			<div class="container" style="text-align: center;">
+				<div class="topSpacerDiv" style="height: 120px;"></div>
+			 		<h:form id="login" onkeypress="enter2tab();"> 
+			 			<div style="background-color: #ffffff;width: 600px;height:280px; margin-left:auto;;margin-right:10%;text-align: center; padding-top: 30px;padding-bottom: 30px;-moz-border-radius: 6px;-webkit-border-radius: 6px;-khtml-border-radius: 6px;border-radius: 6px;-webkit-box-shadow: 0px 0px 6px 3px rgba(32, 32, 32, .20);-moz-box-shadow: 0px 0px 6px 3px rgba(32, 32, 32, .20);	box-shadow: 0px 0px 6px 3px rgba(32, 32, 32, .20);">
+							<!--  <h:graphicImage library="images" name="airometriclogocopy_new.png" style="position: relative;top: -46px;" />-->
+							<h:graphicImage library="images" name="airometriclogo.png" style="width: 500px;height: 222px; position: relative;top: -46px;" />
+							<br/>
+							<h3 style="color: #4474b0;"></h3>
+							<div class="input-prepend" style="position: relative;bottom: 77px;">
+								<span class="add-on"  style="height: 30px;"><i class="icon-user"></i></span>
+								<h:inputText id="loginUserName" name="loginUserName" 
+									value="#{userBean.loginUserName}" 
+									class="input-xlarge" 
+									placeholder="Username" 
+									partialSubmit="true" 
+									style="height: 30px;">
+				                </h:inputText>
+					         </div>
+				         	<br/>
+					         <div class="input-prepend" style="position: relative;bottom: 72px;">      	
+				               <span class="add-on"  style="height: 30px;"><i class="icon-lock" style="vertical-align: center;"></i></span>
+								<h:inputSecret id="loginPassWord" name="loginPassWord" 
+									value="#{userBean.loginPassWord}" 
+									class="input-xlarge" 
+									placeholder="Password" 
+									partialSubmit="true" 
+									style="height: 30px;">
+				                </h:inputSecret>
+					          </div>      
+							<div style="float:center; height:60px;position: relative;bottom: 80px;" >
+								<h:panelGroup align="center" >                
+									<h:commandLink id="loginLink" 
+										action="#{userBean.validateUser}">		
+										<h:graphicImage library="images" name="signIn.png" />
+									</h:commandLink>
+				      			</h:panelGroup>
+							</div>	
+			            </div>
+			            <h:outputText style="font-family: Arial, Helvetica, Sans-Serif; 
+				            font-size: 10pt; font-weight:bold;color:red;" 
+				            value="#{requestScope['message']}"/>	
+			          </h:form> 
+			          <div class="bottomSpacerDiv" style="height: 30px;"></div>
+				</div>
+			  <div id="push"></div>
+		 </div>
+		 	<div id="footer" style="background-color: #ffffff;text-align: center;position: relative;">
+		<div style="position: absolute; width: 100%;text-align: center;">
+			<p id="copyrightText" style="color: #000000;font-size: 12px;">COPYRIGHT (2013-2016) AIROMETRIC WIRELESS INC. ALL RIGHTS RESERVED.</p>
+		</div>
+	</div>
+	</body> 
+</html>
+

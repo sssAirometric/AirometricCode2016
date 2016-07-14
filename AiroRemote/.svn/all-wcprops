@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/MobileProjects/!svn/ver/178/Android/Airometric
+END
+keystore
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/keystore
+END
+build.properties
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/build.properties
+END
+local.properties
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/local.properties
+END
+AndroidManifest.xml
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/MobileProjects/!svn/ver/180/Android/Airometric/AndroidManifest.xml
+END
+build.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/build.xml
+END
+project.properties
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/MobileProjects/!svn/ver/180/Android/Airometric/project.properties
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/.project
+END
+lint.xml
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/lint.xml
+END
+proguard.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/proguard.cfg
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/.classpath
+END

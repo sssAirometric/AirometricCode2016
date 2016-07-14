@@ -1,0 +1,168 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+	   xmlns:ui="http://java.sun.com/jsf/facelets"
+	   xmlns:f="http://java.sun.com/jsf/core"
+	   xmlns:h="http://java.sun.com/jsf/html"
+	   xmlns:a4j="http://richfaces.org/a4j"
+	   xmlns:c="http://java.sun.com/jsp/jstl/core"
+	   xmlns:rich="http://richfaces.org/rich">
+<h:head>
+	<title>Assign Market</title>
+	 
+	        <style type="text/css">
+		      /* html { height: 100% } */
+		      /* body { height: 90%; margin: 1; padding: 0 }  */
+		      #map_canvas { height: 100% }	
+		      
+	.scroll_div{
+	 overflow: scroll;
+	 width:100%;
+	 height:260px;
+	}
+	.fontlabel{
+	  cursor: pointer;none;
+	} 	
+		   	
+    </style>
+   </h:head>
+   
+    <ui:composition template="template/common/commonLayout.xhtml">
+    	<ui:define name="content">
+    	<body style="background-color: #f3f3f3!important ;">
+			<div id="wrap">				
+				<div id="container" class="container" style="text-align: left;">
+				 	<h:form id="operatorForm">
+						<div id="row1" class="row">
+							<div class="tab-content" style="position: relative;height:550px;top: -20px;" >
+								<rich:panel header="Assign Market" style="width: 98%;height: 123px;position: relative;top: 15px;">
+						            <h:panelGrid columns="4" width="100%" >
+									    <h:outputText value="Market Name*" styleClass="fontlabel"/>
+											 <h:selectOneListbox id="marketId" name="marketId" value="#{marketPlaceBean.marketId}" 
+								                        size="1" style="width: 65%;height: 25px;position: relative;right: 110px;bottom: 4px;">
+								   			 	<f:selectItems value="#{sessionScope['marketPlaceMapList']}" />
+											</h:selectOneListbox> 
+							            <h:outputText value="Enterprise*" styleClass="fontlabel" style="position: relative;right: 94px;bottom: 4px;" />
+								            <h:selectOneListbox id="operatorId" name="operatorId" value="#{marketPlaceBean.operatorId}" 
+								                        size="1" style="width: 65%;height: 25px;position: relative;right: 110px;bottom: 4px;">
+								   			 	<f:selectItems value="#{sessionScope['operatorMapList']}" />
+											</h:selectOneListbox>
+		                                <h:panelGrid  width="30%" columns="2">   
+									    	<h:commandLink style="width:70px;position:relative;left:334px;top: 12px;" action="#{marketPlaceBean.assignMarket}">		
+												<h:graphicImage library="images" name="action_save.gif" />
+												<font style="width:70px;position:relative;" color="green"><b>Assign</b></font> 	
+											</h:commandLink>
+									        <h:commandLink style="width: 70px;position: relative;left: 384px;top: 12PX;" 
+									              action="#{userBean.clearOperatorDetails}" 
+									               immediate="true">		
+												<h:graphicImage library="images" name="action_back.gif" />
+												<font style="width:70px;position:relative;" color="green"><b>Clear</b></font> 
+											</h:commandLink>
+										</h:panelGrid> 
+						            </h:panelGrid>      
+							            <div style="position: relative;float: right;right: 36px;bottom: -8px;">
+							            	<h:outputText value=" * - is mandatory field" styleClass="fontlabel"/>
+							            </div>
+							            <h:message for="operatorName" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;"/><br></br> 
+										<font  style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: green;position: relative;float: left;white-space: nowrap;bottom: 17px;" >#{requestScope['message']}</font> 	
+	                   					<font  style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position: relative;float: left;white-space: nowrap;bottom: 17px;">#{requestScope['failuremessage']}</font> 								
+									</rich:panel>
+										<br/><br/><br/> 
+											<c:if test="#{sessionScope['marketOperatorListSize']!='0'}">		
+											<rich:panel header="Market Place List" style="width: 98%;height: 300px;bottom: 11px;position: relative;">	
+												<div id="scroll_div" >
+												 <rich:extendedDataTable value="#{sessionScope['marketOperatorListdetails']}"
+																	var="market" id="table" 
+																	sortPriority="#{marketsSortingBean.sortPriorities}"
+																	selectionMode="none"  style="height:255px;">                  
+											
+											<rich:column sortBy="#{market.slno}" width="90px"    sortOrder="#{marketsSortingBean.sortsOrders['slno']}" sortType="custom">
+												<f:facet name="header">
+													<h:panelGrid columns="2"   >
+														<a4j:commandLink execute="@this" value="SLNO" render="table"
+																		 action="#{marketsSortingBean.sort}">
+															<f:param name="sortProperty" value="slno"/>
+														</a4j:commandLink>
+														<h:graphicImage value="/resources/images/down_icon.gif"
+																		rendered="#{marketsSortingBean.sortsOrders['slno']=='descending'}"/>
+														<h:graphicImage value="/resources/images/up_icon.gif"
+																		rendered="#{marketsSortingBean.sortsOrders['slno']=='ascending'}"/>
+													</h:panelGrid>
+												</f:facet>
+											  #{market.slno}
+											</rich:column>
+											
+												
+											<rich:column sortBy="#{market.marketName}" width="255px"    sortOrder="#{marketsSortingBean.sortsOrders['marketName']}" sortType="custom">
+												<f:facet name="header">
+													<h:panelGrid columns="2"   >
+														<a4j:commandLink execute="@this" value="MARKET NAME" render="table"
+																		 action="#{marketsSortingBean.sort}">
+															<f:param name="sortProperty" value="marketName"/>
+														</a4j:commandLink>
+														<h:graphicImage value="/resources/images/down_icon.gif"
+																		rendered="#{marketsSortingBean.sortsOrders['marketName']=='descending'}"/>
+														<h:graphicImage value="/resources/images/up_icon.gif"
+																		rendered="#{marketsSortingBean.sortsOrders['marketName']=='ascending'}"/>
+													</h:panelGrid>
+												</f:facet>
+											  #{market.marketName}
+											</rich:column>
+											
+											<rich:column sortBy="#{market.operatorName}" width="250px"    sortOrder="#{marketsSortingBean.sortsOrders['cityName']}" sortType="custom">
+												<f:facet name="header" >
+													<h:panelGrid columns="2" >
+														<a4j:commandLink execute="@this" value="Enterprise NAME" render="table"
+																		 action="#{marketsSortingBean.sort}">
+															<f:param name="sortProperty" value="opeartorName"/>
+														</a4j:commandLink>
+														<h:graphicImage value="/resources/images/down_icon.gif"
+																		rendered="#{marketsSortingBean.sortsOrders['opeartorName']=='descending'}"/>
+														<h:graphicImage value="/resources/images/up_icon.gif"
+																		rendered="#{marketsSortingBean.sortsOrders['opeartorName']=='ascending'}"/>
+													</h:panelGrid>
+												</f:facet>
+												#{market.operatorName}
+											</rich:column>
+																
+											<rich:column sortBy="#{market.createdBy}" width="240px"     sortOrder="#{marketsSortingBean.sortsOrders['createdBy']}" sortType="custom">
+												<f:facet name="header" >
+													<h:panelGrid columns="2" >
+														<a4j:commandLink execute="@this" value="CREATED BY" render="table"
+																		 action="#{marketsSortingBean.sort}">
+															<f:param name="sortProperty" value="createdBy"/>
+														</a4j:commandLink>
+														<h:graphicImage value="/resources/images/down_icon.gif"
+																		rendered="#{marketsSortingBean.sortsOrders['createdBy']=='descending'}"/>
+														<h:graphicImage value="/resources/images/up_icon.gif"
+																		rendered="#{marketsSortingBean.sortsOrders['createdBy']=='ascending'}"/>
+													</h:panelGrid>
+												</f:facet>
+												#{market.createdBy}
+											</rich:column>
+										</rich:extendedDataTable>	
+										</div>
+											</rich:panel>	
+									</c:if>  
+								</div>
+						</div>
+					<div id="bottom" class="bottomSpacerDiv"></div>
+			      </h:form>
+			    </div>
+				</div>
+	     <script>window.jQuery || document.write(' <h:outputScript library="js" name="jquery-1.9.0.min.js" />')</script>
+        <h:outputScript library="js" name="plugins.js" />
+        <h:outputScript library="js" name="main.js" />
+		<h:outputScript library="js" name="bootstrap.js" />
+		<h:outputScript library="js" name="jquery-1.9.0.min.js" />
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+       </script>
+   </body>				
+			</ui:define>
+    	</ui:composition>
+
+</html>

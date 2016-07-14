@@ -1,0 +1,5 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:title="Sign in" android:id="@+id/mnSignin"></item>
+	<item android:title="Forgot Password" android:id="@+id/mnFgtPwd"></item>
+	<item android:title="Contact Us" android:id="@+id/mnContactUs"></item>
+</menu>

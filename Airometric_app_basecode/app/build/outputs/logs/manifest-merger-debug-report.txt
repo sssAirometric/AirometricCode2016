@@ -1,0 +1,341 @@
+-- Merging decision tree log ---
+manifest
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:2:1-180:12
+	package
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:3:5-29
+		INJECTED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml
+		INJECTED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml
+	android:versionName
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:4:5-42
+		INJECTED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml
+		INJECTED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:2:11-69
+uses-sdk
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:6:5-8:41
+MERGED from [com.android.support:support-v4:23.4.0] E:\Android_studio\Airometric\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\AndroidManifest.xml:20:5-43
+	android:targetSdkVersion
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:8:9-38
+		INJECTED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml
+		INJECTED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:7:9-35
+		INJECTED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml
+		INJECTED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml
+application
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:10:5-152:19
+MERGED from [com.android.support:support-v4:23.4.0] E:\Android_studio\Airometric\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\AndroidManifest.xml:22:5-20
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:13:9-41
+	android:icon
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:12:9-38
+	android:theme
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:14:9-40
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:11:9-49
+activity#com.airometric.SplashActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:15:9-24:20
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:19:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:17:13-45
+	android:launchMode
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:18:13-48
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:16:13-57
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:20:13-23:29
+action#android.intent.action.MAIN
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:21:17-69
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:21:25-66
+category#android.intent.category.LAUNCHER
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:22:17-77
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:22:27-74
+activity#com.airometric.LoginActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:25:9-31:20
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:30:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:28:13-45
+	android:launchMode
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:29:13-48
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:27:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:26:13-56
+activity#com.airometric.ForgotPasswordActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:32:9-38:20
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:37:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:35:13-45
+	android:launchMode
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:36:13-48
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:34:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:33:13-65
+activity#com.airometric.TermsOfUsageActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:39:9-45:20
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:44:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:42:13-45
+	android:launchMode
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:43:13-48
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:41:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:40:13-63
+activity#com.airometric.TestListActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:46:9-52:20
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:51:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:49:13-45
+	android:launchMode
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:50:13-48
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:48:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:47:13-59
+activity#com.airometric.TestTypeActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:53:9-59:20
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:58:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:56:13-45
+	android:launchMode
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:57:13-48
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:55:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:54:13-59
+activity#com.airometric.MOTestInputActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:60:9-65:20
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:64:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:63:13-45
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:62:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:61:13-62
+activity#com.airometric.MTTestInputActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:66:9-71:20
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:70:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:69:13-45
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:68:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:67:13-62
+activity#com.airometric.FTPTestInputActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:72:9-77:20
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:76:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:75:13-45
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:74:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:73:13-63
+activity#com.airometric.UDPTestInputActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:78:9-83:20
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:82:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:81:13-45
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:80:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:79:13-63
+activity#com.airometric.PingTestInputActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:84:9-89:20
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:88:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:87:13-45
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:86:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:85:13-64
+activity#com.airometric.BrowserTestInputActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:90:9-95:20
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:94:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:93:13-45
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:92:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:91:13-67
+activity#com.airometric.VOIPTestInputActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:96:9-101:20
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:100:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:99:13-45
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:98:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:97:13-64
+activity#com.airometric.ExternalTestActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:102:9-108:20
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:107:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:105:13-45
+	android:launchMode
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:106:13-48
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:104:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:103:13-63
+activity#com.airometric.ChooseContactActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:109:9-113:52
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:113:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:112:13-45
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:111:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:110:13-64
+activity#com.airometric.FTPFileChooseActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:114:9-118:52
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:118:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:117:13-45
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:116:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:115:13-64
+activity#com.airometric.LocalFilesChooseActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:119:9-123:52
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:123:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:122:13-45
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:121:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:120:13-67
+activity#com.airometric.utility.runners.WebviewActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:124:9-128:52
+	android:screenOrientation
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:128:13-49
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:127:13-45
+	android:configChanges
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:126:13-63
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:125:13-74
+receiver#com.airometric.listeners.OutgoingCallReceiver
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:131:9-137:20
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:131:19-79
+intent-filter#android.intent.action.NEW_OUTGOING_CALL
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:132:13-136:29
+	android:priority
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:132:28-50
+action#android.intent.action.NEW_OUTGOING_CALL
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:133:17-82
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:133:25-79
+receiver#com.airometric.listeners.TestFinishListener
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:146:9-80
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:146:19-77
+activity#com.airometric.preferences.SettingsActivity
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:148:9-151:20
+	android:label
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:150:13-60
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:149:13-71
+uses-permission#android.permission.CALL_PHONE
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:154:5-69
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:154:22-66
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:155:5-75
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:155:22-72
+uses-permission#android.permission.PROCESS_OUTGOING_CALLS
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:156:5-81
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:156:22-78
+uses-permission#android.permission.READ_CALL_LOG
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:157:5-72
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:157:22-69
+uses-permission#android.permission.READ_CONTACTS
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:158:5-72
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:158:22-69
+uses-permission#android.permission.READ_LOGS
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:159:5-68
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:159:22-65
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:160:5-81
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:160:22-78
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:161:5-79
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:161:22-76
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:162:5-81
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:162:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:163:5-80
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:163:22-77
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:164:5-79
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:164:22-76
+uses-permission#android.permission.INTERNET
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:165:5-67
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:165:22-64
+uses-permission#android.permission.ACCESS_COARSE_UPDATES
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:166:5-80
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:166:22-77
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:167:5-76
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:167:22-73
+uses-permission#android.permission.MODIFY_PHONE_STATE
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:168:5-77
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:168:22-74
+uses-permission#android.permission.ACCESS_SUPERUSER
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:169:5-74
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:169:22-72
+uses-permission#android.permission.INJECT_EVENTS
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:170:5-71
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:170:22-69
+uses-permission#android.permission.INSTALL_PACKAGES
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:172:5-75
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:172:22-72
+protected-broadcast
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:174:5-78
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:174:26-75
+uses-feature#android.hardware.telephony
+ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:176:5-178:35
+	android:required
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:178:9-32
+	android:name
+		ADDED from E:\Android_studio\Airometric\app\src\main\AndroidManifest.xml:177:9-50

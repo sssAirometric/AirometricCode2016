@@ -1,0 +1,78 @@
+
+
+
+.pleaseWait {
+	display: none;
+	position: absolute;
+	z-index: 1000005;
+	background-color: #ddd;
+	color: #000088;
+	width: 175px;
+	height: 50px;
+	border: thin silver outset;
+	filter: progid:DXImageTransform.Microsoft.dropShadow(Color=000000,offX=3,offY=3,positive=true);
+}
+
+.pleaseWaitTable {
+	font-family:Arial;
+	font-size: 10pt;
+}
+
+/*Styles for overlay*/
+#overlay {
+	position: absolute;
+	z-index: 20000000;
+	top: 0px;
+	left: 0px;
+	width: 80%;
+	height: 80%;
+	opacity: .4;
+	filter: alpha(opacity=40);
+	/* this hack is so it works in IE
+	 * I find setting the color in the css gives me more flexibility 
+	 * than the PNG solution.
+	 */
+	background-color:transparent !important;
+	background-color: #333333;
+	/* this hack is for opera support
+	 * you can uncomment the background-image if you don't care about opera.
+	 * this gives you the flexibility to use any bg color that you want, instead of the png
+	 */
+	background-image/**/: url("../resources/images/maskBG.png") !important;
+	/* background-image:none; 
+	background-repeat: repeat;
+	display:none;
+}
+
+
+#messageOverlay{
+	position: absolute;
+	z-index: 20000000;
+	top: 0px;
+	left: 0px;
+	width: 80%;
+	height: 80%;
+	opacity: .4;
+	filter: alpha(opacity=40);
+	/* this hack is so it works in IE
+	 * I find setting the color in the css gives me more flexibility 
+	 * than the PNG solution.
+	 */
+	background-color:transparent !important;
+	background-color: #333333;
+	/* this hack is for opera support
+	 * you can uncomment the background-image if you don't care about opera.
+	 * this gives you the flexibility to use any bg color that you want, instead of the png
+	 */
+	background-image/**/: url("../resources/images/maskBG.png") !important; 
+	background-repeat: repeat;
+	display:none;
+}
+
+#messageBox {
+	width:300px;
+	height:75px;
+	background-color:#eee;
+	border:thin silver outset;
+	position: relative;
+}

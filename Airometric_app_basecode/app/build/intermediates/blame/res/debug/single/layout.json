@@ -1,0 +1,98 @@
+[
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\udp_test_input.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\udp_test_input.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\choose_contacts.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\choose_contacts.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\list_item_contact.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\list_item_contact.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\termsofusage.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\termsofusage.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\input_dialog.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\input_dialog.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\test_list.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\test_list.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\ftp_test_input.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\ftp_test_input.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\external_test.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\external_test.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\voip_test_input.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\voip_test_input.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\list_item_file.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\list_item_file.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\mt_test_input.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\mt_test_input.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\forgot_password.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\forgot_password.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\file_list.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\file_list.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\app_titlebar.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\app_titlebar.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\deviceinfo.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\deviceinfo.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\browser_test_input.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\browser_test_input.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\temp.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\temp.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\mo_test_input.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\mo_test_input.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\test_config_alert.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\test_config_alert.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\splash.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\splash.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\web_view.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\web_view.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\login.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\login.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\ping_test_input.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\ping_test_input.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\layout\\displaytesttype.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\layout\\displaytesttype.xml"
+    }
+]

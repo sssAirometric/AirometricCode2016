@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Airometric</string>
+    <string name="version">1.0.68</string>
+    <string name="build_date">19/12/2013</string>
+    <string name="termsofusage">This application will be collecting Device and User identification information to determine performance metrics of the device for the duration of the use of the application.</string>
+    <string name="mo_test_finished">Mo Test Completed</string>
+    <string name="mo_test_running">Mo Test Running</string>
+    <string name="ftp_test_running">FTP Test Running</string>
+    <string name="test_finished">Test Completed</string>
+    <string name="test_running">Test Running</string>
+    <string name="release_note">      
+        1.0.66 (18-11-2013)
+	        >> MT Call duration starts when call comes. MT call end duration calculated with buffer time of 15 secs
+        1.0.65
+	        >> Fixed device info end tag not appending issue.
+	        >> Change MT call cut after duration.  
+        1.0.64
+	        >> Fixed issue while uploading failed results - fixed for external test.
+	        >> Fixed redial issue after call cut for MO.       
+        1.0.63
+	        >> Fixed issue while uploading failed results.
+        1.0.62
+	        >> MO - start next test duration once call got disconnected. Previously test duration starts when whole call duration over.
+	        >> Version in login screen
+	        >> CALL_DISCONNECT new event for MO test
+	        >> Button to upload failed results
+	    1.0.61
+        	>> Upload retry mechanism
+        	>> Cycle number appending by - instead of _
+        	>> Call duration should less than test duration validation fix.
+        1.0.60
+        	>> With MT call duration and with mo phone number limit to 20 with + symbol.</string>
+    <string-array name="marketplace">
+        <item >JAYANAGAR MARKET</item>
+        <item >M.G Road Market</item>
+    </string-array>
+
+</resources>

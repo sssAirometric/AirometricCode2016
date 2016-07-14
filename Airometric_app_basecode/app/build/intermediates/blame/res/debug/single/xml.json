@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_notification.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\xml\\pref_notification.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\xml\\device_admin.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\xml\\device_admin.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_headers.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\xml\\pref_headers.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_general.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\xml\\pref_general.xml"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_data_sync.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\xml\\pref_data_sync.xml"
+    }
+]

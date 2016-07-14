@@ -1,0 +1,345 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+			xmlns:ui="http://java.sun.com/jsf/facelets"
+			xmlns:f="http://java.sun.com/jsf/core"
+			xmlns:h="http://java.sun.com/jsf/html"
+			xmlns:a4j="http://richfaces.org/a4j"
+			xmlns:c="http://java.sun.com/jsp/jstl/core"
+			xmlns:rich="http://richfaces.org/rich"
+			xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Airometric Wireless</title>
+	 
+	 <h:outputStylesheet library="css" name="please_wait.css"  /> 
+	  <h:outputScript library="js" name="please_wait.js" />
+	 <style>
+	.fontlabel {
+		font-family: Arial, Helvetica, Sans-Serif; 
+		font-size: 10pt;
+		color:black;
+	}
+	.successlabel {
+		font-family: Arial, Helvetica, Sans-Serif; 
+		font-size: 10pt;
+		font-weight:bold;
+		color:green;
+		
+	}
+	.failurelabel {
+		font-family: Arial, Helvetica, Sans-Serif; 
+		font-size: 10pt;
+		font-weight:bold;
+		color:red;
+	}
+
+	.radioright td input {
+	    float: left;
+	}
+	
+	     #overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #000;
+                filter:alpha(opacity=70);
+                -moz-opacity:0.7;
+                -khtml-opacity: 0.7;
+                opacity: 0.9;
+                z-index: 100;
+                display: none;
+                padding-left: 550px;
+                padding-top: 130px;
+     }
+
+body {
+    font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
+    font-size: 62.5%;
+}
+
+.accordion-expand-holder {
+    text-align: center;
+    padding: 10px;
+} 
+            
+</style>
+</h:head>
+<ui:composition template="template/common/reportLayout.xhtml">
+   <ui:define name="content">
+    <body style="background-color: #f3f3f3;" onload="active();">
+     <ui:insert name="pleaseWait">
+	<ui:include src="../..#{request.contextPath}/Pages/pleaseWait/pleaseWait.xhtml"/>
+	</ui:insert> 
+		<div id="wrap">
+			<div id="container" class="container" style="text-align: left;">
+				 <h:form enctype="multipart/form-data" prependId="false">
+					    <div  class="tabbable tabs-left" style="font-size: 14px;"> <!-- Only required for left/right tabs -->
+							<div class="tab-content" id="holder" style="position: relative;top: -80px; height:600px;">	
+								<rich:panel header="Upload External Test" style="width: 690px; position:relative;top:12px;z-index:999;">
+
+									<br/> <br/> 
+									<div id="accordion" class="ui-accordion ui-widget ui-helper-reset">
+									    <h3 class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+									        <span data-id="vqt" class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+									        Upload VQT File:
+									    </h3>
+									    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+										<div id="marketName" style="right: 300px;">
+										 <h:outputText value="TestName*: " style="size: 10pt;font-family: Arial, Helvetica, Sans-Serif;color:black;"/>&nbsp;&nbsp;&nbsp;
+										 <h:selectOneListbox id="testName" name="testName" value="#{externalFileUploadBean.testName}" 
+										 	size="1" style="width: 25%;height: 25px;">
+							   					<f:selectItems value="#{sessionScope['testNameMap']}" />   
+							   				<f:ajax listener="#{externalFileUploadBean.devicecaseListener}" event="change"  render="deviceId" />    
+										 </h:selectOneListbox>
+						            	 <br/> <br/> 
+						                <h:outputText value="Device Model*" style="size: 10pt;font-family: Arial, Helvetica, Sans-Serif;color:black;" />&nbsp;
+										<h:selectOneListbox class="form-control" id="deviceId" name="deviceId" size="1" value="#{externalFileUploadBean.deviceId}"
+												style="width: 31%;height: 25px;">
+												<f:selectItem itemValue="0" itemLabel="Select Device" />
+							 					<f:selectItems value="#{sessionScope['deviceSelectNameMap']}"/>  
+								  		 </h:selectOneListbox >
+					  		 			<br/> <br/> 
+					  		 
+										 <h:outputText value="Market Name*: " style="size: 10pt;font-family: Arial, Helvetica, Sans-Serif;color:
+										  black;left: 373px;bottom: 36px;"/>
+										 <h:selectOneListbox id="marketId" name="marketId" value="#{externalFileUploadBean.marketId}" 
+									      	 size="1" style="width:140px;height:25px;bottom: 26px;bottom: 39px;left: 380px">
+									   		<f:selectItems value="#{sessionScope['margetPlaceListdetails']}" />
+										 </h:selectOneListbox>
+										
+										 	 <h:selectOneListbox id="vqType" name="vqType" 
+									      	 size="1" style="width:140px;height:25px;bottom: 26px;bottom: 39px;">
+									   		<f:selectItem itemValue="Polqa" itemLabel="Polqa" />
+									   		<f:selectItem itemValue="Pesq" itemLabel="Pesq" />
+									   		<f:selectItem itemValue="CallEvents" itemLabel="Call Events" />
+										 </h:selectOneListbox>
+										  <h:selectOneListbox id="diffHours" name="diffHours" 
+									      	 size="1" style="width:140px;height:25px;bottom: 26px;bottom: 39px;">
+									   		<f:selectItems value="#{sessionScope['differnceHours']}" />
+										 </h:selectOneListbox>
+										 <br/> <br/>
+										<h:commandLink id="Export" action="#{reportBean.migrateAccessToMysql}">
+										 			Migrate
+								 		</h:commandLink>
+										 </div>									 
+											<br/>
+
+	    								</div>
+									</div>
+									
+									<div></div><br></br>
+								    
+									<div id="accordion" class="ui-accordion ui-widget ui-helper-reset">
+									    <h3 class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all" >
+									        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+									        Upload Net File: 
+									    </h3>
+									    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+									  <div id="test" style="right: 300px;">
+									  <b>Mark Test Status</b>
+									  <br/>
+								  
+										 <h:outputText value="TestName to Process*: " style="size: 10pt;font-family: Arial, Helvetica, Sans-Serif;color:
+										  black;"/>
+							  	  		<h:selectOneListbox class="form-control" id="testCaseNametoprocess" name="testCaseNametoprocess" size="1" value="#{externalFileUploadBean.testCaseNametoprocess}"
+										style="width: 25%;">
+											<f:selectItems value="#{sessionScope['testNameMap']}"/>   
+											<f:ajax listener="#{externalFileUploadBean.isTestPreCalculated}" event="change"  render="processStatus" />
+						  			   </h:selectOneListbox >
+						  			   	<h:commandLink id="precalculate" style="display:none;width:70px;position:relative;right: -20px;" action="#{externalFileUploadBean.precalculateTest}">		
+												
+												<font style="width:70px;position:relative;" color="green"><b>Mark </b></font> 
+											</h:commandLink>
+											<a onclick="confirmPrecalculation()" style="width:70px;position:relative;right: -16px;cursor: pointer;">
+											<h:graphicImage library="images" name="page_right.gif" />
+											Mark Complete</a>
+											<h:outputText id="processStatus" name="processStatus" 
+												style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: grey;width:70px;position:relative;right: -30px;;white-space: nowrap;" 
+												value="#{sessionScope['processStatus']}">
+											</h:outputText>
+											<br/>
+											<br/>
+											<h:outputText id="precalculationmessage" name="precalculationmessage" 
+												style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: green;width:70px;position:relative;right: -30px;;white-space: nowrap;" 
+												value="#{sessionScope['precalculationmessage']}">
+											</h:outputText>
+											<br/>
+											<b>Upload Files</b>
+											<br/>
+											    <font color="black">Test Name* :</font>
+									   <h:inputText id="testCaseName" name="testCaseName" 
+											style="width:172px;height:25px;" value="#{externalFileUploadBean.testCaseName}" >
+											
+										</h:inputText>
+									  </div>									 
+											<br/>
+ 
+	    								</div>
+									</div>				
+									
+									<div></div><br></br>
+								    
+									<div id="accordion" class="ui-accordion ui-widget ui-helper-reset">
+									    <h3 class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all" >
+									        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+									        Upload QXDM File:
+									    </h3>
+									    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+									  <div id="test" style="right: 300px;">
+									  <b>Mark Test Status</b>
+									  <br/>
+								  
+										 <h:outputText value="TestName to Process*: " style="size: 10pt;font-family: Arial, Helvetica, Sans-Serif;color:
+										  black;"/>
+							  	  		<h:selectOneListbox class="form-control" id="qxdmTestCaseNametoprocess" name="qxdmTestCaseNametoprocess" size="1" value="#{externalFileUploadBean.qxdmTestCaseNametoprocess}"
+										style="width: 25%;">
+											<f:selectItems value="#{sessionScope['testNameMap']}"/>   
+											<f:ajax listener="#{externalFileUploadBean.isQXDMTestPreCalculated}" event="change"  render="qxdmProcessStatus" />
+						  			   </h:selectOneListbox >
+						  			   	<h:commandLink id="qxdmPrecalculate" style="display:none;width:70px;position:relative;right: -20px;" action="#{externalFileUploadBean.qxdmPrecalculate}">		
+												
+												<font style="width:70px;position:relative;" color="green"><b>Mark </b></font> 
+											</h:commandLink>
+											<a onclick="confirmPrecalculation()" style="width:70px;position:relative;right: -16px;cursor: pointer;">
+											<h:graphicImage library="images" name="page_right.gif" />
+											Mark Complete</a>
+											<h:outputText id="qxdmProcessStatus" name="qxdmProcessStatus" 
+												style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: grey;width:70px;position:relative;right: -30px;;white-space: nowrap;" 
+												value="#{sessionScope['qxdmProcessStatus']}">
+											</h:outputText>
+											<br/>
+											<br/>
+											<h:outputText id="qxdmPrecalculationmessage" name="qxdmPrecalculationmessage" 
+												style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: green;width:70px;position:relative;right: -30px;;white-space: nowrap;" 
+												value="#{sessionScope['qxdmPrecalculationmessage']}">
+											</h:outputText>
+											<br/>
+											<b>Upload Files</b>
+											<br/>
+											    <font color="black">Test Name* :</font>
+									   <h:inputText id="qxdmTestCaseName" name="qxdmTestCaseName" 
+											style="width:172px;height:25px;" value="#{externalFileUploadBean.qxdmTestCaseName}" >
+											
+										</h:inputText>
+									  </div>									 
+											<br/>
+ 
+	    								</div>
+									</div>															
+									
+									<div></div><br></br>
+								    
+									<div id="accordion" class="ui-accordion ui-widget ui-helper-reset">
+									    <h3 class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all" >
+									        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+									        Upload Frequency Plan File:
+									    </h3>
+									    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+									  		<div style="right: 300px;">
+										  		<br/>
+										    	<font color="black">Frequency Plan Name* :</font>
+										   		<h:inputText id="frequencyPlanName" name="frequencyPlanName" 
+													style="width:172px;height:25px;" value="#{externalFileUploadBean.frequencyPlanName}" >
+												</h:inputText>
+									  		</div>									 
+											<br/>
+ 
+	    								</div>
+									</div>
+									
+									<div></div><br></br><br/> <br/>
+									<div id="buttonDiv" style="width: 550px;">
+									    <p:fileUpload fileUploadListener="#{externalFileUploadBean.handleExternalUpload}"  
+									            mode="advanced"
+									            update="messages"
+									            sizeLimit="300000000" style="width:550px;">
+									       <f:param name="testCaseName" value="#{externalFileUploadBean.testCaseName}" />   
+									       <f:param name="marketId" value="#{externalFileUploadBean.marketId}" />  
+									       <f:param name="hiddenReportType" value="#{externalFileUploadBean.hiddenReportType}" />
+									       <f:param name="qxdmTestCaseNametoprocess" value="#{externalFileUploadBean.qxdmTestCaseNametoprocess}" />
+									       <f:param name="qxdmTestCaseName" value="#{externalFileUploadBean.qxdmTestCaseName}" />
+									     </p:fileUpload>  
+								    </div>		
+								    
+								    <p:growl id="messages" showDetail="true"/>	
+								    						
+								</rich:panel>	
+
+						  </div>
+					</div>
+				<div id="bottom" class="bottomSpacerDiv"></div>
+				<h:inputHidden id="hiddenReportType" name="hiddenReportType"  value="#{sessionScope['hiddenReportType']}" />
+			   </h:form>
+			</div>
+		</div>	
+		
+	<script type="text/javascript"> 
+	   function active(){
+		   document.getElementById("uploadExternalFile").className='active';
+		   var role = "#{sessionScope['loggedInUserRoleID']}";
+		   if(role !="admin"){
+			   document.getElementById("holder").style.left = "100px";
+		   }
+	   }
+
+	   function confirmPrecalculation(){
+		   var status = document.getElementById("processStatus").innerHTML;
+		   var button = document.getElementById("precalculate");
+		   if(status=="Completed"){
+			   if(confirm("Preprocess Test")){
+				   button.click();
+				  // pleaseWait(true, true);
+				}
+		   }
+		   else{
+			   button.click();
+			  // pleaseWait(true, true);
+		   }
+			
+	   }
+	   
+		var headers = $('#accordion .accordion-header');
+	   	var contentAreas = $('#accordion .ui-accordion-content ').hide();
+	   	var expandLink = $('.accordion-expand-all');
+		// add the accordion functionality
+
+	   	headers.click(function() {
+
+	       var panel = $(this).next();
+	       var isOpen = panel.is(':visible');
+	       var hiddenReportType = $(this).text().trim();
+	       document.getElementById("hiddenReportType").value = hiddenReportType;
+	       // open or close as necessary  // trigger the correct custom event
+	       panel[isOpen? 'slideUp': 'slideDown']().trigger(isOpen? 'hide': 'show');
+	       // stop the link from causing a pagescroll
+	       return false;
+	   });
+
+	   // hook up the expand/collapse all
+	   expandLink.click(function(){
+	       var isAllOpen = $(this).data('isAllOpen');
+	       
+	       contentAreas[isAllOpen? 'hide': 'show']()
+	           .trigger(isAllOpen? 'hide': 'show');
+	   });
+
+	   
+	</script>
+        <script>window.jQuery || document.write(' <h:outputScript library="js" name="jquery-1.9.0.min.js" />')</script>
+        <h:outputScript library="js" name="plugins.js" />
+        <h:outputScript library="js" name="main.js" />
+		<h:outputScript library="js" name="bootstrap.js" />
+		<h:outputScript library="js" name="jquery-1.9.0.min.js" />
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+   </body> 
+   </ui:define>
+   </ui:composition>
+</html>

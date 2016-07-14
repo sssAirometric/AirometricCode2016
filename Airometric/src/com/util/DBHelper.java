@@ -1,0 +1,48 @@
+package com.util;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
+import com.model.DBUtil;
+
+public class DBHelper {
+
+	
+	public static Connection conn = null;
+	public static Statement st = null;
+	public static ResultSet rs = null; 
+	public static PreparedStatement pst = null;
+	
+	
+	public void openConn(){
+		try{
+			conn= DBUtil.getConnection();
+			st = conn.createStatement();
+//			System.out.println("st--------"+st);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
+	public void closeConn(){
+		try{
+			if (rs != null) {
+				rs.close();
+			}else if (pst != null) {
+				pst.close();
+			}else if (st != null) {
+				st.close();
+			}else if (conn != null) {
+				conn.close();
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+}

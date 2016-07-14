@@ -1,0 +1,353 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+	   xmlns:ui="http://java.sun.com/jsf/facelets"
+	   xmlns:f="http://java.sun.com/jsf/core"
+	   xmlns:h="http://java.sun.com/jsf/html"
+	   xmlns:a4j="http://richfaces.org/a4j"
+	   xmlns:c="http://java.sun.com/jsp/jstl/core"
+	   xmlns:rich="http://richfaces.org/rich">
+<h:head>
+	<title>Change Ranges</title>
+	 
+	        <style type="text/css">
+		      /* html { height: 100% } */
+		      /* body { height: 90%; margin: 1; padding: 0 }  */
+		      #map_canvas { height: 100% }	
+		      
+	.scroll_div{
+	 overflow: scroll;
+	 width:100%;
+	 height:260px;
+	}
+	.fontlabel{
+	  cursor: pointer;none;
+	} 	
+		   	
+    </style>
+
+
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<h:outputStylesheet library="css" name="bootstrap_voice.css"  /> 
+    <h:outputStylesheet library="css" name="bootstrap-theme.min.css"  /> 
+	<h:outputStylesheet library="css" name="styleAnalytics.css"  /> 
+	<h:outputStylesheet library="css" name="reportMap.css"  /> 
+	 <h:outputScript library="js" name="reportMap.js"/> 
+    <h:outputScript library="js" name="jquery-1.9.1.js" />
+	 <h:outputScript library="js" name="highcharts.js"/>
+ <h:outputScript library="js" name="data.js"/>
+ <h:outputScript library="js" name="exporting.js"/>
+ <h:outputScript library="js" name="no-data-to-display.src.js"/>
+<h:outputScript library="js" name="grouped-categories.js"/> 
+
+
+   </h:head>
+   
+
+    <ui:composition template="template/common/configRangeSideBar.xhtml">
+    	<ui:define name="content">
+    	<body style="background-color: #f3f3f3;" onload="active();" >
+		<div id="wrap">
+			<div id="container" class="container" style="text-align: left;">
+				<h:form prependId="false">
+				<h:inputText id="customeName" name="customeName" value="#{qualityRangeBean.customeName}"/>
+				<br/>
+			<b>NONLTE</b>
+					<table>
+						<tr>
+							<td>
+								Range Name
+							</td>
+							<td align="center">
+								
+								Max Value
+							</td >
+							<td align="center">
+								Min Value
+							</td>
+						</tr>
+							<tr>
+							<td>
+								Good
+							</td>
+							<td>
+								<h:inputText id="upperRangeForGood" name="upperRangeForGood" value="#{qualityRangeBean.upperRangeForGood}"/>
+							</td>
+							<td>
+								<h:inputText id="lowerRangeForGood" name="lowerRangeForGood" value="#{qualityRangeBean.lowerRangeForGood}"/>
+							</td>
+						</tr>
+							<tr>
+							<td>
+								Average
+							</td>
+							<td>
+								<h:inputText id="upperRangeForAvg" name="upperRangeForAvg" value="#{qualityRangeBean.upperRangeForAvg}"/>
+							</td>
+							<td>
+								<h:inputText id="lowerRangeForAvg" name="lowerRangeForAvg" value="#{qualityRangeBean.lowerRangeForAvg}"/>
+							</td>
+						</tr>
+							<tr>
+							<td>
+								Poor
+							</td>
+							<td>
+								<h:inputText id="upperRangeForPoor" name="upperRangeForPoor" value="#{qualityRangeBean.upperRangeForPoor}"/>
+							</td>
+							<td>
+								<h:inputText id="lowerRangeForPoor" name="lowerRangeForPoor" value="#{qualityRangeBean.lowerRangeForPoor}"/>
+							</td>
+						</tr>
+					</table>
+					<b>LTE</b>
+					<table>
+						<tr>
+							<td>
+								Range Name
+							</td>
+							<td align="center">
+								
+								Max Value
+							</td >
+							<td align="center">
+								Min Value
+							</td>
+						</tr>
+							<tr>
+							<td>
+								Good
+							</td>
+							<td align="center">
+								<h:inputText id="lteupperRangeForGood" name="lteupperRangeForGood" value="#{qualityRangeBean.lteupperRangeForGood}"/>
+							</td>
+							<td align="center">
+								<h:inputText id="ltelowerRangeForGood" name="ltelowerRangeForGood" value="#{qualityRangeBean.ltelowerRangeForGood}"/>
+							</td>
+						</tr>
+							<tr>
+							<td>
+								Average
+							</td>
+							<td align="center">
+								<h:inputText id="lteupperRangeForAvg" name="lteupperRangeForAvg" value="#{qualityRangeBean.lteupperRangeForAvg}"/>
+							</td>
+							<td align="center">
+								<h:inputText id="ltelowerRangeForAvg" name="ltelowerRangeForAvg" value="#{qualityRangeBean.ltelowerRangeForAvg}"/>
+							</td>
+						</tr>
+							<tr>
+							<td>
+								Poor
+							</td>
+							<td align="center">
+								<h:inputText id="lteupperRangeForPoor" name="lteupperRangeForPoor" value="#{qualityRangeBean.lteupperRangeForPoor}"/>
+							</td>
+							<td align="center">
+								<h:inputText id="ltelowerRangeForPoor" name="ltelowerRangeForPoor" value="#{qualityRangeBean.ltelowerRangeForPoor}"/>
+							</td>
+						</tr>
+					</table>
+					
+				 <h:commandLink id="saveButton" name="saveButton" style="width:70px;position:relative;left:334px;top: 12px;" 
+									     	        action="#{qualityRangeBean.saveRanges}">		
+												<h:graphicImage library="images" name="action_save.gif" />
+												<font style="width:70px;position:relative;" color="green"><b>Save</b></font> 	
+											</h:commandLink>
+											 <h:commandLink id="updateButton" name="updateButton" style="width:70px;position:relative;left:334px;top: 12px;" 
+									     	        action="#{qualityRangeBean.updateRanges}">		
+												<h:graphicImage library="images" name="action_save.gif" />
+												<font style="width:70px;position:relative;" color="green"><b>Update</b></font> 	
+											</h:commandLink>
+											
+											
+											<rich:panel header="Range List" style="width: 75%;left:105px;height: 270px;top: 23px;position: relative;z-index: 999;">	
+											
+											 <rich:extendedDataTable value="#{sessionScope['userRangesToList']}"
+																var="car" id="table" 
+																sortPriority="#{carsSortingBean.sortPriorities}"
+																selectionMode="none"  style="height:230px;right:80px;position:relative">                  
+										
+										<rich:column  width="70px"    sortOrder="#{carsSortingBean.sortsOrders['slno']}" sortType="custom">
+											<f:facet name="header">
+												<h:panelGrid columns="2"   >
+													<a4j:commandLink execute="@this" value="CUSTOM NAME" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="slno"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['slno']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['slno']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+										  #{car.customName}
+										</rich:column>
+										
+											
+										<rich:column  width="190px"    sortOrder="#{carsSortingBean.sortsOrders['userName']}" sortType="custom">
+											<f:facet name="header">
+												<h:panelGrid columns="2"   >
+													<a4j:commandLink execute="@this" value="Good Range" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="userName"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['userName']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['userName']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+										  #{car.upperRangeForGood} to  #{car.lowerRangeForGood}
+										</rich:column>
+										
+										<rich:column sortBy="#{car.email}" width="190px"     sortOrder="#{carsSortingBean.sortsOrders['email']}" sortType="custom">
+												<f:facet name="header" >
+												<h:panelGrid columns="2" >
+													<a4j:commandLink execute="@this" value="Average Range" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="role"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['role']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['role']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+											 #{car.upperRangeForAvg} to  #{car.lowerRangeForAvg}
+										</rich:column>
+										
+										<rich:column  width="190px"    sortOrder="#{carsSortingBean.sortsOrders['role']}" sortType="custom">
+											<f:facet name="header" >
+												<h:panelGrid columns="2" >
+													<a4j:commandLink execute="@this" value="Poor Range" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="role"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['role']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['role']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+											 #{car.upperRangeForPoor} to  #{car.lowerRangeForPoor}
+										</rich:column>
+										<rich:column  width="190px"    sortOrder="#{carsSortingBean.sortsOrders['userName']}" sortType="custom">
+											<f:facet name="header">
+												<h:panelGrid columns="2"   >
+													<a4j:commandLink execute="@this" value="Good Range(LTE)" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="userName"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['userName']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['userName']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+										  #{car.lteupperRangeForGood} to  #{car.ltelowerRangeForGood}
+										</rich:column>
+										
+										<rich:column sortBy="#{car.email}" width="190px"     sortOrder="#{carsSortingBean.sortsOrders['email']}" sortType="custom">
+												<f:facet name="header" >
+												<h:panelGrid columns="2" >
+													<a4j:commandLink execute="@this" value="Average Range(LTE)" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="role"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['role']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['role']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+											 #{car.lteupperRangeForAvg} to  #{car.ltelowerRangeForAvg}
+										</rich:column>
+										
+										<rich:column  width="190px"    sortOrder="#{carsSortingBean.sortsOrders['role']}" sortType="custom">
+											<f:facet name="header" >
+												<h:panelGrid columns="2" >
+													<a4j:commandLink execute="@this" value="Poor Range(LTE)" render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="role"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['role']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['role']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+											 #{car.lteupperRangeForPoor} to  #{car.ltelowerRangeForPoor} 
+										</rich:column>
+												<rich:column  width="190px"    sortOrder="#{carsSortingBean.sortsOrders['role']}" sortType="custom">
+											<f:facet name="header" >
+												<h:panelGrid columns="2" >
+													<a4j:commandLink execute="@this"  render="table"
+																	 action="#{carsSortingBean.sort}">
+														<f:param name="sortProperty" value="role"/>
+													</a4j:commandLink>
+													<h:graphicImage value="/resources/images/down_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['role']=='descending'}"/>
+													<h:graphicImage value="/resources/images/up_icon.gif"
+																	rendered="#{carsSortingBean.sortsOrders['role']=='ascending'}"/>
+												</h:panelGrid>
+											</f:facet>
+													<h:graphicImage library="images" name="action_save.gif" />
+													<a style="width:70px;position:relative;"  color="green" onClick="getRangeValues(#{car.customId})"><b>Edit</b></a> 	
+									     	         
+										</rich:column>
+									</rich:extendedDataTable>
+											
+										</rich:panel>	
+										<h:inputHidden  name="custName" id= "custName" value="#{qualityRangeBean.custName}"/>
+										<h:commandLink id="editButton" name="editButton" style="width:70px;position:relative;" 
+									     	        action="#{qualityRangeBean.getRangesToEdit}">
+									     	       
+									     	        </h:commandLink>
+									  <h:inputHidden  name="roleId" id= "roleId" value="#{sessionScope['loggedInUserRoleID']}"/>
+				</h:form>
+		    </div>
+			</div>	
+	 <script type="text/javascript"> 
+	   function active(){
+		   document.getElementById("dashboard").className='active';
+	   } 
+	   function getRangeValues (value){
+		   var userRole = document.getElementById("roleId").value;
+		   if(userRole != "admin" ){
+			   if(value == "1"){
+				   alert("you cannot edit it!")
+					return false;
+			   }
+				
+		   }
+			document.getElementById("custName").value = value;
+			document.getElementById("editButton").click();
+	   }
+	   var isCreatePage='#{sessionScope["createRangePage"]}';
+	   if(isCreatePage.match("true")){
+			document.getElementById("saveButton").style.display = "";
+			document.getElementById("updateButton").style.display = "none";
+	   }
+	   else{
+		   document.getElementById("saveButton").style.display = "none";
+		   document.getElementById("updateButton").style.display = "";
+	   }
+	</script>
+	    <script>window.jQuery || document.write(' <h:outputScript library="js" name="jquery-1.9.0.min.js" />')</script>
+	        <h:outputScript library="js" name="plugins.js" />
+	        <h:outputScript library="js" name="main.js" />
+			<h:outputScript library="js" name="bootstrap.js" />
+			<h:outputScript library="js" name="jquery-1.9.0.min.js" />
+        <script>
+        
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+            </script>
+   </body>
+		</ui:define>
+	</ui:composition>
+
+</html>

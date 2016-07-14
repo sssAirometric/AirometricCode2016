@@ -1,0 +1,506 @@
+package com.airometric.utility.runners;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.TrafficStats;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
+
+import com.airometric.Airometric;
+import com.airometric.AppActivity;
+import com.airometric.R;
+import com.airometric.TestTypeActivity;
+import com.airometric.api.ResponseCodes;
+import com.airometric.classes.BrowserTestConfig;
+import com.airometric.classes.TestConfig;
+import com.airometric.classes.VOIPTestConfig;
+import com.airometric.config.Constants;
+import com.airometric.config.Messages;
+import com.airometric.config.StringUtils;
+import com.airometric.storage.Preferences;
+import com.airometric.storage.SettingsStore;
+import com.airometric.utility.DeviceUtil;
+import com.airometric.utility.FileUtil;
+import com.airometric.utility.L;
+import com.airometric.utility.NotificationUtil;
+import com.airometric.utility.TimeUtil;
+
+public class WebviewActivity extends AppActivity {
+
+	TestConfig testconfig;
+	private Handler handler = new Handler();
+	SettingsStore settings;
+	String sPageURL, sNoOfCycles;
+	BrowserTestConfig BrowserTestConfigObj;
+	long StartRXBytes = 0, StartRXSegments = 0;
+	int uid;
+	Timer timer;
+	WebView webview;
+	private ProgressBar progress;
+	StartTestTask uploadTask;
+
+	ArrayList<String> arrLstSelectedTestsCodes = new ArrayList<String>();
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setAppTitle(R.layout.web_view);
+
+		settings = new SettingsStore(activity);
+
+		Bundle bundle = this.getIntent().getExtras();
+		if (bundle != null) {
+			if (bundle.containsKey(StringUtils.EXTRA_TEST_CONFIG))
+				testconfig = (TestConfig) bundle
+						.getSerializable(StringUtils.EXTRA_TEST_CONFIG);
+			if (bundle.containsKey(StringUtils.EXTRA_TEST_SELECTED_CODES))
+				arrLstSelectedTestsCodes = bundle
+						.getStringArrayList(StringUtils.EXTRA_TEST_SELECTED_CODES);
+		}
+		if (testconfig == null)
+			testconfig = new TestConfig();
+
+		webview = (WebView) findViewById(R.id.webview);
+		webview.getSettings().setJavaScriptEnabled(true);
+		//webview.getSettings().setPluginsEnabled(true);
+		// webview.setFocusableInTouchMode(false);
+		// webview.setFocusable(false);
+		webview.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				return true;
+			}
+		});
+
+		progress = (ProgressBar) findViewById(R.id.progressBar);
+		progress.setMax(100);
+
+		startTest();
+	}
+
+	public void setValue(int progressVal) {
+		// progress.setProgress(progressVal);
+	}
+
+	public void startTest() {
+
+		BrowserTestConfigObj = testconfig.getBrowserTestConfig();
+
+		/*
+		 * String sTestName = testconfig.getTestName() +
+		 * StringUtils.TEST_CYCLE_APPEND_FILE + testconfig.getTestCycle();
+		 */
+
+		String sTestName = pref.getValue(Preferences.KEY_TEST_NAME, "")
+				+ StringUtils.TEST_CYCLE_APPEND_FILE
+				+ testconfig.getTestCycle();
+
+		pref.setBrowserTestRunningState(true);
+
+		DeviceUtil dv = new DeviceUtil(activity);
+		String sDeviceInfoXML = dv.getDeviceInfo(
+				StringUtils.FILE_CODE_TEST_TYPE_BROWSER, sTestName,
+				pref.getUsername(),
+				pref.getValue(Preferences.KEY_SELECTED_MARKET_PLACE_ID, ""));
+
+		String sCurrTime = TimeUtil.getCurrentTimeFilename();
+
+		FileUtil.CURRENT_BROWSER_TESTTIME = sCurrTime;
+		String path = FileUtil.BROWSER_LOG_DIR + "deviceinfo" + "_" + sTestName
+				+ "_" + sCurrTime + ".xml";
+		File fle = new File(path);
+		if (fle.exists()) {
+			fle.delete();
+		}
+		String dev_info_path = FileUtil.writeToXMLFile(path, sDeviceInfoXML);
+		L.debug("Device info initial data written into " + dev_info_path);
+
+		pref.putValue(Preferences.KEY_CURRENT_BROWSER_DEV_INFO_PATH,
+				dev_info_path);
+
+		String logcat_path = FileUtil.BROWSER_LOG_DIR
+				+ StringUtils.FILE_CODE_TEST_TYPE_BROWSER + "_" + dv.getIMEI()
+				+ "_" + sTestName + "_" + sCurrTime + ".txt";
+
+		File log_fle = new File(logcat_path);
+
+		try {
+			log_fle.createNewFile();
+		} catch (IOException e) {
+		}
+		pref.putValue(Preferences.KEY_CURRENT_BROWSER_LOGCAT_PATH,
+				log_fle.getAbsolutePath());
+		try {
+			Airometric app = (Airometric) activity.getApplication();
+			app.startListeners(dev_info_path);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		NotificationUtil.cancelNotification(activity,
+				StringUtils.TEST_TYPE_CODE_BROWSER);
+
+		uploadTask = new StartTestTask();
+		uploadTask.execute();
+		Constants.CurrentTask = uploadTask;
+
+		NotificationUtil.showRunningNotification(activity,
+				StringUtils.TEST_TYPE_CODE_BROWSER);
+	}
+
+	long no_of_cycles = 0, pass = 0;
+
+	void startTesting() {
+		sPageURL = BrowserTestConfigObj.sPageURL;
+		sNoOfCycles = BrowserTestConfigObj.sCycles;
+		no_of_cycles = Long.parseLong(sNoOfCycles);
+
+		uid = android.os.Process.myUid();
+		pass = 0;
+		print("startTesting()... sPageURL  -> " + sPageURL
+				+ ", NoOfCycles  -> " + sNoOfCycles);
+		DeviceUtil.clearLogcat();
+
+		handler.post(new Runnable() {
+
+			@Override
+			public void run() {
+				doLoad();
+			}
+		});
+	}
+
+	int getBrowserId() {
+		final PackageManager pm = getPackageManager();
+		List<ApplicationInfo> packages = pm
+				.getInstalledApplications(PackageManager.GET_META_DATA);
+		int UID = 0;
+		for (ApplicationInfo packageInfo : packages) {
+			L.debug(packageInfo.name + ";; package -->"
+					+ packageInfo.packageName);
+			if (packageInfo.packageName.indexOf("com.android.browser") != -1
+					|| packageInfo.packageName
+							.indexOf("com.google.android.browse") != -1) {
+				UID = packageInfo.uid;
+			}
+		}
+		return UID;
+	}
+
+	String sResponseCode = "", sResponseDesc = "";
+
+	boolean isPageLoaded = false;
+
+	protected void doLoad() {
+
+		final Message msg = new Message();
+		final Bundle bndle = new Bundle();
+		sResponseCode = "";
+		sResponseDesc = "";
+		isPageLoaded = false;
+		try {
+
+			webview.setWebViewClient(new WebViewClient() {
+				@Override
+				public boolean shouldOverrideUrlLoading(WebView view, String url) {
+					return false;
+				}
+
+				@Override
+				public void onReceivedError(WebView view, int errorCode,
+						String description, String failingUrl) {
+				}
+
+				@Override
+				public void onPageStarted(WebView view, String url,
+						Bitmap favicon) {
+					L.log_browser(settings.getBrowserLogcatPath(), "PageStart");
+					progress.setProgress(0);
+					super.onPageStarted(view, url, favicon);
+				}
+
+				@Override
+				public void onPageFinished(WebView view, String url) {
+					super.onPageFinished(view, url);
+					L.log_browser(settings.getBrowserLogcatPath(),
+							"PageFinished");
+
+					pass++;
+
+					timer.cancel();
+					if (pass == no_of_cycles) {
+						final Message msg = new Message();
+						final Bundle bndle = new Bundle();
+						sResponseCode = "";
+						sResponseDesc = "";
+						sResponseCode = ResponseCodes.SUCCESS;
+						bndle.putString(StringUtils.CODE, sResponseCode);
+						bndle.putString(StringUtils.DESC, sResponseDesc);
+						msg.setData(bndle);
+						progressHandler.sendMessage(msg);
+					} else {
+						if (!pref.isTestCanceled() && pref.isTestRunning())
+							loadUrl();
+					}
+				}
+			});
+
+			webview.setWebChromeClient(new WebChromeClient() {
+				@Override
+				public void onProgressChanged(WebView view,
+						final int newProgress) {
+					handler.post(new Runnable() {
+
+						@Override
+						public void run() {
+							setValue(newProgress);
+						}
+					});
+				}
+
+			});
+			loadUrl();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			sResponseCode = StringUtils.ERROR_CODE;
+			sResponseDesc = Messages.BROWER_TEST_FAILED;
+			bndle.putString(StringUtils.CODE, sResponseCode);
+			bndle.putString(StringUtils.DESC, sResponseDesc);
+			msg.setData(bndle);
+			progressHandler.sendMessage(msg);
+		}
+
+	}
+
+	void loadUrl() {
+		if (Constants.OS_VERSION_JELLY_BEAN_MR2 == android.os.Build.VERSION.SDK_INT
+				|| Constants.OS_VERSION_KIT_KAT == android.os.Build.VERSION.SDK_INT || Constants.OS_VERSION_LOLLIPOP == android.os.Build.VERSION.SDK_INT) {
+			StartRXBytes = DeviceUtil.getStats(uid).getReceiveCount();
+			StartRXSegments = TrafficStats.getUidTcpTxSegments(uid);
+		} else {
+			StartRXBytes = TrafficStats.getUidTcpRxBytes(uid);
+			StartRXSegments = TrafficStats.getUidTcpRxSegments(uid);
+		}
+
+		debug("Initial RX bytes - " + StartRXBytes + ", Initial RX Segments - "
+				+ StartRXSegments);
+		timer = new Timer();
+
+		timer.schedule(new PageLoadTimeTask(), 0,
+				Constants.BROWSER_LOG_INTERVAL * 1000);
+		webview.loadUrl(sPageURL);
+		try {
+			webview.clearCache(true);
+			// deleteDatabase("webview.db");
+			// deleteDatabase("webviewCache.db");
+			doClearCache();
+		} catch (Exception e) {
+			//
+		}
+	}
+
+	private class MyWebChromeClient extends WebChromeClient {
+		@Override
+		public void onProgressChanged(WebView view, int newProgress) {
+			super.onProgressChanged(view, newProgress);
+			setValue(newProgress);
+		}
+
+	}
+
+	class PageLoadTimeTask extends TimerTask {
+
+		public PageLoadTimeTask() {
+		}
+
+		public void run() {
+			if (pref.isBrowserTestRunning()) {
+				long CurrRXBytes = TrafficStats.getUidTcpRxBytes(uid);
+				long CurrRXSegments = TrafficStats.getUidTcpRxSegments(uid);
+				debug("StartRXBytes bytes - " + StartRXBytes
+						+ ", CurrRXBytes - " + CurrRXBytes
+						+ ", CurrRXSegments - " + CurrRXSegments);
+				long RXBytes = CurrRXBytes - StartRXBytes;
+				long RXSegments = CurrRXSegments - StartRXSegments;
+				L.log_browser(settings.getBrowserLogcatPath(), RXBytes,
+						RXSegments);
+			} else {
+				timer.cancel();
+				try {
+					webview.stopLoading();
+				} catch (Exception e) {
+
+				}
+			}
+		}
+	}
+
+	private class StartTestTask extends AsyncTask<URL, Integer, String> {
+
+		public StartTestTask() {
+		}
+
+		protected void onProgressUpdate(Integer... progress) {
+
+		}
+
+		protected void onPostExecute(Long result) {
+
+		}
+
+		@Override
+		protected String doInBackground(URL... urls) {
+			startTesting();
+			return "Started";
+		}
+	}
+
+	private class LoadedTask extends AsyncTask<URL, Integer, String> {
+
+		public LoadedTask() {
+		}
+
+		protected void onProgressUpdate(Integer... progress) {
+
+		}
+
+		protected void onPostExecute(Long result) {
+
+		}
+
+		@Override
+		protected String doInBackground(URL... urls) {
+			handler.post(RunnableCompleted);
+			return "Started";
+		}
+	}
+
+	private Handler progressHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+
+			timer.cancel();
+
+			// ###################
+			String sResponseCode = msg.getData().getString(StringUtils.CODE);
+			String sResponseDesc = msg.getData().getString(StringUtils.DESC);
+
+			if (sResponseCode.equals(ResponseCodes.SUCCESS)) {
+				L.debug("Page load success");
+				goBack();
+				new LoadedTask().execute();
+			} else {
+				L.debug(sResponseDesc);
+				pref.setBrowserTestRunningState(false);
+
+				/*
+				 * NotificationUtil.showFinishedNotification(activity,
+				 * StringUtils.TEST_TYPE_CODE_BROWSER, testconfig.getTestName(),
+				 * sResponseDesc);
+				 */
+				NotificationUtil.showFinishedNotification(activity,
+						StringUtils.TEST_TYPE_CODE_BROWSER,
+						pref.getValue(Preferences.KEY_TEST_NAME, ""), sResponseDesc);
+
+				DeviceUtil.updateTestScreen();
+				doResultUploaded(sResponseCode, sResponseDesc);
+			}
+		}
+	};
+
+	void doClearCache() {
+		File dir = getCacheDir();
+
+		if (dir != null && dir.isDirectory()) {
+			try {
+				File[] children = dir.listFiles();
+				if (children.length > 0) {
+					for (int i = 0; i < children.length; i++) {
+						File[] temp = children[i].listFiles();
+						for (int x = 0; x < temp.length; x++) {
+							temp[x].delete();
+						}
+					}
+				}
+			} catch (Exception e) {
+				// Log.e("Cache", "failed cache clean");
+			}
+		}
+	}
+
+	Runnable RunnableCompleted = new Runnable() {
+		public void run() {
+			if (!pref.isTestCanceled() && pref.isTestRunning()) {
+				L.debug("RunnableCompleted...");
+
+				new ResultUploader(activity, pref.getValue(Preferences.KEY_TEST_NAME, "")
+						+ StringUtils.TEST_CYCLE_APPEND_FILE
+						+ testconfig.getTestCycle(),
+						StringUtils.TEST_TYPE_CODE_BROWSER,
+						settings.getBrowserDeviceInfoPath(),
+						settings.getBrowserLogcatPath()) {
+					public void resultUploaded(String code, String desc) {
+						doResultUploaded(code, desc);
+					};
+				};
+
+			}
+		}
+	};
+
+	@Override
+	public void goBack() {
+		showActivity(TestTypeActivity.class);
+	}
+
+	public void doResultUploaded(String code, String desc) {
+		event("doResultUploaded()::code -> " + code);
+		event("doResultUploaded()::desc -> " + desc);
+		pref.setBrowserTestRunningState(false);
+
+		Constants.CurrentTestRunner.BrowserResultUploaded(code, desc);
+
+		DeviceUtil.updateTestScreen();
+	};
+
+	void startVOIPTest() {
+		if (!pref.isTestCanceled() && pref.isTestRunning()) {
+			VOIPTestConfig objVOIPConfig = null;
+			objVOIPConfig = testconfig.getVOIPTestConfig();
+			event("startVOIPTest()");
+			if (objVOIPConfig != null) {
+				VOIPTestRunner voipTestRunner = new VOIPTestRunner(activity,
+						testconfig) {
+					@Override
+					public void doResultUploaded(String code, String desc) {
+						VOIPResultUploaded(code, desc);
+					}
+				};
+				voipTestRunner.startTest();
+			}
+		}
+	}
+
+	public void VOIPResultUploaded(String code, String desc) {
+		event("VOIPResultUploaded()::code -> " + code);
+		event("VOIPResultUploaded()::desc -> " + desc);
+	}
+}

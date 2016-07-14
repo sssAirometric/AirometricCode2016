@@ -1,0 +1,463 @@
+package com.services;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+
+import com.PropertyFileReader;
+import com.dao.TestConfigDao;
+import com.dao.TestConfigUserDao;
+import com.dao.UserDao;
+import com.dao.impl.TestConfigDaoImpl;
+import com.dao.impl.TestConfigUserDaoImpl;
+import com.dao.impl.UserDaoImpl;
+import com.google.android.gcm.server.Message;
+import com.google.android.gcm.server.MulticastResult;
+import com.google.android.gcm.server.Sender;
+import com.to.MarketInfo;
+import com.to.TestConfig;
+import com.util.DemoUtil;
+
+@Controller
+@RequestMapping("/file")
+public class FileController {
+	static HashMap<String,String>  propertiesFiledata =PropertyFileReader.getProperties();
+	private final String UPLOADED_FILE_PATH = propertiesFiledata.get("UPLOADED_FILE_PATH");
+	private final String DOWNLOAD_FILE_PATH = propertiesFiledata.get("DOWNLOAD_FILE_PATH");
+	private final String CONFIG_FILE_NAME = propertiesFiledata.get("CONFIG_FILE_NAME");
+ 
+	/**
+	 * This Service uploads single or multi files to the mentioned directory 
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+    @RequestMapping(value = "/uploadTest", method = RequestMethod.POST)
+    @ResponseBody
+    public String upload(@Context HttpServletRequest request) throws Exception {
+        String response = ResponseStatusENUM.FAILURE.getStatus();
+        if (ServletFileUpload.isMultipartContent(request)) { 
+        	String userName = request.getParameter("userName");
+            String passWord = request.getParameter("passWord");
+            String imei = request.getParameter("imei");
+//            System.out.println("upload==="+userName+""+passWord);
+            UserDao userDao = new UserDaoImpl();
+            /*response = userDao.validateUser(userName, passWord,imei);
+            if(response.equals("1")){
+            	System.out.println("In Upload authentication falied====");
+            	return ResponseStatusENUM.AUTH_FAILURE.getStatus();
+            }*/
+            // Create a factory for disk-based file items 
+            DiskFileItemFactory  fileItemFactory = new DiskFileItemFactory();
+            File destinationDir = new File(UPLOADED_FILE_PATH);
+            ServletFileUpload uploadHandler = new ServletFileUpload(fileItemFactory);
+            try {
+                /*
+                 * Parse the request
+                 */
+                List items = uploadHandler.parseRequest(request);
+                Iterator itr = items.iterator();
+
+                while(itr.hasNext()) {
+                    FileItem item = (FileItem) itr.next();
+                    /*
+                     * Handle Form Fields.
+                     */
+                    if(item.isFormField()) {
+                        //response += "<BR>" + "Field Name = "+item.getFieldName()+", Value = "+item.getString();
+                    } else {
+                        //Handle Uploaded files.
+                        /*response += "<BR>" + "File Field Name = "+item.getFieldName()+
+                            ", File Name = "+item.getName()+
+                            ", Content type = "+item.getContentType()+
+                            ", File Size = "+item.getSize();*/
+                        /*
+                         * Write file to the ultimate location.
+                         */
+                        File file = new File(destinationDir,item.getName());
+                        item.write(file);
+                        response = ResponseStatusENUM.SUCCESS.getStatus();
+                    }
+                }
+            }catch(FileUploadException ex) {
+                //response += "Error encountered while parsing the request " + ex;
+            } catch(Exception ex) {
+            	//response += "Error encountered while uploading file " + ex;
+            }
+        } 
+        return response;
+    }
+    /**
+     * Service validates the user aginst the data base by passing username and password
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/validate", method = RequestMethod.POST)
+    @ResponseBody
+    public String validateUser(HttpServletRequest request)  throws Exception {
+    	String response = ResponseStatusENUM.AUTH_FAILURE.getStatus();
+        String userName = request.getParameter("userName");
+        String passWord = request.getParameter("passWord");
+        String imei = request.getParameter("imei");
+        UserDao userDao = new UserDaoImpl();
+        response = userDao.validateUser(userName, passWord,imei);
+        if(response.startsWith("success")){
+        	
+        	String marketStr= getMarkets_Operator(userName);
+        	  if(null != marketStr){
+        		response=response+","+marketStr;
+        	}
+//        	  System.out.println("response------------------"+response);
+        }
+        return response;
+    }
+    
+    /**
+     * This Service searches the file in the directory by taking input filed as file name(IMEI number)
+     * If the file was found it will send the file as attachment else returns response saying no content
+     * @throws IOException 
+     */
+    @RequestMapping(value = "/download", method = RequestMethod.GET)
+    public @ResponseBody byte[] downLoadFile(HttpServletRequest request) throws IOException {
+    	String imei = request.getParameter("imei");
+    	String userName = request.getParameter("userName");
+        String passWord = request.getParameter("passWord");
+//        System.out.println(imei+"==="+userName+"===="+passWord);
+        UserDao userDao = new UserDaoImpl();
+        String responseBak = userDao.validateUser(userName, passWord,imei);
+        byte[] reportBytes = null;
+     /*   if(responseBak.equals("1")){
+        	System.out.println("Inside responseBak===================");
+        	ResponseBuilder response = Response.status(1);
+        	System.out.println("Inside responseBak==================="+response);
+        	return response.build();
+        }else{*/
+	    	TestConfig testConfig = new TestConfigDaoImpl().getTestConfigXML(imei, userName);
+	    	if(null != testConfig){
+	    		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();  
+	    		DocumentBuilder builder;  
+	    		try{  
+		            builder = factory.newDocumentBuilder();  
+		            // Use String reader  
+		            Document document = builder.parse( new InputSource(new StringReader( testConfig.getTestConfigXml() ) ) );  
+		            TransformerFactory tranFactory = TransformerFactory.newInstance();  
+		            Transformer aTransformer = tranFactory.newTransformer();  
+		            Source src = new DOMSource( document );  
+		            File downLoadPath = new File(DOWNLOAD_FILE_PATH);
+		            if(!downLoadPath.exists()){
+		            	downLoadPath.mkdir();
+		            }
+		            Result dest = new StreamResult( new File(DOWNLOAD_FILE_PATH+"\\"+testConfig.getTestConfigName()+".xml") );  
+		            aTransformer.transform( src, dest );
+				} catch (Exception e){  
+		            // TODO Auto-generated catch block  
+		            e.printStackTrace();  
+		        } 
+				String filePath = DOWNLOAD_FILE_PATH+"\\"+testConfig.getTestConfigName()+".xml";
+	    		File file = new File(filePath);
+	    		ResponseBuilder response1 = Response.ok((Object) file);
+	            response1.header("Content-Disposition","attachment; filename="+testConfig.getTestConfigName()+".xml");
+	            try{
+		            if (file != null && file.exists()) {
+		                InputStream reportInputStream = new FileInputStream(file);
+		                long length = file.length();
+		                reportBytes = new byte[(int)length];
+		                int offset = 0;
+		                int numRead = 0;
+		                while (offset < reportBytes.length
+		                       && (numRead = reportInputStream.read(reportBytes, offset, reportBytes.length-offset)) >= 0) {
+		                    offset += numRead;
+		                }
+		                if (offset < reportBytes.length) {
+		                    throw new Exception("Could not completely read file "+ file.getName());
+		                }
+		                reportInputStream.close();
+		            }
+	            }catch (Exception e) {
+					e.printStackTrace();
+				}
+	            return reportBytes;
+	    	}else{
+//	    		System.out.println("Sending empty byte array===");
+	    		return reportBytes;
+	    	}
+       // }
+    }
+    
+    /**
+     * This Service will provide the All the markets that are restricted to the particular operator.
+     */
+    
+    @RequestMapping(value = "/getMarkets", method = RequestMethod.POST)
+    @ResponseBody
+    public String getMarkets_Operator(String userName) throws Exception {
+    	String xmlMarket="";
+    	int k=1;
+    	String xmlMarketTag=null;
+    	List<MarketInfo>marketList=new ArrayList<MarketInfo>();
+    	UserDao userDao = new UserDaoImpl();
+        marketList=userDao.getMarket_Operator(userName);
+        for(int i=0;i<marketList.size();i++){
+        	MarketInfo marketInfo=marketList.get(i);
+        	if(xmlMarket == ""){
+        		xmlMarket="<market>"+"<marketId>"+marketInfo.getMarket_id()+"</marketId>"+"<marketName>"+marketInfo.getMarket_name()+"</marketName>"+"</market>";
+        	}else{
+            	xmlMarket=xmlMarket+" "+"<market>"+"<marketId>"+marketInfo.getMarket_id()+"</marketId>"+"<marketName>"+marketInfo.getMarket_name()+"</marketName>"+"</market>";	
+        	}
+        	k++;
+        }
+        xmlMarketTag="<marketplace>"+xmlMarket+"</marketplace>";       
+        return xmlMarketTag;
+    }
+
+    @RequestMapping(value = "/updateTerms", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateTermsAndConditions(HttpServletRequest request) throws Exception {
+    	String response = ResponseStatusENUM.AUTH_FAILURE.getStatus();
+        String userName = request.getParameter("userName");
+        UserDao userDao = new UserDaoImpl();
+        response = userDao.updateTermsAndConditions(userName);
+        return response;
+    }
+    /*
+     * This code is added by ankit to update the status of test which is running on android device by superadmin from server
+     */
+    /**
+     * Service validates the user aginst the data base by passing username and password
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/updateteststatus", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateteststatusbyserver(HttpServletRequest request)  throws Exception {
+    	String response = ResponseStatusENUM.AUTH_FAILURE.getStatus();
+        String userName = request.getParameter("userName");
+        String status = request.getParameter("status");
+        String imei = request.getParameter("imei");
+        String testname = request.getParameter("testName");
+        boolean status1 = Boolean.valueOf(status);
+        TestConfigUserDao testConfigUserDao = new TestConfigUserDaoImpl();
+        boolean testrunning = testConfigUserDao.setIsAutoRunning(imei, userName, testname, status1);
+        response = String.valueOf(testrunning);
+        return response;
+    }
+    /**
+     * Service demo validates the user against the data base by passing default user name and password and IMEI no for new version by sss
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/demovalidate", method = RequestMethod.POST)
+    @ResponseBody
+    public String checkvalidateUserandcreate(HttpServletRequest request)  throws Exception {
+    	String response = ResponseStatusENUM.AUTH_FAILURE.getStatus();
+        String userName = request.getParameter("userName");
+        String passWord = request.getParameter("passWord");
+        String imei = request.getParameter("imei");
+        DemoUtil DemoUtil = new DemoUtil();
+        
+        response = DemoUtil.demovalidateUser(userName,passWord,imei);
+        if(response.startsWith("success")){
+        	//demodownLoadFile(request);
+        	String marketStr= getMarkets_Operator(userName);
+        	  if(null != marketStr){
+        		response=response+","+marketStr;
+        	}
+        	  // System.out.println("response------------------"+response);
+        }
+        return response;
+    }
+    
+    /**
+	 * This Service demo uploads single or multi files to the mentioned directory 
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+    @RequestMapping(value = "/demouploadTest", method = RequestMethod.POST)
+    @ResponseBody
+    public String demoupload(@Context HttpServletRequest request) throws Exception {
+        String response = ResponseStatusENUM.FAILURE.getStatus();
+        if (ServletFileUpload.isMultipartContent(request)) { 
+        	String userName = request.getParameter("userName");
+            String passWord = request.getParameter("passWord");
+            String imei = request.getParameter("imei");
+//            System.out.println("upload==="+userName+""+passWord);
+            /* UserDao userDao = new UserDaoImpl();
+           response = userDao.validateUser(userName, passWord,imei);
+            if(response.equals("1")){
+            	System.out.println("In Upload authentication falied====");
+            	return ResponseStatusENUM.AUTH_FAILURE.getStatus();
+            }*/
+            // Create a factory for disk-based file items 
+            DiskFileItemFactory  fileItemFactory = new DiskFileItemFactory();
+            File destinationDir = new File(UPLOADED_FILE_PATH);
+            ServletFileUpload uploadHandler = new ServletFileUpload(fileItemFactory);
+            try {
+                /*
+                 * Parse the request
+                 */
+                List items = uploadHandler.parseRequest(request);
+                Iterator itr = items.iterator();
+
+                while(itr.hasNext()) {
+                    FileItem item = (FileItem) itr.next();
+                    /*
+                     * Handle Form Fields.
+                     */
+                    if(item.isFormField()) {
+                        //response += "<BR>" + "Field Name = "+item.getFieldName()+", Value = "+item.getString();
+                    } else {
+                        //Handle Uploaded files.
+                        /*response += "<BR>" + "File Field Name = "+item.getFieldName()+
+                            ", File Name = "+item.getName()+
+                            ", Content type = "+item.getContentType()+
+                            ", File Size = "+item.getSize();*/
+                        /*
+                         * Write file to the ultimate location.
+                         */
+                        File file = new File(destinationDir,item.getName());
+                        item.write(file);
+                        response = ResponseStatusENUM.SUCCESS.getStatus();
+                    }
+                }
+            }catch(FileUploadException ex) {
+                //response += "Error encountered while parsing the request " + ex;
+            } catch(Exception ex) {
+            	//response += "Error encountered while uploading file " + ex;
+            }
+        } 
+        return response;
+    }
+    
+    /**demo
+     * This Service searches the file in the directory by taking input filed as file name(IMEI number)
+     * If the file was found it will send the file as attachment else returns response saying no content
+     * @throws IOException 
+     */
+    @RequestMapping(value = "/demodownload", method = RequestMethod.GET)
+    public @ResponseBody byte[] demodownLoadFile(HttpServletRequest request) throws IOException {
+    	String imei = request.getParameter("imei");
+    	String userName = request.getParameter("userName");
+        String passWord = request.getParameter("passWord");
+//        System.out.println(imei+"==="+userName+"===="+passWord);
+        /*DemoUtil demoutil = new DemoUtil();
+        String responseBak = demoutil.demovalidateUser(imei);*/
+        byte[] reportBytes = null;
+     /*   if(responseBak.equals("1")){
+        	System.out.println("Inside responseBak===================");
+        	ResponseBuilder response = Response.status(1);
+        	System.out.println("Inside responseBak==================="+response);
+        	return response.build();
+        }else{*/
+	    	TestConfig testConfig = new TestConfigDaoImpl().getTestConfigXML(imei, userName);
+	    	//System.out.println("testConfig.getTestConfigXml() "+ testConfig.getTestConfigXml());
+	    	if(null != testConfig){
+	    		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();  
+	    		DocumentBuilder builder;  
+	    		try{  
+		            builder = factory.newDocumentBuilder();  
+		            // Use String reader  
+		            Document document = builder.parse( new InputSource(new StringReader( testConfig.getTestConfigXml() ) ) );  
+		            TransformerFactory tranFactory = TransformerFactory.newInstance();  
+		            Transformer aTransformer = tranFactory.newTransformer();  
+		            Source src = new DOMSource( document );  
+		            File downLoadPath = new File(DOWNLOAD_FILE_PATH);
+		            if(!downLoadPath.exists()){
+		            	downLoadPath.mkdir();
+		            }
+		            Result dest = new StreamResult( new File(DOWNLOAD_FILE_PATH+"\\"+testConfig.getTestConfigName()+".xml") );  
+		            aTransformer.transform( src, dest );
+				} catch (Exception e){  
+		            // TODO Auto-generated catch block  
+		            e.printStackTrace();  
+		        } 
+				String filePath = DOWNLOAD_FILE_PATH+"\\"+testConfig.getTestConfigName()+".xml";
+	    		File file = new File(filePath);
+	    		ResponseBuilder response1 = Response.ok((Object) file);
+	            response1.header("Content-Disposition","attachment; filename="+testConfig.getTestConfigName()+".xml");
+	            try{
+		            if (file != null && file.exists()) {
+		                InputStream reportInputStream = new FileInputStream(file);
+		                long length = file.length();
+		                reportBytes = new byte[(int)length];
+		                int offset = 0;
+		                int numRead = 0;
+		                while (offset < reportBytes.length
+		                       && (numRead = reportInputStream.read(reportBytes, offset, reportBytes.length-offset)) >= 0) {
+		                    offset += numRead;
+		                }
+		                if (offset < reportBytes.length) {
+		                    throw new Exception("Could not completely read file "+ file.getName());
+		                }
+		                reportInputStream.close();
+		            }
+	            }catch (Exception e) {
+					e.printStackTrace();
+				}
+	            return reportBytes;
+	    	}
+	    	else{
+	    		String filePath = DOWNLOAD_FILE_PATH+"\\"+CONFIG_FILE_NAME;
+	    		System.out.println("filePath "+filePath);
+	    		File file = new File(filePath);
+	    		ResponseBuilder response1 = Response.ok((Object) file);
+	            response1.header("Content-Disposition","attachment; filename="+CONFIG_FILE_NAME);
+	            try{
+		            if (file != null && file.exists()) {
+		                InputStream reportInputStream = new FileInputStream(file);
+		                long length = file.length();
+		                reportBytes = new byte[(int)length];
+		                int offset = 0;
+		                int numRead = 0;
+		                while (offset < reportBytes.length
+		                       && (numRead = reportInputStream.read(reportBytes, offset, reportBytes.length-offset)) >= 0) {
+		                    offset += numRead;
+		                }
+		                if (offset < reportBytes.length) {
+		                    throw new Exception("Could not completely read file "+ file.getName());
+		                }
+		                reportInputStream.close();
+		            }
+	            }catch (Exception e) {
+					e.printStackTrace();
+				}
+	            return reportBytes;
+//	    		
+	    	}
+       // }
+    }
+    
+}

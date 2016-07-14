@@ -1,0 +1,93 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+	   xmlns:ui="http://java.sun.com/jsf/facelets"
+	   xmlns:f="http://java.sun.com/jsf/core"
+	   xmlns:h="http://java.sun.com/jsf/html"
+	   xmlns:a4j="http://richfaces.org/a4j"
+	   xmlns:c="http://java.sun.com/jsp/jstl/core"
+	   xmlns:rich="http://richfaces.org/rich">
+	   
+<h:head>
+	<title>Airometric File Processing</title>
+	<style type="text/css">
+	.fontlabel {
+		font-family: Arial, Helvetica, Sans-Serif; 
+		font-size: 15pt;
+		color:black;
+	}
+	.line-separator{
+		height:1px;
+		width: 100%;
+		background:#86a3ac;
+     } 
+	</style>
+	
+	<h:outputStylesheet library="css" name="Style_Dashboard.css" />
+</h:head>
+<ui:composition template="template/common/reportLayout.xhtml">
+   <ui:define name="content">
+    <body style="background-color: #f3f3f3;" onload="initialize(); active();">
+		<div id="wrap">
+			<div id="container" class="container" style="text-align: left;">
+			  <h:form>
+					<div id="row1" class="row" style="height: 650px !important;">
+						<div class="tab-content" style="width: 850px;height:664px;position: absolute;top: -68px;left: 100px;"> 
+						<rich:panel header="Processing Files">
+						<h:outputText value="TestName* " styleClass="fontlabel"/>	
+						<h:selectOneListbox id="testCaseName" name="testCaseName" value="#{reportBean.testCaseName}" size="1" style="width:25%;height:25px;">
+               				<f:selectItems value="#{sessionScope['testNameMap']}" /> 
+               				<f:ajax listener="#{reportBean.testListener}" event="change"  render="fileName buttonId messageId messageId2" />                  
+              			</h:selectOneListbox>	
+							&nbsp;&nbsp;
+						 <h:outputText value="FileName* " styleClass="fontlabel"/>
+						 <h:selectOneListbox id="fileName" name="fileName" value="#{reportBean.fileName}" size="1" 
+						 		style="width:42%;height:25px;" valueChangeListener="#{reportBean.setFileName}" 
+								immediate="true" onchange="this.form.submit()" >
+			   					<f:selectItems value="#{sessionScope['fileNameMap']}" />     					  							
+						 </h:selectOneListbox>              			
+						<h:commandButton id="buttonId" name="buttonId" style="position: relative;left: 20px;" 
+							value="#{reportBean.buttonLable}" action="#{reportBean.activeDeactivateTestName}">  
+						</h:commandButton> 	 
+						<h:outputText id="messageId" name="messageId" 
+							style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: green;position: relative;float: right;bottom: -15px;white-space: nowrap;" 
+							value="#{reportBean.activationMessage}">
+						</h:outputText>
+						<h:outputText id="messageId2" name="messageId2" 
+							style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position: relative;float: right;bottom: -15px;white-space: nowrap;" 
+							value="#{reportBean.errorMessage}">
+						</h:outputText>						
+						 </rich:panel>
+  						
+					   </div>	
+					</div>
+				<div id="bottom" class="bottomSpacerDiv"></div>
+				<h:inputHidden id="hidden_path" name="hidden_path"  value="#{sessionScope['stringfullpath']}" />
+		      </h:form>
+		    </div>	 
+		</div>
+	     	 <script type="text/javascript">
+ 
+		function initialize(){
+			var status="#{sessionScope['updateStatus']}";  
+		}	
+		function active(){
+			   document.getElementById("fileProcess").className='active';
+		   }              	
+	 </script>
+        <script>window.jQuery || document.write(' <h:outputScript library="js" name="jquery-1.9.0.min.js" />')</script>
+        <h:outputScript library="js" name="plugins.js" />
+        <h:outputScript library="js" name="main.js" />
+		<h:outputScript library="js" name="bootstrap.js" />
+		<h:outputScript library="js" name="jquery-1.9.0.min.js" />
+        <script>
+        
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+            </script>
+   </body>
+</ui:define>
+</ui:composition>
+</html>

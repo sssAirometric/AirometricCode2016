@@ -1,0 +1,205 @@
+package com.preprocessing;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
+
+import com.model.DBUtil;
+import com.report.to.SnapShotTO;
+
+
+
+public class PreProcessor  {
+	public static void  addSnapShot(String testName,String marketId) {
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+			TreeSet<Date> timeStamp = new TreeSet<Date>();
+			Map<Date, String> deviceInfoSnapMap = new HashMap<Date, String>();
+			List<SnapShotTO> snapShotList = new ArrayList<SnapShotTO>();
+			Map<Date, String> logCatSnapMap = new HashMap<Date, String>();
+			SimpleDateFormat newSdf = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss.SSS");
+			String query = "SELECT * FROM STG_DEVICE_INFO WHERE TEST_NAME LIKE '"
+					+ testName
+					+ "%' AND TEST_TYPE = 'FTP' order by TIME_STAMP_FOREACH_SAMPLE";
+			String logCatQuery = "SELECT TIME_STAMP FROM stg_log_cat_info WHERE TEST_NAME LIKE '%"
+					+ testName + "%' AND TEST_TYPE = 'FTP'";
+
+			Connection conn = null;
+			Statement stmt = null;
+			ResultSet rs = null;
+			
+			try {
+//				System.out.println(query);
+			    conn = DBUtil.openConn();
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery(query);
+				while (rs.next()) {
+					String dateStr = rs.getString("TIME_STAMP_FOREACH_SAMPLE");
+					String snapShotId = rs.getString("SNAPSHOT_ID");
+					String imei_number = rs.getString("DEVICE_IMEI");
+					String  logtestName = rs.getString("TEST_NAME");
+					String testIdenfier = rs
+							.getString("TEST_IDENTIFIER_TIMESTAMP");
+					SnapShotTO snapShotTO = new SnapShotTO();
+
+					snapShotTO.setSnapshotId(snapShotId);
+					snapShotTO.setTimeStamp(dateStr);
+					snapShotTO.setImeiNumber(imei_number);
+					snapShotTO.setTestIdentifier(testIdenfier);
+					snapShotTO.setTestName(logtestName);
+					snapShotList.add(snapShotTO);
+					timeStamp.add(newSdf.parse(dateStr));
+				}
+
+//				rs = stmt.executeQuery(logCatQuery);
+				 stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			      conn.setAutoCommit(false);
+				for (int i = snapShotList.size()-1; i >=0; i--) {
+					SnapShotTO snapShotTO = snapShotList.get(i);
+					if (i - 1 >= 0) {
+						SnapShotTO nextsnapShotTO = snapShotList.get(i - 1);
+						String updateLogcat = "UPDATE stg_log_cat_info SET SNAPSHOT_ID ='"
+								+ snapShotTO.getSnapshotId()
+								+ "' "
+								+ "WHERE " + "  TEST_NAME ='"
+								+ snapShotTO.getTestName()
+								+ "' AND "
+								+
+										"str_to_date(TIME_STAMP,'%Y-%m-%d %H:%i:%s.%f') <= str_to_date('"
+								+ snapShotTO.getTimeStamp()
+								+ "','%Y-%m-%d %H:%i:%s.%f')"
+								+ " AND str_to_date(TIME_STAMP,'%Y-%m-%d %H:%i:%s.%f') >= str_to_date('"
+								+ nextsnapShotTO.getTimeStamp()
+								+ "','%Y-%m-%d %H:%i:%s.%f')"
+								+" AND "
+								+ "TEST_IDENTIFIER_TIMESTAMP = '"
+								+ snapShotTO.getTestIdentifier()
+								+ "' AND IMEI_NUMBER = '"
+								+ snapShotTO.getImeiNumber() + "'";
+						
+						if(null!=snapShotTO.getSnapshotId()){
+							stmt.addBatch(updateLogcat);
+//							stmt.executeUpdate(updateLogcat);
+						}
+						
+					} else {
+						String updateLogcat = "UPDATE stg_log_cat_info SET SNAPSHOT_ID ='"
+								+ snapShotTO.getSnapshotId()
+								+ "'"
+								+ "WHERE TEST_NAME ='"+
+									 snapShotTO.getTestName()
+									+ "'  AND "+
+										"str_to_date(TIME_STAMP,'%Y-%m-%d %H:%i:%s.%f') < str_to_date('"
+								+ snapShotTO.getTimeStamp()
+								+ "','%Y-%m-%d %H:%i:%s.%f') AND "
+								+ "TEST_IDENTIFIER_TIMESTAMP = '"
+								+ snapShotTO.getTestIdentifier()
+								+ "' AND IMEI_NUMBER = '"
+								+ snapShotTO.getImeiNumber() + "'";
+						
+						stmt.addBatch(updateLogcat);
+//						System.out.println("updateLogcat-----"+updateLogcat);
+//						stmt.executeUpdate(updateLogcat);
+					}
+				}
+				
+				int[] updateCounts = stmt.executeBatch();
+//				System.out.println("updateCounts----"+updateCounts.length);
+			      
+			      conn.commit();
+			      conn.setAutoCommit(true);
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+	}
+	
+	
+	public static List<String> getLogcatEntriesToDelete(String testName,String eventName,Connection conn) {
+		List<String> timeStampLogCat = new ArrayList<String>();
+		SimpleDateFormat sdf = new SimpleDateFormat(
+		"yyyy-MM-dd HH:mm:ss.SSS");
+		String query = "SELECT TIME_STAMP FROM stg_log_cat_info WHERE TEST_NAME LIKE '"
+				+ testName + "%' AND EVENT_NAME = '"+eventName+"' ORDER BY TIME_STAMP ";
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			String currentTimeStamp = "";
+			while (rs.next()) {
+				currentTimeStamp = rs.getString("TIME_STAMP");
+				timeStampLogCat.add(currentTimeStamp);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return timeStampLogCat;
+	}
+	
+	
+	public static List<String> getTimeStampsToDelete(List<String> timeStampLogCat,Connection conn) {
+		List<String> timeStampTodelete = new ArrayList<String>();
+		SimpleDateFormat sdf = new SimpleDateFormat(
+		"yyyy-MM-dd HH:mm:ss.SSS");
+		try{
+			
+			Statement stmt = conn.createStatement();
+			for (int i = 0; i < timeStampLogCat.size(); i++) {
+				String currentDate = timeStampLogCat.get(i);
+				if (i+1<timeStampLogCat.size()&&null != timeStampLogCat.get(i + 1)) {
+					String nextDate = timeStampLogCat.get(i + 1);
+					if(matchCallTimestamp(sdf.parse(currentDate),sdf.parse(nextDate))){
+						timeStampTodelete.add(nextDate);
+						String query = "UPDATE stg_log_cat_info SET EVENT_NAME = CONCAT('Dup_', EVENT_NAME) WHERE TIME_STAMP ='"+nextDate+"'";
+//						System.out.println(query);
+						stmt.executeUpdate(query);
+					}
+				}
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	
+		return timeStampTodelete;
+	}
+	
+	public static boolean matchCallTimestamp(Date d1, Date d2) {
+		boolean status = false;
+		SimpleDateFormat format = new SimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss.SSS");
+		// System.out.println("POLQA----------"+starttime);
+		// System.out.println("DeviceInfo----------"+Endtime);
+		int seconds = 0;
+		try {
+			long diff = d1.getTime() - d2.getTime();
+			long diffMilliSeconds = diff / 1000 % 60 % 60;
+			long diffSeconds = diff / 1000 % 60;
+			long diffMinutes = diff / (60 * 1000) % 60;
+			long diffHours = diff / (60 * 60 * 1000) % 24;
+			long diffDays = diff / (24 * 60 * 60 * 1000);
+			seconds = Math.abs((int) diffSeconds + (int) (60 * diffMinutes));
+//			System.out.println(seconds);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (seconds < 1) {
+			status = true;
+		}
+		// System.out.println(seconds+"----status------"+status);
+		return status;
+	}
+}

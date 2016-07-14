@@ -1,0 +1,1379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+    version="2.0">
+    <managed-bean>
+        <managed-bean-name>testCaseAction</managed-bean-name>
+        <managed-bean-class>com.action.TestCaseAction</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+	 <managed-bean>
+        <managed-bean-name>userBean</managed-bean-name>
+        <managed-bean-class>com.to.UserBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+      <managed-bean>
+        <managed-bean-name>fileUploadController</managed-bean-name>
+        <managed-bean-class>com.fileUploadController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+     <managed-bean>
+        <managed-bean-name>qualityRangeBean</managed-bean-name>
+        <managed-bean-class>com.beans.QualityRangeBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+        <managed-bean>
+        <managed-bean-name>reportBean</managed-bean-name>
+        <managed-bean-class>com.to.ReportBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+     <managed-bean>
+        <managed-bean-name>moTestCase</managed-bean-name>
+        <managed-bean-class>com.to.MOTestCase</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>mtTestCase</managed-bean-name>
+        <managed-bean-class>com.to.MTTestCase</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>ftpTestCase</managed-bean-name>
+        <managed-bean-class>com.to.FTPTestCase</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>testConfig</managed-bean-name>
+        <managed-bean-class>com.to.TestConfig</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+     <managed-bean>
+        <managed-bean-name>fileUploadBean</managed-bean-name>
+        <managed-bean-class>com.to.FileUploadBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+	 <managed-bean>
+        <managed-bean-name>marketPlaceBean</managed-bean-name>
+        <managed-bean-class>com.to.MarketPlaceBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>    
+    
+     <managed-bean>
+        <managed-bean-name>externalFileUploadBean</managed-bean-name>
+        <managed-bean-class>com.to.ExternalFileUploadBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>                
+   <!-- Login Page Navigation start -->
+    <navigation-rule>
+        <display-name>validateUser</display-name>
+        <from-view-id>/Pages/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>valid</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>invalid</from-outcome>
+            <to-view-id>/Pages/login.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>   
+  <!-- Login Page Navigation Ends -->
+  
+ <!-- Logout Page Navigation start -->
+    <navigation-rule>
+        <display-name>logoutUser</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>valid</from-outcome>
+            <to-view-id>/Pages/login.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>   
+ 
+  <!-- Logout Page Navigation ends -->   
+  
+  <!-- Logout Page Session Navigation start --> 
+     <navigation-rule>
+        <display-name>logoutSessionUser</display-name>
+        <from-view-id>/Pages/session_content.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>sessionValid</from-outcome>
+            <to-view-id>/Pages/login.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>   
+    
+ <!-- Logout Page Session Navigation Ends -->  
+ 
+  <!-- Add test Case  Navigation Start -->  
+    <navigation-rule>
+        <display-name>addTestCase</display-name>
+        <from-view-id>/Pages/addTestCase.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+        <!-- assignTestConfig.xhtml -->
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>testCreatedFailed</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+  
+    <!-- Add test Case  Navigation Ends -->  
+     
+     <!-- Assign test Case  Navigation Start -->    
+    <navigation-rule>
+        <display-name>assignTestConfig</display-name>
+        <from-view-id>/Pages/assignTestConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/Pages/assignTestConfig.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/Pages/assignTestConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+  <!-- Assign test Case  Navigation Ends -->    
+        
+        
+   <navigation-rule>
+        <display-name>goToDeleteUserStatus</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>deletePopPage</from-outcome>
+            <to-view-id>/Pages/editUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
+    
+    <navigation-rule>
+        <display-name>userPage</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>createUserPage</from-outcome>
+            <to-view-id>/Pages/createUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
+    
+     <navigation-rule>
+        <display-name>operateUser</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>operateUserPage</from-outcome>
+            <to-view-id>/Pages/createUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
+
+    <navigation-rule>
+        <display-name>edituserDetails</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>edituserDetailsPage</from-outcome>
+            <to-view-id>/Pages/editUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
+    
+    <navigation-rule>
+        <display-name>welcomeEditUser</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeEditUserPage</from-outcome>
+            <to-view-id>/Pages/editUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
+    
+     <navigation-rule>
+        <display-name>operatorEditUser</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>operatorEditUserPage</from-outcome>
+            <to-view-id>/Pages/editUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
+
+     <navigation-rule>
+        <display-name>generateExcelReport</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>reportDataValidation</from-outcome>
+            <to-view-id>/Pages/excelReport.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>reportDataSuccess</from-outcome>
+            <to-view-id>/Pages/excelReport.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
+    
+     <navigation-rule>
+        <display-name>generateGoogleMapReport</display-name>
+        <from-view-id>/Pages/map.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>mapDataValidation</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>mapGoogleDataSuccess</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
+    
+   <navigation-rule>
+        <display-name>mapCreateUser</display-name>
+        <from-view-id>/Pages/createUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>mapCreateUserPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>createUsertoReports</display-name>
+        <from-view-id>/Pages/createUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>createUsertoReportsPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>editUsertoReports</display-name>
+        <from-view-id>/Pages/editUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>editUsertoReportsPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>welcomeUser</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomePage</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+      <navigation-rule>
+        <display-name>welcomeCreateUser</display-name>
+        <from-view-id>/Pages/createUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeCreateUserPage</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>welcomeUserEdit</display-name>
+        <from-view-id>/Pages/editUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeUserEditPage</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>welcomeOpearatorUser</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeOpearatorUserPage</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+
+     <navigation-rule>
+        <display-name>welcomeConfig</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeConfigPage</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    
+     <navigation-rule>
+        <display-name>welcomeOperatorConfig</display-name>
+        <from-view-id>/Pages/createOperator.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeOperatorConfigPage</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    
+    
+     <navigation-rule>
+        <display-name>editWelcomeConfig</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>editWelcomeConfigPage</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>welcomeUploadConfig</display-name>
+        <from-view-id>/Pages/uploadTestConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeUploadConfigPage</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>welcomeMaptoConfig</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeMaptoConfigPage</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>welcomeVoiceConnecttoConfig</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeVoiceConnecttoConfigPage</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+     
+    <navigation-rule>
+        <display-name>welcomeDashbordtoConfig</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeDashbordtoConfigPage</from-outcome>
+            <to-view-id>/Pages/dashboard.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>createConfigPage</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>createConfigPageview</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>welcomeMaptoUser</display-name>
+        <from-view-id>/Pages/map.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeMaptoUserPage</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>welcomeVoiceConnectivity</display-name>
+        <from-view-id>/Pages/voiceConnectivity.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeVoiceConnectivityPage</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>welcomeDashboard</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeDashboardPage</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>welcomeReports</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeMapsPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>welcomeOperatorReports</display-name>
+        <from-view-id>/Pages/createOperator.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeOperatorReportsPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>createConfigToReports</display-name>
+        <from-view-id>/Pages/addTestCase.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>createConfigToReportsPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+  <!-- welcome map  -->
+     <navigation-rule>
+        <display-name>mapsUser</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeMapsUserPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>voiceConnectivity</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>voiceConnectPage</from-outcome>
+            <to-view-id>/Pages/voiceConnectivity.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>voiceConnectAnalytics</display-name>
+        <from-view-id>/Pages/dashboard.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>voiceConnectAnalyticsPage</from-outcome>
+            <to-view-id>/Pages/voiceConnectivity.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>voiceConnect</display-name>
+        <from-view-id>/Pages/voiceConnectivity.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>voiceConnectionPage</from-outcome>
+            <to-view-id>/Pages/voiceConnectivity.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>dashboardVoice</display-name>
+        <from-view-id>/Pages/dashboard.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>dashboardVoicePage</from-outcome>
+            <to-view-id>/Pages/dashboard.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>excelvoiceMapsUser</display-name>
+        <from-view-id>/Pages/excelReport.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>excelvoiceMapsUserPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>dashboardMapsUser</display-name>
+        <from-view-id>/Pages/dashboard.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>dashboardMapsUserPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>welcomeExcel</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeExcelPage</from-outcome>
+            <to-view-id>/Pages/excelReport.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>welcomeExceltoConfig</display-name>
+        <from-view-id>/Pages/excelReport.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeExceltoConfigPage</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>welcomeExcelConfig</display-name>
+        <from-view-id>/Pages/excelReport.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeExcelConfigPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>voiceConnectDashboard</display-name>
+        <from-view-id>/Pages/voiceConnectivity.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>voiceConnectDashboardPage</from-outcome>
+            <to-view-id>/Pages/dashboard.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+
+    <navigation-rule>
+        <display-name>voiceMapsUser</display-name>
+        <from-view-id>/Pages/voiceConnectivity.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>voiceMapsUserPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+
+    <navigation-rule>
+        <display-name>mapCreatUser</display-name>
+        <from-view-id>/Pages/map.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>mapCreatUserPage</from-outcome>
+            <to-view-id>/Pages/createUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+
+    <navigation-rule>
+        <display-name>assignConfigToReports</display-name>
+        <from-view-id>/Pages/assignTestConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>assignConfigToReportsPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    
+    <navigation-rule>
+        <display-name>createAssignConfigPage</display-name>
+        <from-view-id>/Pages/assignTestConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>createAssignConfigPageview</from-outcome>
+            <to-view-id>/Pages/assignTestConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>editConfigToReports</display-name>
+        <from-view-id>/Pages/editConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>editConfigToReportsPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>uploadConfigToReports</display-name>
+        <from-view-id>/Pages/uploadTestConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>uploadConfigToReportsPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>welcomeReportTabConfig</display-name>
+        <from-view-id>/Pages/map.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeReportTabConfigPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>welcomeVoiceConnectConfig</display-name>
+        <from-view-id>/Pages/voiceConnectivity.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeVoiceConnectConfigPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>clearOperatorDetails</display-name>
+        <from-view-id>/Pages/createOperator.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>clearOperatorDetailsPage</from-outcome>
+            <to-view-id>/Pages/createOperator.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>addOperator</display-name>
+        <from-view-id>/Pages/createOperator.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>addOperatorFailed</from-outcome>
+            <to-view-id>/Pages/createOperator.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>addOperatorSuccess</from-outcome>
+            <to-view-id>/Pages/createOperator.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    
+     <navigation-rule>
+        <display-name>maptoDashboard</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>maptoDashboardPage</from-outcome>
+            <to-view-id>/Pages/dashboard.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>maptoExcelReport</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>maptoExcelReportPage</from-outcome>
+            <to-view-id>/Pages/excelReport.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>dashboardtoExcelReport</display-name>
+        <from-view-id>/Pages/dashboard.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>dashboardtoExcelReportPage</from-outcome>
+            <to-view-id>/Pages/excelReport.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>voicetoExcelReport</display-name>
+        <from-view-id>/Pages/voiceConnectivity.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>voicetoExcelReportPage</from-outcome>
+            <to-view-id>/Pages/excelReport.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>excelReportdetails</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>excelReportdetailsPage</from-outcome>
+            <to-view-id>/Pages/excelReport.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>welcomeDashboardConfig</display-name>
+        <from-view-id>/Pages/dashboard.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeDashboardConfigPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+
+     <navigation-rule>
+        <display-name>editAssignConfig</display-name>
+        <from-view-id>/Pages/uploadTestConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>editAssignConfigPage</from-outcome>
+            <to-view-id>/Pages/editConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+
+    <navigation-rule>
+        <display-name>exceltoDashboard</display-name>
+        <from-view-id>/Pages/excelReport.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>exceltoDashboardPage</from-outcome>
+            <to-view-id>/Pages/dashboard.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>EditConfiguration</display-name>
+        <from-view-id>/Pages/editConfig.xhtml</from-view-id>
+         <navigation-case>
+            <from-outcome>configeditSelectFailed</from-outcome>
+            <to-view-id>/Pages/editConfig.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>EditConfigurationPage</from-outcome>
+            <to-view-id>/Pages/editConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    
+     <navigation-rule>
+        <display-name>testEditAssignConfig</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>testEditAssignConfigPage</from-outcome>
+            <to-view-id>/Pages/editConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+
+     <navigation-rule>
+        <display-name>editAssignCreateConfig</display-name>
+        <from-view-id>/Pages/editConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>editAssignCreateConfigPage</from-outcome>
+            <to-view-id>/Pages/assignTestConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>editCreateAssignConfig</display-name>
+        <from-view-id>/Pages/assignTestConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>editCreateAssignConfigPage</from-outcome>
+            <to-view-id>/Pages/editConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>     
+    
+    <navigation-rule>
+        <display-name>testAssignUpload</display-name>
+        <from-view-id>/Pages/assignTestConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>testAssignUploadPage</from-outcome>
+            <to-view-id>/Pages/uploadTestConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>testEditAssignUpload</display-name>
+        <from-view-id>/Pages/editConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>testEditAssignUploadPage</from-outcome>
+            <to-view-id>/Pages/uploadTestConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>uploadAssignConfig</display-name>
+        <from-view-id>/Pages/uploadTestConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>uploadAssignConfigPage</from-outcome>
+            <to-view-id>/Pages/assignTestConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+  
+   <navigation-rule>
+        <display-name>assignConfigPage</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>assignConfigurationPage</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>createUserOperator</display-name>
+        <from-view-id>/Pages/createUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>createUserOperatorPage</from-outcome>
+            <to-view-id>/Pages/createOperator.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>editUserOperator</display-name>
+        <from-view-id>/Pages/editUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>editUserOperatorPage</from-outcome>
+            <to-view-id>/Pages/createOperator.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    
+     <navigation-rule>
+        <display-name>operatorWelcome</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>operatorWelcomePage</from-outcome>
+            <to-view-id>/Pages/createOperator.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+       <navigation-rule>
+        <display-name>createOperator</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>createOperatorPage</from-outcome>
+            <to-view-id>/Pages/createOperator.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    
+    <navigation-rule>
+        <display-name>assignEdittoConfig</display-name>
+        <from-view-id>/Pages/editConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>assignEdittoConfigPage</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>uploadConfiguration</display-name>
+        <from-view-id>/Pages/uploadTestConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>uploadConfigurationPage</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>uploadEditAssignConfig</display-name>
+        <from-view-id>/Pages/uploadTestConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>uploadEditAssignConfigPage</from-outcome>
+            <to-view-id>/Pages/editConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>testAssignConfigPage</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>testassignConfigurationPage</from-outcome>
+            <to-view-id>/Pages/assignTestConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>testUpload</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>testUploadPage</from-outcome>
+            <to-view-id>/Pages/uploadTestConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+        <navigation-rule>
+        <display-name>testUpload</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>transferPage</from-outcome>
+            <to-view-id>/Pages/transfer_test.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <!-- Tabs Navigation Start  -->
+     <navigation-rule>
+        <display-name>createUserToConfig</display-name>
+        <from-view-id>/Pages/createUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>createUserToConfigPage</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>editUserToConfig</display-name>
+        <from-view-id>/Pages/editUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>editUserToConfigPage</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+
+    <navigation-rule>
+        <display-name>createConfigToManagement</display-name>
+        <from-view-id>/Pages/addTestCase.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>createConfigToManagementPage</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>assignConfigToManagement</display-name>
+        <from-view-id>/Pages/assignTestConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>assignConfigToManagementPage</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>editConfigToManagement</display-name>
+        <from-view-id>/Pages/editConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>editConfigToManagementPage</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>uploadConfigToManagement</display-name>
+        <from-view-id>/Pages/uploadTestConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>uploadConfigToManagementPage</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>editCreateUser</display-name>
+        <from-view-id>/Pages/editUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>editCreateUserPage</from-outcome>
+            <to-view-id>/Pages/editUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>edituserPageDetails</display-name>
+        <from-view-id>/Pages/createUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>edituserDetailsPage</from-outcome>
+            <to-view-id>/Pages/editUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>editToUser</display-name>
+        <from-view-id>/Pages/editUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>editToUserPage</from-outcome>
+            <to-view-id>/Pages/createUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+        <display-name>clearUserDetails</display-name>
+        <from-view-id>/Pages/createUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>clearUserDetailsPage</from-outcome>
+            <to-view-id>/Pages/createUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    
+    <navigation-rule>
+      <display-name>deleteConfiguration</display-name>
+      <from-view-id>/Pages/editConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>configSelectFailed</from-outcome>
+            <to-view-id>/Pages/editConfig.xhtml</to-view-id>
+        </navigation-case>
+         <navigation-case>
+            <from-outcome>configAssignedFailed</from-outcome>
+            <to-view-id>/Pages/editConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+     <navigation-rule>
+      <display-name>deleteConfig</display-name>
+      <from-view-id>/Pages/editConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>deleteConfigPage</from-outcome>
+            <to-view-id>/Pages/editConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <display-name>editConfiguration</display-name>
+      <from-view-id>/Pages/editConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>editConfigurationPage</from-outcome>
+            <to-view-id>/Pages/editConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <display-name>updateConfiguration</display-name>
+      <from-view-id>/Pages/editConfig.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>testUpdateCreatedFailed</from-outcome>
+            <to-view-id>/Pages/editConfig.xhtml</to-view-id>
+        </navigation-case>
+         <navigation-case>
+            <from-outcome>updateSuccess</from-outcome>
+            <to-view-id>/Pages/editConfig.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>updateConfigurationPage</from-outcome>
+            <to-view-id>/Pages/editConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+     <navigation-rule>
+        <display-name>ExceltovoiceConnect</display-name>
+        <from-view-id>/Pages/excelReport.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ExceltovoiceConnectPage</from-outcome>
+            <to-view-id>/Pages/voiceConnectivity.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+     <!-- Tabs Navigation Ends  -->
+    
+  
+  <!-- Create User Page Navigation start -->
+    <navigation-rule>
+        <display-name>createUser</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>userCreatedSuccess</from-outcome>
+            <to-view-id>/Pages/createUser.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>userCreatedFailed</from-outcome>
+            <to-view-id>/Pages/createUser.xhtml</to-view-id>
+        </navigation-case>
+         <navigation-case>
+            <from-outcome>userEditSuccess</from-outcome>
+            <to-view-id>*</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>userEditLogout</from-outcome>
+            <to-view-id>/Pages/login.xhtml</to-view-id>
+        </navigation-case>
+        
+    </navigation-rule>
+    <navigation-rule>
+        <display-name>addRowAction</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>add</from-outcome>
+            <to-view-id>/Pages/createUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <display-name>addRowEditAction</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>edit</from-outcome>
+            <to-view-id>/Pages/editUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+     <navigation-rule>
+        <display-name>addLoginUserRowAction</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>addRow</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+     <navigation-rule>
+        <display-name>loginRemoveRowAction</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>removeRow</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <display-name>removeRowAction</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>remove</from-outcome>
+            <to-view-id>/Pages/createUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+      <navigation-rule>
+        <display-name>goToeditUser</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/Pages/editUser.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>deleteSuccess</from-outcome>
+            <to-view-id>/Pages/editUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <display-name>welcomePage</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomePage</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    <navigation-rule>
+        <display-name>handleFileUpload</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>uploadSuccess</from-outcome>
+            <to-view-id>/Pages/uploadTestConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+<!-- Create User Page Navigation Ends -->
+    <managed-bean>
+        <managed-bean-name>testCaseValidator</managed-bean-name>
+        <managed-bean-class>
+            com.validator.TestCaseValidator
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+	<validator>
+ 		<display-name>com.validator.TestCaseValidator</display-name>
+ 		<validator-id>com.validator.TestCaseValidator</validator-id>
+ 		<validator-class>com.validator.TestCaseValidator</validator-class>
+ 	</validator> 
+ 	
+    <managed-bean>
+    
+   <managed-bean-name>createUserValidator</managed-bean-name>
+        <managed-bean-class>
+            com.validator.CreateUserValidator
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+	<validator>
+ 		<display-name>com.validator.CreateUserValidator</display-name>
+ 		<validator-id>com.validator.CreateUserValidator</validator-id>
+ 		<validator-class>com.validator.CreateUserValidator</validator-class>
+ 	</validator> 
+ 	
+ 	 <managed-bean>
+ 	  <managed-bean-name>OperatorUserValidator</managed-bean-name>
+        <managed-bean-class>
+            com.validator.OperatorUserValidator
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+	<validator>
+ 		<display-name>com.validator.OperatorUserValidator</display-name>
+ 		<validator-id>com.validator.OperatorUserValidator</validator-id>
+ 		<validator-class>com.validator.OperatorUserValidator</validator-class>
+ 	</validator> 
+ 	
+    <managed-bean>
+        <managed-bean-name>assignConfigValidator</managed-bean-name>
+        <managed-bean-class>
+            com.validator.AssignConfigValidator
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+	<validator>
+ 		<display-name>com.validator.AssignConfigValidator</display-name>
+ 		<validator-id>com.validator.AssignConfigValidator</validator-id>
+ 		<validator-class>com.validator.AssignConfigValidator</validator-class>
+ 	</validator> 		
+    <managed-bean>
+        <managed-bean-name>loginUserValidator</managed-bean-name>
+        <managed-bean-class>
+            com.validator.LoginUserValidator
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+	<validator>
+ 		<display-name>com.validator.LoginUserValidator</display-name>
+ 		<validator-id>com.validator.LoginUserValidator</validator-id>
+ 		<validator-class>com.validator.LoginUserValidator</validator-class>
+ 	</validator> 	
+   <navigation-rule>
+        <display-name>loginuserPage</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>loginuserPagesuccess</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule> 
+    <navigation-rule>  
+        <display-name>editLoginUser</display-name>
+        <from-view-id>*</from-view-id>      
+         <navigation-case>
+            <from-outcome>loginUserEditSuccess</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+         </navigation-case>
+    </navigation-rule>   
+    
+	<!-- Market Place tab navigation start -->
+	<navigation-rule>
+        <display-name>listMarketPlace</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>listMarketPlacePage</from-outcome>
+            <to-view-id>/Pages/listMarketPlace.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <display-name>goToActiveMarket</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>listMarketPlacePage</from-outcome>
+            <to-view-id>/Pages/listMarketPlace.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+     <navigation-rule>
+        <display-name>welcomeMarketUser</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeMarketUserPage</from-outcome>
+            <to-view-id>/Pages/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
+
+     <navigation-rule>
+        <display-name>welcomeMarketConfig</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeMarketConfigPage</from-outcome>
+            <to-view-id>/Pages/addTestCase.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <display-name>welcomeMarketReports</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>welcomeMarketReportsPage</from-outcome>
+            <to-view-id>/Pages/map.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>      
+    <!-- Market Place tab navigation end -->  
+    
+    	<!-- Create Market Place start -->
+    	
+    <navigation-rule>
+        <display-name>goToMarket</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>goToMarketPage</from-outcome>
+            <to-view-id>/Pages/createMarket.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+	<navigation-rule>
+        <display-name>goToMarketOperator</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>goToMarketOperatorPage</from-outcome>
+            <to-view-id>/Pages/assignMarket.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+   <!-- Create Market Place tab navigation end -->     
+ 	 <managed-bean>
+ 	  <managed-bean-name>MarketUserValidator</managed-bean-name>
+        <managed-bean-class>
+            com.validator.MarketUserValidator
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+	<validator>
+ 		<display-name>com.validator.MarketUserValidator</display-name>
+ 		<validator-id>com.validator.MarketUserValidator</validator-id>
+ 		<validator-class>com.validator.MarketUserValidator</validator-class>
+ 	</validator> 
+    <!--Create Market Place end -->      
+      
+    <!-- File processing start -->  
+	<navigation-rule>
+        <display-name>maptoFileProcessing</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>maptoFileProcessingPage</from-outcome>
+            <to-view-id>/Pages/fileProcessing.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>    
+    
+    <navigation-rule>
+        <display-name>fileUpload</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>fileUploadPage</from-outcome>
+            <to-view-id>/Pages/uploadFile.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>saveConfiguration</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>configurationPage</from-outcome>
+            <to-view-id>/Pages/voiceConnectivity.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <display-name>saveAsDraft</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>configurationPage</from-outcome>
+            <to-view-id>/Pages/voiceConnectivity.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>    
+    
+    <navigation-rule>
+        <display-name>getConfigurationToSave</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>configurationPage</from-outcome>
+            <to-view-id>/Pages/voiceConnectivity.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <display-name>exportReport</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>exportPage</from-outcome>
+            <to-view-id>/Pages/voiceConnectivity.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>   
+    
+      <navigation-rule>
+        <display-name>exportReport1</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>exportPage1</from-outcome>
+            <to-view-id>/Pages/voiceConnectivity.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>   
+    
+         <navigation-rule>
+        <display-name>configPageToChangeRanges</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>configPageToChangeRanges</from-outcome>
+            <to-view-id>/Pages/configurerange.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
+    
+    <navigation-rule>
+        <display-name>frequencyUpload</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>frequencyUploadPage</from-outcome>
+            <to-view-id>/Pages/uploadFrequencyPlan.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>    
+    
+    <navigation-rule>
+        <display-name>externalUpload</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>externalUploadPage</from-outcome>
+            <to-view-id>/Pages/uploadExternalFile.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <display-name>preCalculationTest</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>mapGoogleDataSuccess</from-outcome>
+            <to-view-id>/Pages/uploadTestConfig.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>      
+        
+    <navigation-rule>
+        <display-name>precalculateTestNew</display-name>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>precalculateTestSuccess</from-outcome>
+            <to-view-id>/Pages/preCalculationTest.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+            
+    <!-- File processing end -->
+    <lifecycle>
+    	<phase-listener>com.util.RequestInterceptor</phase-listener>
+	</lifecycle> 
+	
+
+</faces-config>

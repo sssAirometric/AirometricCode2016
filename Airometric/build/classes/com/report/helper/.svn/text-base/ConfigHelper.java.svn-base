@@ -1,0 +1,28 @@
+package com.report.helper;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import com.report.dao.impl.DataConnectivityDaoImpl;
+
+public class ConfigHelper {
+
+	public Integer getConfigId(String configName){
+		int configId = 0;
+		try{
+			Statement stmt =  DataConnectivityDaoImpl.st;
+			String query = "SELECT CONFIG_ID FROM  configuration_master WHERE CONFIG_NAME='"+configName+"'";
+			System.out.println("query------"+query);
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()){
+				configId = rs.getInt("CONFIG_ID");
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return configId;
+	}
+}

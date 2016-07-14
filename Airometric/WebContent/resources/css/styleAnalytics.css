@@ -1,0 +1,404 @@
+
+/*clearfix Class*/
+
+.cf:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+.cf {
+    display: inline-block;
+}
+.cf {
+    display: block;
+}
+body {background: #f4f4f4; padding-bottom: 30px;}
+.container.header:before {padding: 1px;} 
+.header-row {background: #ffffff;}
+.headerBtns {margin-top: 60px}
+.filter {margin: 20px 0}
+.filter-form select { background: none; border-radius: 0; padding: 5px 10px 5px 5px; height: 30px}
+.device h2 {font-size:1.6em;margin-top: 0;}
+.device strong {display: table-row; font-weight: normal;}
+.device strong span {display: table-cell;width: 40%}
+.device-holder { margin: 20px 0 0 0}
+.device-holder img {width: 90%}
+.img-responsive {width: 100%}
+#myTab {width: 50%; float: left; padding: 0;}
+#myTab li {list-style-type: none; padding-right: 10px;}
+#myTab li a { display: block; padding: 10px 10px 10px 5px; color: #999999; text-decoration: none; border-bottom: 1px solid #d3d3d3}
+#myTab li a.first {border-top: 1px solid #d3d3d3;}
+#myTab li.active a.first {
+    border-top: 1px solid #CCCCCC;
+}
+#myTab li.active { padding-right: 10px;}
+#myTab li.active a{background: #f4f4f4;border-bottom: 1px solid #CCCCCC;border-top: 1px solid #CCCCCC; color: #333333; padding: 10px 20px 9px 5px;}
+#myTab li a strong, #myTab li a span {display: block;}
+#myTab li a strong {
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 16px;
+}
+#myTab li a span {font-size: 12px}
+#myTab li a span.details {background: url(../resources/images/details-arrow.jpg) no-repeat 43px 6px;}
+#myTab li.active a span.details {background: url(../resources/images/details-arrow-on.jpg) no-repeat 43px 6px;}
+.tab-content {width: 50%; float: left;border: 1px solid #666666; margin: -1px 0 0 -1px;}
+.tab-content > .active {height: 400px;   padding: 10px;  z-index: 999;}
+#map-canvas {height: 100%}
+.airo-dropdown .dropdown-menu {display: block;position: static;margin-bottom: 20px;}
+
+.historyBox lable {background: none repeat scroll 0 0 #CCCCCC; border-radius: 5px 5px 5px 5px; margin-left: 5px; padding: 5px;}
+.historyBox lable input {margin-right: 5px;}
+
+.test-details-box h2 {font-weight: normal; border-bottom: 1px solid #666666; font-size: 25px;}
+.test { background: none; box-shadow: none;}
+.test-heading {}
+.test-heading h3 { font-size: 17px; color:#666666; font-weight: normal; line-height: 30px;}
+.test-heading h3 i {
+    background: url("../resources/images/edge-icon-big.jpg") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    float: left;
+    height: 35px;
+    margin-right: 9px;
+    width: 38px;
+}
+.test-heading h3 i.edge {background: url(../resources/images/edge-icon-big.jpg) no-repeat 0 0;}
+.test-heading h3 i.connectivity {background: url(../resources/images/connectivity-icon-big.jpg) no-repeat 0 0;margin-right: 20px;width: 45px;}
+.test-heading h3 i.rentention {background: url(../resources/images/rentention-icon-big.jpg) no-repeat 0 0;margin-right: 20px;width: 45px;}
+.test-heading h3 i.vq-icon {background: url(../resources/images/vq-icon-big.jpg) no-repeat 0 0;margin-right: 20px;width: 45px;}
+.test-heading h3 i.browser-speed-icon {background: url(../resources/images/browser-speed-icon-big.jpg) no-repeat 0 0;margin-right: 20px;width: 45px;height: 40px;}
+.test-heading h3 i.data-throughput-icon {background: url(../resources/images/data-throughput-icon-big.jpg) no-repeat 0 0;margin-right: 20px;width: 45px;height: 40px;}
+.test-heading h3 a { font-size: 13px; color:#666666; margin-left: 30px }
+.test-heading a.accordion-toggle:after {content: "Collapse -"}
+.test-heading a.collapsed:after {content: "Expand +"}
+.analysis-box { background: #ffffff; width:90%; float: left; padding: 10px; margin-top: 5px}
+.analysis-box > strong { display: inline-block;font-size: 16px;font-weight: normal;width:9%;}
+.analysis-box > strong a {display: block;font-size: 12px;text-decoration: underline;}
+.analysis-box > ul {float: right;width:90%; list-style-type: none;}
+.analysis-box > ul li { line-height: 11px; margin-top: 10px;}
+.analysis-box > ul li span {display: inline-block; width: 12px; height: 12px;margin-right: 5px}
+.edge li span{}
+.pieHolder { width:98%; float: right}
+.panel-collapse {clear: both; margin-top: 10px}
+/*.panel-collapse img {width: 100%}:Commented for the Google Map Pointers*/
+.panel-collapse .row {margin:10px 0; padding: 0}
+.panel-collapse .row .container  {padding: 0}
+.detailsMap {width: 49%; float: left}
+.vq-compare-networks {width: 49%; float: right}
+.uplink-vq {width: 49%; float: left}
+.downlink-vq {width: 49%; float: right}
+.down-arrow {clear:both;border-bottom: 1px solid #d3d3d3; padding: 15px 0; text-align: center; position: relative;}
+.down-arrow a.accordion-toggle { background: url(../resources/images/uparrow.jpg) no-repeat 0 0; display: block; width: 15px; height: 10px;  left: 50%;
+    position: absolute;} 
+.down-arrow a.collapsed { background: url(../resources/images/downarrow.jpg) no-repeat 0 0; display: block; width: 15px; height: 10px;  left: 50%;
+    position: absolute;}       
+.airo-showcase > p > .btn {margin: 5px 0; } 
+.greenBgColor { background: #39b54a}
+.redBgColor { background: #ea2a2a}
+.orangeBgColor { background: #f48c37}
+footer {padding: 10px 15px; }
+.chart {position: relative; display: inline-block; width:32px; height:32px; text-align: center; }
+.chartBig{width: 40px; height: 40px; }
+.chartBig span.percent {line-height: 40px; font-size: 15px; color: #333333; font-weight: normal;}
+.chart canvas {position: absolute; top: 0; left: 0; width: 100%; height: 100%; } 
+.percent {display: inline-block; line-height:34px; z-index: 2; } 
+.percent:after {margin-left: 0.1em; font-size: .8em; }
+.angular .chart {margin-top: 0; }
+.borderTop {border-top: 1px dotted #ccc;margin-left: -3px;margin-top: 5px;padding: 5px 0;}
+.borderTop div.col-sm-5 {width:40.4%}
+.borderTop div.col-sm-2 {padding-left:4%;}
+#myTab li a strong.deviceName {font-size: 12px; margin-top:8%;}
+.addToCompare {font-size: 11px;padding: 3px 10px; line-height:20px; border-radius: 3px}
+.addToCompare input[type="checkbox"] {float: left;margin: 4px 6px 4px -4px;}
+
+/* tables */
+table.tablesorter {
+	font-family:arial;
+	background-color: #CDCDCD;
+	margin:10px 0pt 15px;
+	font-size: 8pt;
+	width: 100%;
+	text-align: left;
+	border-spacing: 1px;
+	border-collapse: separate;
+}
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+	background-color: #e6EEEE;
+	border: 1px solid #FFF;
+	font-size: 8pt;
+	padding: 4px;
+}
+table.tablesorter thead tr .header {
+	background-image: url(../resources/images/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+table.tablesorter tbody td {
+	color: #3D3D3D;
+	padding: 4px;
+	background-color: #FFF;
+	vertical-align: top;
+}
+table.tablesorter tbody tr.odd td {
+	background-color:#F0F0F6;
+}
+table.tablesorter thead tr .headerSortUp {
+	background-image: url(../resources/images/asc.gif);
+}
+table.tablesorter thead tr .headerSortDown {
+	background-image: url(../resources/images/desc.gif);
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+background-color: #8dbdd8;
+}
+
+/* Begin Responsive Style */
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-width : 240px) and (max-width : 320px){	
+
+.row {margin-left: 0; margin-right: 0;} 
+.container {padding:0 1%; width: 100%; }
+.headerBtns {margin: 10px; }
+.filter-form select {margin-top: 5px}
+.col-md-2.device.clearfix {padding: 5px; }
+.device-details {float: right; width: 60%; }
+.device-details h2 {font-size: 1.3em}
+.device-holder {float:left; margin: 0 0 20px; width:30%; }
+.device-holder img {width:100%;}
+.col-md-10 {padding: 5px}
+
+#myTab {float: none; padding: 0; width: 100%;}
+#myTab li { padding-right: 0}
+#myTab li.active a {
+    background: none repeat scroll 0 0 #F4F4F4;
+    color: #333333;
+    padding: 10px 20px 9px 5px;
+}
+#myTab li div.col-sm-1.text-center {float: left; width: 20%; }
+#myTab li div.col-sm-2.text-center {float: right; height: 1px; top:-26px; width: 20%;}
+#myTab li a span.details {background: none;display: block; height: 48px; left: 3%; padding: 0; position: absolute; top: -10px; width: 96%; text-indent: -9999px} 
+#myTab li.active a span.details {background: none;}
+.tab-content { display: none}
+
+.container.test-details-box {margin: 0; padding: 1%; width: 100%; }
+.test-heading {position: relative;} 
+.test-heading h3 a {display: none} 
+.analysis-box {float: left; margin-top: 5px; padding: 10px; width: 100%; }
+.analysis-box > strong {display: block; font-size: 16px; font-weight: normal; width: 100%; }
+.analysis-box > ul {list-style-type: none; padding: 0; width: 100%; }
+.analysis-box > ul li {font-size: 12px; line-height: 16px; margin-top: 10px; }
+.pieHolder {float: right; left:75%; position: absolute; top: 71px; width: 18%; }
+.chartBig {height: 50px; width: 50px; } 
+.chartBig span.percent {font-size: 23px; line-height: 50px; }
+footer {text-align: center; }	
+
+
+}
+
+
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width : 320px) and (max-width : 480px) and (orientation : portrait){
+.row {margin-left: 0; margin-right: 0;} 
+.container {padding:0 1%; width: 100%; }
+.headerBtns {margin: 10px; }
+.filter-form select {margin-top: 5px}
+.col-md-2.device.clearfix {padding: 5px; }
+.device-details {float: right; width: 60%; }
+.device-details h2 {font-size: 1.3em}
+.device-holder {float:left; margin: 0 0 20px; width:30%; }
+.device-holder img {width:100%;}
+.col-md-10 {padding: 5px}
+
+#myTab {float: none; padding: 0; width: 100%;}
+#myTab li { padding-right: 0}
+#myTab li.active a {padding: 10px 10px 9px 5px;}
+#myTab li div.col-sm-1.text-center {float: left; width: 20%; }
+#myTab li div.col-sm-2.text-center {float: right; height: 1px; top:-26px; width: 20%;}
+#myTab li a span.details {background: none;display: block; height: 48px; left: 3%; padding: 0; position: absolute; top: -10px; width: 96%; text-indent: -9999px} 
+#myTab li.active a span.details {background: none;}
+.tab-content { display: none}
+
+.container.test-details-box {margin: 0; padding: 1%; width: 100%; }
+.test-heading {position: relative;} 
+.test-heading h3 a {float: right; margin-right:0} 
+.analysis-box {float: left; margin-top: 5px; padding: 10px; width: 100%; }
+.analysis-box > strong {display: block; font-size: 16px; font-weight: normal; width: 100%; }
+.analysis-box > ul {list-style-type: none; padding: 0; width: 100%; }
+.analysis-box > ul li {font-size: 12px; line-height: 16px; margin-top: 10px; }
+.pieHolder {float: right; left: 80%; position: absolute; top: 71px; width: 18%; }
+.chartBig {height: 50px; width: 50px; } 
+.chartBig span.percent {font-size: 23px; line-height: 50px; }
+footer {text-align: center; }		
+
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen and (min-width : 321px) and (max-width : 480px) and (orientation : landscape){
+.row {margin-left: 0; margin-right: 0;} 
+.container {padding:0 1%; width: 100%; }
+.headerBtns {margin: 10px; }
+.filter-form select {margin-top: 5px}
+.col-md-2.device.clearfix {padding: 5px; }
+.device-details {float: right; width: 65%; }
+.device-holder {float:left; margin: 0 0 20px; width:25%; }
+.device-holder img {width:100%;}
+.col-md-10 {padding: 5px}
+#myTab {margin: 0; padding: 0; width: 100%;}
+#myTab li {display: inline-block; list-style-type: none; padding-right: 10px; width: 15%; }
+#myTab li div.row {margin: 0}
+#myTab li div.col-sm-9 {padding: 3px}
+#myTab li a {color: #999999; display: block; padding: 9px 0; text-decoration: none; border-bottom: 0 }
+#myTab li a strong {display: block; font-size: 11px; font-weight: normal; height: 40px; margin-top: 5px; text-align: center; }
+#myTab li a span.details {background: url("../resources/images/details-arrow.jpg") no-repeat scroll 41px 6px rgba(0, 0, 0, 0); font-size: 11px; padding: 0 0 0 7px; }
+#myTab li a.first {border-top: 0; }
+#myTab li.active a {background: none repeat scroll 0 0 #F4F4F4; color: #333333; padding: 9px 0; border-bottom: 0;  }
+#myTab li a span.details {border-top: 1px dotted #CCCCCC; padding-top: 10px; background-position: 43px 14px;}
+#myTab li.active a span.details {border-top: 1px dotted #CCCCCC; padding-top: 10px; background-position: 43px 14px;}
+.angular .chart {margin:0;}
+.tab-content {border: 1px solid #666666; float: left; margin: -1px 0 0 -1px; width: 100%; }
+
+.container.test-details-box {margin: 0; padding: 1%; width: 100%; }
+.test-heading {position: relative;}
+.test-heading h3 a {float: right; }  
+.analysis-box {float: left; margin-top: 5px; padding: 10px; width: 100%; }
+.analysis-box > strong {display: block; font-size: 16px; font-weight: normal; width: 100%; }
+.analysis-box > ul {list-style-type: none; padding: 0; width: 100%; }
+.analysis-box > ul li {font-size: 12px; line-height: 16px; margin-top: 10px; }
+.pieHolder {float: right; left: 86%; position: absolute; top: 71px; width: 18%; }
+.chartBig {height: 50px; width: 50px; } 
+.chartBig span.percent {font-size: 23px; line-height: 50px; }
+footer {text-align: center;}
+
+}
+
+/* small tablets ----------- */
+@media only screen and (min-width :400px) and (max-width : 767px){
+.row {margin-left: 0; margin-right: 0;} 
+.container {padding:0 1%; width: 100%; }
+.headerBtns {margin: 10px; }
+.filter-form select {margin-top: 5px}
+.col-md-2.device.clearfix {padding: 5px; }
+.device-details {float: right; width: 65%; }
+.device-holder {float:left; margin: 0 0 20px; width:25%; }
+.device-holder img {width:70%;}
+.col-md-10 {padding: 5px}
+#myTab {margin: 0; padding: 0; width: 100%;}
+#myTab li {display: inline-block; list-style-type: none; padding-right: 10px; width: 15%; }
+#myTab li div.row {margin: 0}
+#myTab li div.col-sm-9 {padding: 3px}
+#myTab li a {color: #999999; display: block; padding: 9px 0; text-decoration: none; border-bottom: 0 }
+#myTab li a strong {display: block; font-size: 11px; font-weight: normal; height: 40px; margin-top: 5px; text-align: center; }
+#myTab li a span.details {background: url("../resources/images/details-arrow.jpg") no-repeat scroll 41px 6px rgba(0, 0, 0, 0); font-size: 11px; padding: 0 0 0 7px; }
+#myTab li a.first {border-top: 0; }
+#myTab li.active a {background: none repeat scroll 0 0 #F4F4F4; color: #333333; padding: 9px 0; border-bottom: 0;  }
+#myTab li a span.details {border-top: 1px dotted #CCCCCC; padding-top: 10px; background-position: 43px 14px;}
+#myTab li.active a span.details {border-top: 1px dotted #CCCCCC; padding-top: 10px; background-position: 43px 14px;}
+.angular .chart {margin:0;}
+.tab-content {border: 1px solid #666666; float: left; margin: -1px 0 0 -1px; width: 100%; }
+
+.container.test-details-box {margin: 0; padding: 1%; width: 100%; }
+.test-heading {position: relative;}
+.test-heading h3 a {float: right; }  
+.analysis-box {float: left; margin-top: 5px; padding: 10px; width: 100%; }
+.analysis-box > strong {display: block; font-size: 16px; font-weight: normal; width: 100%; }
+.analysis-box > ul {list-style-type: none; padding: 0; width: 100%; }
+.analysis-box > ul li {font-size: 12px; line-height: 16px; margin-top: 10px; }
+.pieHolder {float: right; left: 86%; position: absolute; top: 71px; width: 18%; }
+.chartBig {height: 50px; width: 50px; } 
+.chartBig span.percent {font-size: 23px; line-height: 50px; }
+footer {text-align: center;}
+
+
+}
+
+
+/* iPads (portrait) ----------- */
+@media only screen and (min-width : 767px) and (max-width : 1024px) and (orientation : portrait) {
+.row {margin-left: 0; margin-right: 0;} 
+.container {padding:0 1%; width: 100%; }
+.headerBtns {margin: 10px; }
+.filter-form select {margin-top: 5px}
+.col-md-2.device.clearfix {padding: 5px; }
+.device-details {float: right; width: 75%; }
+.device-holder {float:left; margin: 0 0 20px; width:20%; }
+.device-holder img {width:100%;}
+
+.col-sm-1.text-center { padding-left: 0;}
+.col-md-10 {padding: 5px}
+.container.test-details-box {margin: 0; padding: 1%; width: 100%; }
+.test-heading {position: relative;}
+.test-heading h3 a {float: right; }  
+.analysis-box {float: left; margin-top: 5px; padding: 10px; width: 100%; }
+.analysis-box > strong {display: block; font-size: 16px; font-weight: normal; width: 100%; }
+.analysis-box > ul {list-style-type: none; padding: 0; width: 100%; }
+.analysis-box > ul li {font-size: 12px; line-height: 16px; margin-top: 10px; }
+.pieHolder {float: right; left: 90%; position: absolute; top: 71px; width: 18%; }
+.chartBig {height: 50px; width: 50px; } 
+.chartBig span.percent {font-size: 23px; line-height: 50px; }
+footer {text-align: center;}
+}
+
+/* iPads (landscape) ----------- */
+@media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation : landscape) {
+.row {margin-left: 0; margin-right: 0;} 
+.container {padding:0 1%; width: 100%; }
+.headerBtns {margin: 10px; }
+.filter-form select {margin-top: 5px}
+.col-md-2.device.clearfix {padding: 5px; }
+.device-details {float: right; width: 75%; }
+.device-holder {float:left; margin: 0 0 20px; width:20%; }
+.device-holder img {width:100%;}	
+.analysis-box {width:89%;}
+.pieHolder {width: 9%; }
+}
+
+/* Desktops and laptops ----------- */
+@media only screen and (min-width : 1224px) {
+/* Styles */
+}
+
+/* Large screens ----------- */
+@media only screen and (min-width : 1824px) {
+/* Styles */
+}
+
+/* iPhone 4 ----------- */
+@media only screen and (-webkit-min-device-pixel-ratio : 1.5),only screen and (min-device-pixel-ratio : 1.5) {
+/* Styles */
+}
+
+
+@media print {
+.col-md-2 {width:20%; float: left;}
+.col-sm-1, .col-sm-2, .col-sm-4, .col-sm-5, .col-sm-9 {float: left;}
+.col-sm-1 {width: 26.2%}
+.col-sm-2 {width: 16.2%}
+.col-sm-4 {width: 33.3%}
+.col-sm-5 {width: 41.65%}
+.col-sm-9 {width: 50%}
+.col-md-10 {width:80%;float:right;}
+#myTab li a strong {font-size: 13px;}
+.analysis-box {width:80%;}
+.pieHolder {width: 18%;}
+}
+
+.compare-box {background-color: #D7EAF0; border: 1px solid #A9D9E7; font-size: 11px; margin: 0 auto 20px; padding: 5px; position: relative; width: 97.5%; }
+.compare-box a.remove-compare-box {background:#3276B1; border-radius: 50%; color: #FFFFFF; font-size: 10px; height: 15px; position: absolute; right: -10px; text-align: center; top: -12px; width: 15px; }
+.compare-box a.remove-compare-box:hover { text-decoration: none}
+.compare-box div.compare {position:relative;background-color: #f5f5f5; border: 1px solid #A9D9E7; float: left; margin-right: 2%; min-height: 35px; width: 23%; padding: 5px;height: 100px;}
+.compare-box div.compare img {float: left; margin-right: 5px}
+.compare-box div.compare strong, .compare-box div.compare span { display: block;}
+.compare-box div.compare a.remove {background: none repeat scroll 0 0 #000000; border-radius: 50%; bottom: -3px; color: #FFFFFF; font-size: 8px; height: 12px; position: absolute; right: -3px; text-align: center; width: 12px; }
+.compare-box div.compare a.remove:hover { text-decoration: none}
+.compare-btn {margin-top: 10px}
+
+#containerInnerDiv {
+    margin-bottom: 40px;
+}
+
+/* End Responsive Style */
+

@@ -1,0 +1,1716 @@
+package com.to;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.faces.component.UIOutput;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
+
+import com.dao.UserDao;
+import com.dao.impl.MarketPlaceDaoImpl;
+import com.dao.impl.OperatorDaoImpl;
+import com.dao.impl.TestConfigDaoImpl;
+import com.dao.impl.UserDaoImpl;
+import com.validator.TestCaseValidator;
+import com.dao.MarketPlaceDao;
+/**
+ * @author Mohsin 100787
+ *
+ */
+public class UserBean implements Serializable{
+	private static final long serialVersionUID = 1L;
+	private String loginUserName;
+	private String loginPassWord;
+	private String userName;
+	private String password;
+	private String email;
+	private String imei;
+	private String deviceId;
+	private String deviceType;
+	private String mobileNumber;
+	private String role;
+	private String operatorId;
+	private String operatorName;
+	private String userMessage;
+	private String emailMessage;
+	private String UserId;
+	private List<UserBean> userList;
+	private List<UserBean> operatorList;
+	boolean enableListUserDiv = false;
+	private int userStatus;
+	private String userStatusStr;
+	private  List<TestConfig> assignListTestConfig;
+    private boolean selected;
+    private boolean enableLoginUserDetails = false;
+    private String slno;
+    private int operatorStatus;
+    private String operatorStatusStr;
+    private String[] marketId;
+    private String countryId;
+    private String customeRangeId;
+    private int superioruser;
+    
+    
+	public int getSuperioruser() {
+		return superioruser;
+	}
+	public void setSuperioruser(int superioruser) {
+		this.superioruser = superioruser;
+	}
+	public String getCustomeRangeId() {
+		return customeRangeId;
+	}
+	public void setCustomeRangeId(String customeRangeId) {
+		this.customeRangeId = customeRangeId;
+	}
+	public String getOperatorStatusStr() {
+		return operatorStatusStr;
+	}
+	public void setOperatorStatusStr(String operatorStatusStr) {
+		this.operatorStatusStr = operatorStatusStr;
+	}
+	public List<UserBean> getOperatorList() {
+		return operatorList;
+	}
+	public void setOperatorList(List<UserBean> operatorList) {
+		this.operatorList = operatorList;
+	}
+	public int getOperatorStatus() {
+		return operatorStatus;
+	}
+	public void setOperatorStatus(int operatorStatus) {
+		this.operatorStatus = operatorStatus;
+	}
+	public String getSlno() {
+		return slno;
+	}
+	public void setSlno(String slno) {
+		this.slno = slno;
+	}
+
+	public boolean isEnableLoginUserDetails() {
+		return enableLoginUserDetails;
+	}
+
+	public void setEnableLoginUserDetails(boolean enableLoginUserDetails) {
+		this.enableLoginUserDetails = enableLoginUserDetails;
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+	
+	Map<String, String> roleMap = new LinkedHashMap<String, String>();
+	Map<String,String> operatorMap = new LinkedHashMap<String,String>();
+	Map<String,String> testConfigMap = new LinkedHashMap<String,String>();
+	Map<String,String> userMap = new LinkedHashMap<String,String>();
+	Map<String,String> testNameMap = new LinkedHashMap<String,String>();
+	Map<String, String> marketPlaceMap = new LinkedHashMap<String, String>();
+	Map<String, String> countryMap = new LinkedHashMap<String, String>();
+	
+	private List<DeviceInfoTO>  deviceInfos = new  ArrayList<DeviceInfoTO>();
+	
+	private List<UserDeviceInfo>  userDeviceInfo = new  ArrayList<UserDeviceInfo>();
+	
+	private List<UserDeviceInfo>  userDeviceInforesult = new  ArrayList<UserDeviceInfo>();
+	
+	private List<Integer> marketIdList = new ArrayList<Integer>();
+	
+	MarketBean marketBean= new MarketBean();
+	
+	
+	
+	public MarketBean getMarketBean() {
+		return marketBean;
+	}
+	public void setMarketBean(MarketBean marketBean) {
+		this.marketBean = marketBean;
+	}
+	public List<UserDeviceInfo> getUserDeviceInforesult() {
+		return userDeviceInforesult;
+	}
+
+	public void setUserDeviceInforesult(List<UserDeviceInfo> userDeviceInforesult) {
+		this.userDeviceInforesult = userDeviceInforesult;
+	}
+
+	public List<DeviceInfoTO> getDeviceInfos() {
+		return deviceInfos;
+	}
+
+	public void setDeviceInfos(List<DeviceInfoTO> deviceInfos) {
+		this.deviceInfos = deviceInfos;
+	}
+
+	private String action;
+	
+	public String getAction() {
+		return action;
+	}
+    
+	public Map<String, String> getUserMap() {
+		return userMap;
+	}
+
+	public void setUserMap(Map<String, String> userMap) {
+		this.userMap = userMap;
+	}
+
+	public List<TestConfig> getAssignListTestConfig() {
+		return assignListTestConfig;
+	}
+
+	public void setAssignListTestConfig(List<TestConfig> assignListTestConfig) {
+		this.assignListTestConfig = assignListTestConfig;
+	}
+
+	public Map<String, String> getTestConfigMap() {
+		return testConfigMap;
+	}
+
+	public void setTestConfigMap(Map<String, String> testConfigMap) {
+		this.testConfigMap = testConfigMap;
+	}
+
+	public List<UserBean> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List<UserBean> userList) {
+		this.userList = userList;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+	public List<UserDeviceInfo> getUserDeviceInfo() {
+		return userDeviceInfo;
+	}
+	public void setUserDeviceInfo(List<UserDeviceInfo> userDeviceInfo) {
+		this.userDeviceInfo = userDeviceInfo;
+	}
+	
+	public int getUserStatus() {
+		return userStatus;
+	}
+	public void setUserStatus(int userStatus) {
+		this.userStatus = userStatus;
+	}
+	
+	public Map<String, String> getRoleMap() {
+		return roleMap;
+	}
+	public void setRoleMap(Map<String, String> roleMap) {
+		this.roleMap = roleMap;
+	}
+	public Map<String, String> getOperatorMap() {
+		return operatorMap;
+	}
+	public void setOperatorMap(Map<String, String> operatorMap) {
+		this.operatorMap = operatorMap;
+	}
+
+	public boolean isEnableListUserDiv() {
+		return enableListUserDiv;
+	}
+	public void setEnableListUserDiv(boolean enableListUserDiv) {
+		this.enableListUserDiv = enableListUserDiv;
+	}
+	public String getUserId() {
+		return UserId;
+	}
+	public void setUserId(String userId) {
+		UserId = userId;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getImei() {
+		return imei;
+	}
+	public void setImei(String imei) {
+		this.imei = imei;
+	}
+	public String getDeviceType() {
+		return deviceType;
+	}
+	public void setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
+	}
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public String getOperatorId() {
+		return operatorId;
+	}
+	public void setOperatorId(String operatorId) {
+		this.operatorId = operatorId;
+	}
+	public String getUserMessage() {
+		return userMessage;
+	}
+	public void setUserMessage(String userMessage) {
+		this.userMessage = userMessage;
+	}
+	public String getEmailMessage() {
+		return emailMessage;
+	}
+	public void setEmailMessage(String emailMessage) {
+		this.emailMessage = emailMessage;
+	}
+	public String getLoginUserName() {
+		return loginUserName;
+	}
+	public void setLoginUserName(String loginUserName) {
+		this.loginUserName = loginUserName;
+	}
+	public String getLoginPassWord() {
+		return loginPassWord;
+	}
+	public void setLoginPassWord(String loginPassWord) {
+		this.loginPassWord = loginPassWord;
+	}
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
+	}
+	public String getOperatorName() {
+		return operatorName;
+	}
+
+	public void setOperatorName(String operatorName) {
+		this.operatorName = operatorName;
+	}
+	
+	UserDeviceInfo userDeviceInfo2 = null;
+	
+	public void attrListener(ActionEvent event){
+		userDeviceInfo2 = (UserDeviceInfo)event.getComponent().getAttributes().get("userDeviceRm");
+	}
+	
+	public String getUserStatusStr() {
+		return userStatusStr;
+	}
+
+	public void setUserStatusStr(String userStatusStr) {
+		this.userStatusStr = userStatusStr;
+	}
+	public Map<String, String> getMarketPlaceMap() {
+		return marketPlaceMap;
+	}
+	public void setMarketPlaceMap(Map<String, String> marketPlaceMap) {
+		this.marketPlaceMap = marketPlaceMap;
+	}
+	public String[] getMarketId() {
+		return marketId;
+	}
+	public void setMarketId(String[] marketId) {
+		this.marketId = marketId;
+	}
+	public String getCountryId() {
+		return countryId;
+	}
+	public void setCountryId(String countryId) {
+		this.countryId = countryId;
+	}
+	public Map<String, String> getCountryMap() {
+		return countryMap;
+	}
+	public void setCountryMap(Map<String, String> countryMap) {
+		this.countryMap = countryMap;
+	}
+	
+	public List<Integer> getMarketIdList() {
+		return marketIdList;
+	}
+	public void setMarketIdList(List<Integer> marketIdList) {
+		this.marketIdList = marketIdList;
+	}
+	
+	/**
+     Add rows for the User Device Info List in the Create User Page.
+	 */
+	public String addRowAction(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		UserBean userBean=(UserBean) context.getExternalContext().getSessionMap().get("userBean");
+		UserDeviceInfo userDev = new UserDeviceInfo();
+	    this.userDeviceInfo.add(userDev);
+	    userBean.setAction("list");
+	    userBean.setUserDeviceInfo(userDeviceInfo);
+	    context.getExternalContext().getSessionMap().put("userBean", userBean);
+	    return "add";
+	}
+	/**
+    Add rows for the User Device Info List in the Edit User Page.
+	 */
+	public String addRowEditAction(){
+		System.out.println("Inside this loop");
+		FacesContext context = FacesContext.getCurrentInstance();
+		UserBean userBean=(UserBean) context.getExternalContext().getSessionMap().get("userBean");
+		UserDeviceInfo userDevice= new UserDeviceInfo();
+	    this.userDeviceInfo.add(userDevice);
+	    userBean.setUserDeviceInfo(userDeviceInfo);
+	    userBean.setAction("edit");
+	    context.getExternalContext().getSessionMap().put("userBean", userBean);
+	    return "edit";
+	}
+
+	/**
+    Remove rows for the User Device Info List in the Create User Page.
+	 */
+	public String removeRowAction(){
+		String  removedStatus = "false";
+		FacesContext context = FacesContext.getCurrentInstance();
+
+			for(int i=0; i<userDeviceInfo.size();i++){
+				if(userDeviceInfo.size()>1){
+					if(userDeviceInfo.get(i).isSelected()){
+						removedStatus = removeDeviceRowFromDb(userDeviceInfo.get(i).getDeviceId());
+						this.userDeviceInfo.remove(i);
+						i--;
+					}
+				}else{
+					context.getExternalContext().getRequestMap().put("message", "Can't remove default value");
+				}
+			}
+			return "remove";
+	 }
+	/**
+    Remove rows for the User Device Info List in the Edit User Page.
+	 */
+	public String removeRowEditAction(){
+		String  removedStatus = "false";
+		FacesContext context = FacesContext.getCurrentInstance();
+        UserBean userBean=(UserBean) context.getExternalContext().getSessionMap().get("userBean");
+			for(int i=0; i<userDeviceInfo.size();i++){
+				if(userDeviceInfo.size()>1){
+					if(userDeviceInfo.get(i).isSelected()){
+						removedStatus = removeDeviceRowFromDb(userDeviceInfo.get(i).getDeviceId());
+						this.userDeviceInfo.remove(i);
+						i--;
+						userBean.setAction("edit");
+						context.getExternalContext().getSessionMap().put("userBean",userBean);
+						context.getExternalContext().getRequestMap().put("message", "Message: Device details deleted successfully");
+						context.getExternalContext().getRequestMap().put("failuremessage", "");
+					}else if(!userDeviceInfo.get(i).isSelected()){
+						userBean.setAction("edit");
+						context.getExternalContext().getRequestMap().put("failuremessage", "Message:Please Select a value to remove");
+						context.getExternalContext().getSessionMap().put("userBean",userBean);
+					}
+				}else{
+					if(userDeviceInfo.get(i).isSelected()){
+						userBean.setAction("edit");
+						context.getExternalContext().getRequestMap().put("failuremessage", "Message:Can't remove default value");
+						context.getExternalContext().getSessionMap().put("userBean",userBean);
+					}else{
+						userBean.setAction("edit");
+						context.getExternalContext().getRequestMap().put("failuremessage", "Message:Please Select a value to remove");
+						context.getExternalContext().getSessionMap().put("userBean",userBean);
+					}
+				}
+			}
+			return "remove";
+	 }
+
+	/**
+    Remove rows for the User Device Info from the database for both Create/Edit User Page.
+	 */
+	public String removeDeviceRowFromDb(String deviceid){
+		UserDao userDao = new UserDaoImpl();
+		String removedFromdb = userDao.removeDeviceFromDb(deviceid);
+		return removedFromdb;
+	}
+	
+	/**
+       Validate the User that is Login into the Application.
+	 */
+	public String validateUser(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		UserDao userDao = new UserDaoImpl();
+		UserBean userBean = userDao.validateUserInfo(loginUserName,loginPassWord);
+		if(userBean != null){
+			String role = userBean.getRole();
+			if(role.equals("technician") || userBean.getUserStatus() != 1){
+				context.getExternalContext().getSessionMap().remove("userBean");
+				context.getExternalContext().getRequestMap().put("message", "Access denied");
+				return "invalid";
+			}
+			context.getExternalContext().getSessionMap().put("loggedInUserRoleID", role);
+			context.getExternalContext().getSessionMap().put("loggedInUserID", userBean.getUserId());
+			if(!role.equals("superadmin")){
+				UserBean bean=userDao.validateUserInformation(loginUserName,loginPassWord);
+				context.getExternalContext().getSessionMap().put("loggedInOperatorID", bean.getOperatorId());
+			}
+			
+			String login="Welcome"+" "+loginUserName;
+			context.getExternalContext().getSessionMap().put("loginName", login);
+			context.getExternalContext().getSessionMap().put("userName", loginUserName);
+			context.getExternalContext().getSessionMap().remove("userBean");
+			context.getExternalContext().getSessionMap().remove("bean");
+			return "valid";
+		}else{
+			context.getExternalContext().getSessionMap().remove("userBean");
+			context.getExternalContext().getRequestMap().put("message", "Invalid Credentials");
+			return "invalid";
+		}
+	}
+	/**
+          Navigation from the Welcome user to the Create User page.
+	 */
+	public String userPage(){
+		try{
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			UserDao userDao = new UserDaoImpl();
+			MarketPlaceDao marketPlaceDao = new MarketPlaceDaoImpl();
+			String userRole =  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+			String userIdLogged =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+			//marketPlaceMap=marketPlaceDao.getMarketPlaceMap();
+			countryMap=marketPlaceDao.getCountryMap();
+			System.out.println("userRole---------"+userRole);
+//			if(userRole.equals("superadmin")){	
+				System.out.println("inside ifffffffff");
+//				userList = userDao.listUser(userIdLogged,userRole);
+				operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+				roleMap = userDao.getActiveRoleInMap(userRole);
+				Set<String> userNameList =  new UserDaoImpl().getUsersOfSuperior(userIdLogged,userRole);
+				userList = userDao.listUser(userNameList.toString().substring(1, userNameList.toString().length()-1),userRole);
+			/*}else{
+				userList =userDao.listUserBasedOnOperator(new UserDaoImpl().getOperator(userIdLogged),userIdLogged);
+				operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+				roleMap = userDao.getActiveRoleInMap(userRole);
+			}*/
+			System.out.println("got the values");
+			context.getExternalContext().getSessionMap().remove("userBean");
+			System.out.println("context.getExternalContext().getSessionMap()--------"+context.getExternalContext().getSessionMap());
+			UserBean userBean =  new  UserBean();
+			UserDeviceInfo userDevice = new UserDeviceInfo();
+			this.userDeviceInforesult.add(userDevice);
+			userBean.setUserDeviceInfo(userDeviceInforesult);
+			userBean.setUserName("");
+			userBean.setPassword("");
+			userBean.setEmail("");
+			userBean.setRole("1");
+			userBean.setUserStatus(1);
+			userBean.setOperatorId((String)context.getExternalContext().getSessionMap().get("loggedInOperatorID"));
+			userBean.setAction("view");
+			Map<String, String> statusMap = new LinkedHashMap<String, String>();
+			statusMap.put("Active", "1");
+			statusMap.put("Inactive", "0");
+			context.getExternalContext().getSessionMap().remove("marketPlaceMapForCountry");
+			context.getExternalContext().getSessionMap().remove("marketIdList");
+			context.getExternalContext().getSessionMap().put("userBean", userBean);
+			context.getExternalContext().getSessionMap().remove("statusMap");
+			context.getExternalContext().getSessionMap().put("statusMap", statusMap);
+			context.getExternalContext().getSessionMap().remove("operatorMaplist");
+			context.getExternalContext().getSessionMap().remove("roleMaplist");
+			context.getExternalContext().getSessionMap().remove("marketPlaceMapList");
+			context.getExternalContext().getSessionMap().put("operatorMaplist", operatorMap);
+			context.getExternalContext().getSessionMap().put("roleMaplist", roleMap);
+			context.getExternalContext().getSessionMap().remove("userListSize");
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			context.getExternalContext().getSessionMap().put("userListSize", userList.size());
+			context.getExternalContext().getSessionMap().put("userListdetails", userList);
+			//context.getExternalContext().getSessionMap().put("marketPlaceMapList", marketPlaceMap);
+			context.getExternalContext().getSessionMap().remove("countryMapList");
+			context.getExternalContext().getSessionMap().put("countryMapList", countryMap);
+		}catch (Exception e) {
+			System.out.println("exception.................");
+			e.printStackTrace();
+		}
+		System.out.println("returning........................"+FacesContext.getCurrentInstance().getExternalContext().getSessionMap());
+		return "createUserPage";
+	}
+	
+	
+	public String operateUser(){
+		try{
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			UserDao userDao = new UserDaoImpl();
+			String userRole =  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+			String userIdLogged =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+//			if(userRole.equals("superadmin")){		
+				userList = userDao.listUser(userIdLogged,userRole);
+				operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+				roleMap = userDao.getActiveRoleInMap(userRole);
+			/*}else{
+				userList =userDao.listUserBasedOnOperator(new UserDaoImpl().getOperator(userIdLogged),userIdLogged);
+				operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+				roleMap = userDao.getActiveRoleInMap(userRole);
+			}*/
+			context.getExternalContext().getSessionMap().remove("userBean");
+			UserBean userBean =  new  UserBean();
+			UserDeviceInfo userDevice = new UserDeviceInfo();
+			this.userDeviceInforesult.add(userDevice);
+			userBean.setUserDeviceInfo(userDeviceInforesult);
+			userBean.setUserName("");
+			userBean.setPassword("");
+			userBean.setEmail("");
+			userBean.setRole("1");
+			userBean.setUserStatus(1);
+			userBean.setOperatorId("0");
+			userBean.setAction("view");
+			Map<String, String> statusMap = new LinkedHashMap<String, String>();
+			statusMap.put("Active", "1");
+			statusMap.put("Inactive", "0");
+			context.getExternalContext().getSessionMap().put("userBean", userBean);
+			context.getExternalContext().getSessionMap().remove("statusMap");
+			context.getExternalContext().getSessionMap().put("statusMap", statusMap);
+			context.getExternalContext().getSessionMap().remove("operatorMaplist");
+			context.getExternalContext().getSessionMap().remove("roleMaplist");
+			context.getExternalContext().getSessionMap().put("operatorMaplist", operatorMap);
+			context.getExternalContext().getSessionMap().put("roleMaplist", roleMap);
+			context.getExternalContext().getSessionMap().remove("userListSize");
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			context.getExternalContext().getSessionMap().put("userListSize", userList.size());
+			context.getExternalContext().getSessionMap().put("userListdetails", userList);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "operateUserPage";
+	}
+	
+	/**
+          Navigation from the Edit user to the Create User page.
+     */
+	
+	public String editToUser(){
+		try{
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			UserDao userDao = new UserDaoImpl();
+			String userRole =  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+			String userIdLogged =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+//			if(userRole.equals("superadmin")){			
+				userList = userDao.listUser(userIdLogged,userRole);
+				operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+				roleMap = userDao.getActiveRoleInMap(userRole);
+			/*}else{
+				userList =userDao.listUserBasedOnOperator(new UserDaoImpl().getOperator(userIdLogged), userIdLogged);
+				roleMap = userDao.getActiveRoleInMap(userRole);
+			}*/
+			context.getExternalContext().getSessionMap().remove("userBean");
+			UserBean userBean =  new  UserBean();
+			UserDeviceInfo userDevice = new UserDeviceInfo();
+			this.userDeviceInforesult.add(userDevice);
+			userBean.setUserDeviceInfo(userDeviceInforesult);
+			userBean.setUserName("");
+			userBean.setPassword("");
+			userBean.setEmail("");
+			userBean.setRole("1");
+			userBean.setUserStatus(1);
+			userBean.setOperatorId("0");
+			userBean.setAction("view");
+			Map<String, String> statusMap = new LinkedHashMap<String, String>();
+			statusMap.put("Active", "1");
+			statusMap.put("Inactive", "0");
+			context.getExternalContext().getSessionMap().put("userBean", userBean);
+			context.getExternalContext().getSessionMap().remove("statusMap");
+			context.getExternalContext().getSessionMap().put("statusMap", statusMap);
+			context.getExternalContext().getSessionMap().remove("operatorMaplist");
+			context.getExternalContext().getSessionMap().remove("roleMaplist");
+			context.getExternalContext().getSessionMap().put("operatorMaplist", operatorMap);
+			context.getExternalContext().getSessionMap().put("roleMaplist", roleMap);
+			context.getExternalContext().getSessionMap().remove("userListSize");
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			context.getExternalContext().getSessionMap().put("userListSize", userList.size());
+			context.getExternalContext().getSessionMap().put("userListdetails", userList);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "editToUserPage";
+	}
+	
+	/**
+          Navigation from the Same Edit user page.
+    */  
+	public String edituserDetails(){
+		try{
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			UserDao userDao = new UserDaoImpl();
+			String userRole =  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+			String userIdLogged =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+//			if(userRole.equals("superadmin")){			
+				userList = userDao.listUser(userIdLogged,userRole);
+				operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+				roleMap = userDao.getActiveRoleInMap(userRole);
+			/*}else{
+				userList =userDao.listUserBasedOnOperator(new UserDaoImpl().getOperator(userIdLogged), userIdLogged);
+				roleMap = userDao.getActiveRoleInMap(userRole);
+			}*/
+			context.getExternalContext().getSessionMap().remove("userBean");
+			UserBean userBean =  new  UserBean();
+			UserDeviceInfo userDevice = new UserDeviceInfo();
+			this.userDeviceInforesult.add(userDevice);
+			userBean.setUserDeviceInfo(userDeviceInforesult);
+			userBean.setUserName("");
+			userBean.setPassword("");
+			userBean.setEmail("");
+			userBean.setRole("1");
+			userBean.setUserStatus(1);
+			userBean.setOperatorId("0");
+			userBean.setAction("list");
+			Map<String, String> statusMap = new LinkedHashMap<String, String>();
+			statusMap.put("Active", "1");
+			statusMap.put("Inactive", "0");
+			context.getExternalContext().getSessionMap().put("userBean", userBean);
+			context.getExternalContext().getSessionMap().remove("statusMap");
+			context.getExternalContext().getSessionMap().put("statusMap", statusMap);
+			context.getExternalContext().getSessionMap().remove("operatorMaplist");
+			context.getExternalContext().getSessionMap().remove("roleMaplist");
+			context.getExternalContext().getSessionMap().put("operatorMaplist", operatorMap);
+			context.getExternalContext().getSessionMap().put("roleMaplist", roleMap);
+			context.getExternalContext().getSessionMap().remove("userListSize");
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			context.getExternalContext().getSessionMap().put("userListSize", userList.size());
+			context.getExternalContext().getSessionMap().put("userListdetails", userList);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "edituserDetailsPage";
+	}
+	/**
+         Navigation from the Welcome user to the Edit User page.
+     */
+	public String welcomeEditUser(){
+		try{
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			UserDao userDao = new UserDaoImpl();
+			String userRole =  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+			String userIdLogged =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+			countryMap=new MarketPlaceDaoImpl().getCountryMap();
+			if(userRole.equals("superadmin")){			
+				Set<String> userNameList =  new UserDaoImpl().getUsersOfSuperior(userIdLogged,userRole);
+				userList = userDao.listUser(userNameList.toString().substring(1, userNameList.toString().length()-1),userRole);
+				operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+				roleMap = userDao.getActiveRoleInMap(userRole);
+				marketPlaceMap=new MarketPlaceDaoImpl().getMarketPlaceMap();
+			}else{
+				Set<String> userNameList =  new UserDaoImpl().getUsersOfSuperior(userIdLogged,userRole);
+				userList = userDao.listUser(userNameList.toString().substring(1, userNameList.toString().length()-1),userRole);
+				operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+				roleMap = userDao.getActiveRoleInMap(userRole);
+				marketPlaceMap=new MarketPlaceDaoImpl().getMarketPlaceMap();
+			}
+			context.getExternalContext().getSessionMap().remove("userBean");
+			UserBean userBean =  new  UserBean();
+			UserDeviceInfo userDevice = new UserDeviceInfo();
+			this.userDeviceInforesult.add(userDevice);
+			userBean.setUserDeviceInfo(userDeviceInforesult);
+			userBean.setUserName("");
+			userBean.setPassword("");
+			userBean.setEmail("");
+			userBean.setRole("1");
+			userBean.setUserStatus(1);
+			userBean.setOperatorId("0");
+			userBean.setAction("list");
+			Map<String, String> statusMap = new LinkedHashMap<String, String>();
+			statusMap.put("Active", "1");
+			statusMap.put("Inactive", "0");
+			context.getExternalContext().getSessionMap().put("userBean", userBean);
+			context.getExternalContext().getSessionMap().remove("statusMap");
+			context.getExternalContext().getSessionMap().put("statusMap", statusMap);
+			context.getExternalContext().getSessionMap().remove("operatorMaplist");
+			context.getExternalContext().getSessionMap().remove("roleMaplist");
+			context.getExternalContext().getSessionMap().remove("marketPlaceMapList");
+			context.getExternalContext().getSessionMap().put("operatorMaplist", operatorMap);
+			context.getExternalContext().getSessionMap().put("roleMaplist", roleMap);
+			context.getExternalContext().getSessionMap().remove("userListSize");
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			context.getExternalContext().getSessionMap().put("userListSize", userList.size());
+			context.getExternalContext().getSessionMap().put("userListdetails", userList);
+			context.getExternalContext().getSessionMap().put("marketPlaceMapList", marketPlaceMap);
+			context.getExternalContext().getSessionMap().remove("countryMapList");
+			context.getExternalContext().getSessionMap().put("countryMapList", countryMap);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "welcomeEditUserPage";
+	}
+	
+	
+	public String operatorEditUser(){
+		try{
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			UserDao userDao = new UserDaoImpl();
+			String userRole =  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+			String userIdLogged =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+//			if(userRole.equals("superadmin")){			
+				userList = userDao.listUser(userIdLogged,userRole);
+				operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+				roleMap = userDao.getActiveRoleInMap(userRole);
+			/*}else{
+				userList =userDao.listUserBasedOnOperator(new UserDaoImpl().getOperator(userIdLogged), userIdLogged);
+				roleMap = userDao.getActiveRoleInMap(userRole);
+			}*/
+			context.getExternalContext().getSessionMap().remove("userBean");
+			UserBean userBean =  new  UserBean();
+			UserDeviceInfo userDevice = new UserDeviceInfo();
+			this.userDeviceInforesult.add(userDevice);
+			userBean.setUserDeviceInfo(userDeviceInforesult);
+			userBean.setUserName("");
+			userBean.setPassword("");
+			userBean.setEmail("");
+			userBean.setRole("1");
+			userBean.setUserStatus(1);
+			userBean.setOperatorId("0");
+			userBean.setAction("list");
+			Map<String, String> statusMap = new LinkedHashMap<String, String>();
+			statusMap.put("Active", "1");
+			statusMap.put("Inactive", "0");
+			context.getExternalContext().getSessionMap().put("userBean", userBean);
+			context.getExternalContext().getSessionMap().remove("statusMap");
+			context.getExternalContext().getSessionMap().put("statusMap", statusMap);
+			context.getExternalContext().getSessionMap().remove("operatorMaplist");
+			context.getExternalContext().getSessionMap().remove("roleMaplist");
+			context.getExternalContext().getSessionMap().put("operatorMaplist", operatorMap);
+			context.getExternalContext().getSessionMap().put("roleMaplist", roleMap);
+			context.getExternalContext().getSessionMap().remove("userListSize");
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			context.getExternalContext().getSessionMap().put("userListSize", userList.size());
+			context.getExternalContext().getSessionMap().put("userListdetails", userList);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "operatorEditUserPage";
+	}
+	
+	/**
+         Navigation from the Edit user to the Welcome User page.
+    */
+	public String welcomeUserEdit(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getSessionMap().remove("userBean");
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		context.getExternalContext().getSessionMap().put("loggedInUserRoleID", userrole);
+		return "welcomeUserEditPage";
+	}
+	/**
+         Implementation of Clear Funtionality in the Create user page.
+    */
+	public String clearUserDetails(){
+		try{
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			UserDao userDao = new UserDaoImpl();
+			String userRole =  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+			String userIdLogged =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+//			if(userRole.equals("superadmin")){			
+				userList = userDao.listUser(userIdLogged,userRole);
+				operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+				roleMap = userDao.getActiveRoleInMap(userRole);
+			/*}else{
+				userList =userDao.listUserBasedOnOperator(new UserDaoImpl().getOperator(userIdLogged), userIdLogged);
+				roleMap = userDao.getActiveRoleInMap(userRole);
+			}*/
+			context.getExternalContext().getSessionMap().remove("userBean");
+			UserBean userBean =  new  UserBean();
+			UserDeviceInfo userDevice = new UserDeviceInfo();
+			this.userDeviceInforesult.add(userDevice);
+			userBean.setUserDeviceInfo(userDeviceInforesult);
+			userBean.setUserName("");
+			userBean.setPassword("");
+			userBean.setEmail("");
+			userBean.setRole("1");
+			userBean.setUserStatus(1);
+			userBean.setOperatorId("0");
+			userBean.setAction("view");
+			Map<String, String> statusMap = new LinkedHashMap<String, String>();
+			statusMap.put("Active", "1");
+			statusMap.put("Inactive", "0");
+			context.getExternalContext().getSessionMap().put("userBean", userBean);
+			context.getExternalContext().getSessionMap().remove("statusMap");
+			context.getExternalContext().getSessionMap().put("statusMap", statusMap);
+			context.getExternalContext().getSessionMap().remove("operatorMaplist");
+			context.getExternalContext().getSessionMap().remove("roleMaplist");
+			context.getExternalContext().getSessionMap().put("operatorMaplist", operatorMap);
+			context.getExternalContext().getSessionMap().put("roleMaplist", roleMap);
+			context.getExternalContext().getSessionMap().remove("userListSize");
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			context.getExternalContext().getSessionMap().put("userListSize", userList.size());
+			context.getExternalContext().getSessionMap().put("userListdetails", userList);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "clearUserDetailsPage";
+	}
+	/**
+         Navigation from the map to the Create User page.
+    */
+	public String mapCreatUser(){
+		try{
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().remove("userBean");
+			UserDao userDao = new UserDaoImpl();
+			String userRole =  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+			String userIdLogged =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+//			if(userRole.equals("superadmin")){			
+				userList = userDao.listUser(userIdLogged,userRole);
+				operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+				roleMap = userDao.getActiveRoleInMap(userRole);
+			/*}else{
+				userList =userDao.listUserBasedOnOperator(new UserDaoImpl().getOperator(userIdLogged), userIdLogged);
+				roleMap = userDao.getActiveRoleInMap(userRole);
+			}*/
+			if(this.userDeviceInfo.size()==0){
+				UserDeviceInfo userDevice = new UserDeviceInfo();
+				this.userDeviceInfo.add(userDevice);
+			}
+			UserBean userBean=new UserBean ();
+		    userBean.setUserDeviceInfo(userDeviceInfo);
+		    context.getExternalContext().getSessionMap().remove("userBean");
+		    context.getExternalContext().getSessionMap().put("userBean", userBean);
+			context.getExternalContext().getSessionMap().remove("operatorMaplist");
+			context.getExternalContext().getSessionMap().remove("roleMaplist");
+			context.getExternalContext().getSessionMap().put("operatorMaplist", operatorMap);
+			context.getExternalContext().getSessionMap().put("roleMaplist", roleMap);
+			context.getExternalContext().getSessionMap().remove("userListSize");
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			context.getExternalContext().getSessionMap().put("userListSize", userList.size());
+			context.getExternalContext().getSessionMap().put("userListdetails", userList);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "mapCreatUserPage";
+	}
+	
+	public String createUserOperator(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		Map<String, String> statusMap = new LinkedHashMap<String, String>();
+		statusMap.put("Active", "1");
+		statusMap.put("Inactive", "0");
+		UserDao userDao = new UserDaoImpl();
+		operatorList=userDao.getOperatorList();
+		context.getExternalContext().getSessionMap().remove("operatorListSize");
+		context.getExternalContext().getSessionMap().remove("operatorListdetails");
+		context.getExternalContext().getSessionMap().put("operatorListSize", operatorList.size());
+		context.getExternalContext().getSessionMap().put("operatorListdetails", operatorList);
+		context.getExternalContext().getSessionMap().remove("statusMap");
+		context.getExternalContext().getSessionMap().put("statusMap", statusMap);
+		return "createUserOperatorPage";
+	}
+	
+	public String editUserOperator(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		Map<String, String> statusMap = new LinkedHashMap<String, String>();
+		statusMap.put("Active", "1");
+		statusMap.put("Inactive", "0");
+		UserDao userDao = new UserDaoImpl();
+		operatorList=userDao.getOperatorList();
+		context.getExternalContext().getSessionMap().remove("operatorListSize");
+		context.getExternalContext().getSessionMap().remove("operatorListdetails");
+		context.getExternalContext().getSessionMap().put("operatorListSize", operatorList.size());
+		context.getExternalContext().getSessionMap().put("operatorListdetails", operatorList);
+		context.getExternalContext().getSessionMap().remove("statusMap");
+		context.getExternalContext().getSessionMap().put("statusMap", statusMap);
+		return "editUserOperatorPage";
+	}
+	public String operatorWelcome(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		Map<String, String> statusMap = new LinkedHashMap<String, String>();
+		statusMap.put("Active", "1");
+		statusMap.put("Inactive", "0");
+		UserDao userDao = new UserDaoImpl();
+		operatorList=userDao.getOperatorList();
+		context.getExternalContext().getSessionMap().remove("operatorListSize");
+		context.getExternalContext().getSessionMap().remove("operatorListdetails");
+		context.getExternalContext().getSessionMap().put("operatorListSize", operatorList.size());
+		context.getExternalContext().getSessionMap().put("operatorListdetails", operatorList);
+		context.getExternalContext().getSessionMap().remove("statusMap");
+		context.getExternalContext().getSessionMap().put("statusMap", statusMap);
+		return "operatorWelcomePage";
+	}
+	public String createOperator(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		Map<String, String> statusMap = new LinkedHashMap<String, String>();
+		statusMap.put("Active", "1");
+		statusMap.put("Inactive", "0");
+		UserDao userDao = new UserDaoImpl();
+		operatorList=userDao.getOperatorList();
+		context.getExternalContext().getSessionMap().remove("operatorListSize");
+		context.getExternalContext().getSessionMap().remove("operatorListdetails");
+		context.getExternalContext().getSessionMap().put("operatorListSize", operatorList.size());
+		context.getExternalContext().getSessionMap().put("operatorListdetails", operatorList);
+		context.getExternalContext().getSessionMap().remove("statusMap");
+		context.getExternalContext().getSessionMap().put("statusMap", statusMap);
+		return "createOperatorPage";
+	}
+	
+	public String clearOperatorDetails(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		Map<String, String> statusMap = new LinkedHashMap<String, String>();
+		statusMap.put("Active", "1");
+		statusMap.put("Inactive", "0");
+		UserDao userDao = new UserDaoImpl();
+		operatorList=userDao.getOperatorList();
+		context.getExternalContext().getSessionMap().remove("operatorListSize");
+		context.getExternalContext().getSessionMap().remove("operatorListdetails");
+		context.getExternalContext().getSessionMap().put("operatorListSize", operatorList.size());
+		context.getExternalContext().getSessionMap().put("operatorListdetails", operatorList);
+		context.getExternalContext().getSessionMap().remove("userBean");
+		context.getExternalContext().getSessionMap().remove("statusMap");
+		context.getExternalContext().getSessionMap().put("statusMap", statusMap);
+		return "clearOperatorDetailsPage";
+	}
+	
+	public String addOperator(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		boolean status=false;
+		String userId =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+		UserDao userDao = new UserDaoImpl();
+		status=userDao.checkOperatorExists(operatorName);
+		if(status== true){
+			context.getExternalContext().getRequestMap().put("failuremessage", "Operator already exists");
+			return "addOperatorFailed";
+		}
+		String operStatus = userDao.addOperator(userId,operatorName,operatorStatus);
+		if (operStatus.equalsIgnoreCase("success")) {
+			context.getExternalContext().getRequestMap().put("message", "New Operator created.");
+		} else {
+			context.getExternalContext().getRequestMap().put("failuremessage", "Operator Creation failed");
+		}
+		operatorList=userDao.getOperatorList();
+		Map<String, String> statusMap = new LinkedHashMap<String, String>();
+		statusMap.put("Active", "1");
+		statusMap.put("Inactive", "0");
+		context.getExternalContext().getSessionMap().remove("statusMap");
+		context.getExternalContext().getSessionMap().put("statusMap", statusMap);
+		context.getExternalContext().getSessionMap().remove("userBean");
+		context.getExternalContext().getSessionMap().remove("operatorListSize");
+		context.getExternalContext().getSessionMap().remove("operatorListdetails");
+		context.getExternalContext().getSessionMap().put("operatorListSize", operatorList.size());
+		context.getExternalContext().getSessionMap().put("operatorListdetails", operatorList);
+		return "addOperatorSuccess";
+	}
+	
+
+	/**
+         Navigation from the Edit User to the Create User page.
+    */
+	public String edituserPageDetails(){
+		try{
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.getExternalContext().getSessionMap().remove("userBean");
+			UserDao userDao = new UserDaoImpl();
+			String userRole =  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+			String userIdLogged =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+//			if(userRole.equals("superadmin")){			
+				userList = userDao.listUser(userIdLogged,userRole);
+				operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+				roleMap = userDao.getActiveRoleInMap(userRole);
+			/*}else{
+				userList =userDao.listUserBasedOnOperator(new UserDaoImpl().getOperator(userIdLogged), userIdLogged);
+				roleMap = userDao.getActiveRoleInMap(userRole);
+			}*/
+			UserBean userBean=new UserBean();
+			if(this.userDeviceInfo.size() >=1){
+				UserDeviceInfo userDevice = new UserDeviceInfo();
+				userDevice.setDeviceType("");
+				userDevice.setImei("");
+				userDevice.setDeviceId("");
+				this.userDeviceInforesult.add(userDevice);
+			}
+			Map<String, String> statusMap = new LinkedHashMap<String, String>();
+			statusMap.put("Active", "1");
+			statusMap.put("Inactive", "0");
+		    userBean.setUserDeviceInfo(userDeviceInforesult);
+		    userBean.setAction("list");
+		    context.getExternalContext().getSessionMap().remove("userBean");
+		    context.getExternalContext().getSessionMap().put("userBean", userBean);
+			context.getExternalContext().getSessionMap().remove("statusMap");
+			context.getExternalContext().getSessionMap().put("statusMap", statusMap);
+			context.getExternalContext().getSessionMap().remove("operatorMaplist");
+			context.getExternalContext().getSessionMap().remove("roleMaplist");
+			context.getExternalContext().getSessionMap().put("operatorMaplist", operatorMap);
+			context.getExternalContext().getSessionMap().put("roleMaplist", roleMap);
+			context.getExternalContext().getSessionMap().remove("userListSize");
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			context.getExternalContext().getSessionMap().put("userListSize", userList.size());
+			context.getExternalContext().getSessionMap().put("userListdetails", userList);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "edituserDetailsPage";
+	}
+	
+	/**
+        Implementation of the Edit Functionality for the Created Users.
+    */
+    public String editCreateUser(){
+    	FacesContext context = FacesContext.getCurrentInstance();
+		UserDao userDao = new UserDaoImpl();
+		MarketPlaceDao marketPlaceDao= new  MarketPlaceDaoImpl();
+		String[] marketId = new String[marketIdList.size()];
+		marketId = marketIdList.toArray(marketId);
+		//MarketPlaceDao marketPlaceDao = new MarketPlaceDaoImpl();
+		String userId =  context.getExternalContext().getRequestParameterMap().get("userIdEdit").toString();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		System.out.println("superioruser---------"+superioruser);
+		System.out.println("role---------"+role);
+			if(userDeviceInfo.size() == 0){
+				context.getExternalContext().getRequestMap().put("failuremessage", "Please Enter Device Type,IMEI and Mobile Number");
+				return "userCreatedFailed";
+			}/*else if(superioruser==0){
+				context.getExternalContext().getRequestMap().put("failuremessage", "Please Select the supervisor");
+				return "userCreatedFailed";
+			}*/
+			else{
+				for(int i =0;i< userDeviceInfo.size();i++){
+					UserDeviceInfo userDevice = userDeviceInfo.get(i);
+					if(userDevice.getDeviceType().equals("") && userDevice.getMobileNumber().equals("") && userDevice.getImei().equals("")){
+						this.userDeviceInfo.remove(i);
+						i--;
+					}else{
+						if(userDevice.getDeviceType().equals("") || userDevice.getMobileNumber().equals("") ||userDevice.getImei().equals("")){
+							context.getExternalContext().getRequestMap().put("failuremessage", "Please Enter Device Type,IMEI and Mobile Number");
+							return "userCreatedFailed";
+						}else{
+							if( userDevice.getMobileNumber().trim().length()>17){
+								context.getExternalContext().getRequestMap().put("failuremessage", "Mobile Number Should be equals to 16 characters");
+								return "userCreatedFailed";
+							}
+							if(!TestCaseValidator.isInteger(userDevice.getImei()) || userDevice.getImei().trim().length()>15){
+								context.getExternalContext().getRequestMap().put("failuremessage", "IMEI Should be Numberic and not more than 15 characters");
+								return "userCreatedFailed";
+							}
+						}
+					}
+				}
+			}
+			//String mktId =  context.getExternalContext().getRequestParameterMap().get("marketId");
+			//System.out.println("===marketId===="+mktId);
+			
+			userDao.editUser(userId,email,role,userStatus,operatorId,userDeviceInfo,password,marketId,countryId);
+			List<Integer> marketIdList= marketPlaceDao.getMarketIDListForUser(userId);
+			String userIdLogged =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+//			if(userrole.equals("superadmin")){			
+			Set<String> userNameList =  new UserDaoImpl().getUsersOfSuperior(userIdLogged,userrole);
+			userList = userDao.listUser(userNameList.toString().substring(1, userNameList.toString().length()-1),userrole);				
+			operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+				roleMap = userDao.getActiveRoleInMap(userrole);
+				marketPlaceMap=new MarketPlaceDaoImpl().getMarketPlaceMap();
+				countryMap= new MarketPlaceDaoImpl().getCountryMap();
+				
+			/*}else{
+				userList =userDao.listUserBasedOnOperator(new UserDaoImpl().getOperator(userIdLogged), userIdLogged);
+				roleMap = userDao.getActiveEditRoleInMap(userrole);
+				marketPlaceMap=new MarketPlaceDaoImpl().getMarketPlaceMap();
+				countryMap= new MarketPlaceDaoImpl().getCountryMap();
+				if(userIdLogged.equals(userId) && userStatus == 0 ){
+					FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+					return "userEditLogout";
+				}
+			}	*/
+			String username=userDao.getUserName(userId);
+			if(this.userDeviceInfo.size()==0){
+				UserDeviceInfo userDevice = new UserDeviceInfo();
+				this.userDeviceInfo.add(userDevice);
+				UserBean userBean=(UserBean) context.getExternalContext().getSessionMap().get("userBean");
+			    userBean.setUserDeviceInfo(userDeviceInfo);
+			    userBean.setAction("edit");
+			    context.getExternalContext().getSessionMap().remove("userBean");
+			    context.getExternalContext().getSessionMap().put("userBean", userBean);
+			}else{
+				UserBean userBean =  userDao.getUserDetails(userId);
+			    userBean.setAction("edit");
+			    userBean.setMarketIdList(marketIdList);
+			    context.getExternalContext().getSessionMap().remove("userBean");
+			    context.getExternalContext().getSessionMap().put("userBean", userBean);
+			}
+			Map<String, String> statusMap = new LinkedHashMap<String, String>();
+			
+			statusMap.put("Active", "1");
+			statusMap.put("Inactive", "0");
+			
+			context.getExternalContext().getSessionMap().remove("statusMap");
+			context.getExternalContext().getSessionMap().put("statusMap",statusMap);
+			context.getExternalContext().getSessionMap().put("loggedInUserRoleID", userrole);
+			context.getExternalContext().getSessionMap().remove("userListSize");
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			context.getExternalContext().getSessionMap().remove("marketPlaceMapList");
+			context.getExternalContext().getSessionMap().put("userListSize", userList.size());
+			context.getExternalContext().getSessionMap().put("userListdetails", userList);
+			context.getExternalContext().getRequestMap().put("message", "User:" +username+ " Updated Successfully");
+			context.getExternalContext().getSessionMap().put("marketPlaceMapList", marketPlaceMap);
+			context.getExternalContext().getSessionMap().remove("countryMapList");
+			context.getExternalContext().getSessionMap().put("countryMapList", countryMap);
+			return "editCreateUserPage"; 	
+    }
+    /**
+       Implementation of the Create User Funtionliaty.
+    */
+	public String createUser(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		UserDao userDao = new UserDaoImpl();
+		String userId =  context.getExternalContext().getRequestParameterMap().get("userIdEdit").toString();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		UserBean userBean = new UserBean();
+		userBean.setUserName(userName);
+		userBean.setPassword(password);
+		userBean.setEmail(email);
+		userBean.setRole(role);
+		userBean.setAction("list");
+		userBean.setMarketId(marketId);
+		userBean.setCountryId(countryId);
+		if(userrole.equals("superadmin")){
+			userBean.setOperatorId(operatorId);
+		}else{
+			userBean.setOperatorId(context.getExternalContext().getSessionMap().get("loggedInOperatorID").toString());
+		}
+		System.out.println("superioruser---------"+superioruser);
+		System.out.println("role---------"+role);
+			if(userDeviceInfo.size() == 0){
+				context.getExternalContext().getRequestMap().put("failuremessage", "Please Enter Device Type,IMEI and Mobile Number");
+				return "userCreatedFailed";
+			}else if(!role.equalsIgnoreCase("1")&&superioruser==0){
+				context.getExternalContext().getRequestMap().put("failuremessage", "Please Select the supervisor");
+				return "userCreatedFailed";
+			}
+		else{
+			for(int i =0;i< userDeviceInfo.size();i++){
+				UserDeviceInfo userDevice = userDeviceInfo.get(i);
+				if(i==0){
+					if(userDevice.getDeviceType().equals("") && userDevice.getMobileNumber().equals("") && userDevice.getImei().equals("")){
+						context.getExternalContext().getRequestMap().put("failuremessage", "Please Enter Device Type,IMEI and Mobile Number");
+						return "userCreatedFailed";
+					}else{
+						if(userDevice.getDeviceType().equals("") || userDevice.getMobileNumber().equals("") ||userDevice.getImei().equals("")){
+							context.getExternalContext().getRequestMap().put("failuremessage", "Please Enter Device Type,IMEI and Mobile Number");
+							return "userCreatedFailed";
+						}else{
+							if(userDevice.getMobileNumber().trim().length()>17){
+								context.getExternalContext().getRequestMap().put("failuremessage", "Mobile Number Should be  equals to 16 characters");
+								return "userCreatedFailed";
+							}
+							if(!TestCaseValidator.isInteger(userDevice.getImei()) || userDevice.getImei().trim().length()>15){
+								context.getExternalContext().getRequestMap().put("failuremessage", "IMEI Should be Numberic and not more than 15 characters");
+								return "userCreatedFailed";
+							}
+						}
+				   }
+				}else{
+					if(userDevice.getDeviceType().equals("") && userDevice.getMobileNumber().equals("") && userDevice.getImei().equals("")){
+						this.userDeviceInfo.remove(i);
+						i--;
+					}else{
+						if(userDevice.getDeviceType().equals("") || userDevice.getMobileNumber().equals("") ||userDevice.getImei().equals("")){
+							context.getExternalContext().getRequestMap().put("failuremessage", "Please Enter Device Type,IMEI and Mobile Number");
+							return "userCreatedFailed";
+						}else{
+							if( userDevice.getMobileNumber().trim().length()>17){
+								context.getExternalContext().getRequestMap().put("failuremessage", "Mobile Number Should be equals to 16 characters");
+								return "userCreatedFailed";
+							}
+							if(!TestCaseValidator.isInteger(userDevice.getImei()) || userDevice.getImei().trim().length()>15){
+								context.getExternalContext().getRequestMap().put("failuremessage", "IMEI Should be Numberic and not more than 15 characters");
+								return "userCreatedFailed";
+							}
+						}
+				   }
+				}	
+		   }
+		}
+		userBean.setUserStatus(userStatus);
+		userBean.setUserDeviceInfo(userDeviceInfo);			
+		userBean.setUserMessage(userMessage);
+		userBean.setEmailMessage(emailMessage);
+		userBean.setUserId(userId);
+		userBean.setSuperioruser(superioruser);
+		System.out.println("superioruser--------------"+superioruser);
+		String status = userDao.createUser(userBean);
+		
+		String[] statusArray = status.split("&&&");
+		userBean.setUserMessage(statusArray[1]);
+		//userBean.setEmailMessage(statusArray[2]);
+		status = statusArray[0];	
+		String userIdLogged =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+//		if(userrole.equals("superadmin")){			
+			userList = userDao.listUser(userIdLogged,userrole);
+			operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+			roleMap = userDao.getActiveRoleInMap(userrole);
+		/*}else{
+			userList = userDao.listUserBasedOnOperator(userBean.getOperatorId(),userIdLogged);
+			operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+			roleMap = userDao.getActiveRoleInMap(userrole);
+		}*/	
+		if(!status.equals("failure")){
+			context.getExternalContext().getSessionMap().remove("userBean");
+			context.getExternalContext().getSessionMap().remove("userListSize");
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			context.getExternalContext().getSessionMap().put("userListSize", userList.size());
+			context.getExternalContext().getSessionMap().put("userListdetails", userList);
+			context.getExternalContext().getRequestMap().put("message", "User:" +userName+ " Created Successfully");
+			userDeviceInfo.clear();
+			if(this.userDeviceInfo.size()==0){
+				UserDeviceInfo userDevice = new UserDeviceInfo();
+				this.userDeviceInfo.add(userDevice);
+				UserBean userBean2=new UserBean();
+				userBean2.setUserDeviceInfo(userDeviceInfo);
+			    context.getExternalContext().getSessionMap().put("userBean", userBean2);
+			}
+			return "userCreatedSuccess";
+		}else{
+			if(null != userBean.getUserMessage()){
+				context.getExternalContext().getRequestMap().put("failuremessage", userBean.getUserMessage());
+			}else{
+				context.getExternalContext().getRequestMap().put("failuremessage", "User Created Failed");
+			}
+			return "userCreatedFailed";
+		}	
+	}
+    
+	public String welcomeOpearatorUser(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		context.getExternalContext().getSessionMap().put("loggedInUserRoleID", userrole);
+		return "welcomeOpearatorUserPage";
+	}
+	
+	
+	  /**
+    Implementation of the Same Welcome Page.
+    */
+	public String welcomeUser(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		context.getExternalContext().getSessionMap().put("loggedInUserRoleID", userrole);
+		return "welcomePage";
+	}
+	  /**
+           Navigation from the map to the Welcome User  page
+    */
+	public String welcomeMaptoUser(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		context.getExternalContext().getSessionMap().put("loggedInUserRoleID", userrole);
+		ReportBean reportBean = (ReportBean)context.getExternalContext().getSessionMap().get("reportBean");
+		reportBean.setTestCaseName("");
+		reportBean.setMapReportType("signalStrength");
+		context.getExternalContext().getSessionMap().put("reportBean",reportBean);
+		return "welcomeMaptoUserPage";
+	}
+	
+	  /**
+         Navigation from the Create User  to the Welcome User  page
+    */
+	public String welcomeCreateUser(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getSessionMap().remove("userBean");
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		context.getExternalContext().getSessionMap().put("loggedInUserRoleID", userrole);
+		return "welcomeCreateUserPage";
+	}
+	 /**
+         Navigation from the Create Configuration to Welcome page
+    */
+	public String createConfigToManagement(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		context.getExternalContext().getSessionMap().put("loggedInUserRoleID", userrole);
+		return "createConfigToManagementPage";
+	}
+	/**
+        Navigation from the Assign Configuration to Welcome page
+    */
+	public String assignConfigToManagement(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		context.getExternalContext().getSessionMap().put("loggedInUserRoleID", userrole);
+		return "assignConfigToManagementPage";
+	}
+	/**
+         Navigation from the Edit Configuration to Welcome page
+    */
+	public String editConfigToManagement(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		context.getExternalContext().getSessionMap().put("loggedInUserRoleID", userrole);
+		return "editConfigToManagementPage";
+	}
+	/**
+       Navigation from the Upload  to Welcome page
+    */
+	public String uploadConfigToManagement(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		context.getExternalContext().getSessionMap().put("loggedInUserRoleID", userrole);
+		return "uploadConfigToManagementPage";
+	}
+	/**
+        Implementation of the logout Functionality 
+    */
+	public String logoutUser(){
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return "valid";
+	}
+	/**
+       Implementation of the Session timed out Functionality 
+    */
+	public String logoutSessionUser(){
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return "sessionValid";
+	}
+	/**
+       Implementation of the edit and the Delete user Functionality
+    */
+	public String goToeditUser(){
+		System.out.println("=============================23================");
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userRole =  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		UserDao userDao = new UserDaoImpl();
+		MarketPlaceDao marketPlaceDao= new  MarketPlaceDaoImpl();
+		if(userRole.equals("superadmin")){			
+			operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+			roleMap = userDao.getActiveRoleInMap(userRole);
+		}else{
+			operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+			roleMap = userDao.getActiveEditRoleInMap(userRole);
+		}
+		String editUserId =  context.getExternalContext().getRequestParameterMap().get("editUserId").toString();
+		UserBean userBean =  userDao.getUserDetails(editUserId);
+		String userId=userBean.getUserId();
+		List<Integer> marketIdList= marketPlaceDao.getMarketIDListForUser(userId);
+//		userBean=user
+		String cntryId= userBean.getCountryId();
+		System.out.println("marketIdList==="+marketIdList);
+		getMarketForCountry(cntryId);
+		if(userBean.getUserDeviceInfo().size()==0){
+			UserDeviceInfo userDevice = new UserDeviceInfo();
+			userBean.getUserDeviceInfo().add(userDevice);
+		}
+		
+		userBean.setUserId(editUserId);
+		userBean.setAction("edit");
+		userBean.setMarketIdList(marketIdList);
+		context.getExternalContext().getSessionMap().remove("marketIdList");
+		context.getExternalContext().getSessionMap().remove("operatorMaplist");
+		context.getExternalContext().getSessionMap().remove("roleMaplist");
+		context.getExternalContext().getSessionMap().put("operatorMaplist", operatorMap);
+		context.getExternalContext().getSessionMap().put("roleMaplist", roleMap);
+		context.getExternalContext().getSessionMap().put("userBean", userBean);
+		context.getExternalContext().getSessionMap().put("marketIdList", marketIdList);
+		return "success";
+	}
+	/**
+          Implementation of the Pop up alert Message before deleting the user 
+    */
+	public String goToDeleteUserStatus(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getRequestMap().put("removedStatus", "true");
+		context.getExternalContext().getRequestMap().put("popUpmessage", "Are you sure want to delete the user?");	
+		String editUserId =  context.getExternalContext().getRequestParameterMap().get("editUserId").toString();
+		context.getExternalContext().getSessionMap().remove("editUserId");
+		context.getExternalContext().getSessionMap().put("editUserId",editUserId);
+		UserBean userBean =  new UserBean();
+		userBean.setAction("list");
+		UserDeviceInfo userDevice = new UserDeviceInfo();
+		this.userDeviceInforesult.add(userDevice);
+		userBean.setUserDeviceInfo(userDeviceInforesult);
+		context.getExternalContext().getSessionMap().remove("userBean");
+		context.getExternalContext().getSessionMap().put("userBean", userBean);
+		return "deletePopPage";
+	}
+	
+	/**
+        Implementation of the Delete user Functionality
+    */
+	public String goToDeleteUser(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getSessionMap().remove("userListdetails");
+		String userRole =  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		UserDao userDao = new UserDaoImpl();
+		boolean deleteStatus=false;
+		String editUserId =  context.getExternalContext().getSessionMap().get("editUserId").toString();
+		String userName=userDao.getUserName(editUserId);
+		UserBean userBean =  new UserBean();
+		deleteStatus=userDao.deleteUser(editUserId);
+		if(userBean.getUserDeviceInfo().size()==0){
+			UserDeviceInfo userDevice = new UserDeviceInfo();
+			userBean.getUserDeviceInfo().add(userDevice);
+		}
+		userBean.setUserId(editUserId);
+		userBean.setAction("list");
+		if(deleteStatus == true){
+			context.getExternalContext().getRequestMap().put("failuremessage", "User: "+userName+ " Deleted Successfully");
+		}else{
+			context.getExternalContext().getRequestMap().put("failuremessage", "User Deleted UnSuccessFully");
+		}
+		String userIdLogged =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+//		if(userRole.equals("superadmin")){			
+			userList = userDao.listUser(userIdLogged,userRole);
+			roleMap = userDao.getActiveRoleInMap(userRole);
+		/*}else{
+			roleMap = userDao.getActiveRoleInMap(userRole);
+			userList =userDao.listUserBasedOnOperator(new UserDaoImpl().getOperator(userIdLogged),userIdLogged);
+		}*/
+		context.getExternalContext().getSessionMap().put("userBean", userBean);
+		context.getExternalContext().getSessionMap().remove("editUserId");
+		context.getExternalContext().getSessionMap().put("userListdetails", userList);
+		return "deleteSuccess";
+	}
+	/**
+        Navigation from the Header page to the welcome page
+    */
+	public String welcomePage(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getSessionMap().remove("userBean");
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		context.getExternalContext().getSessionMap().put("loggedInUserRoleID", userrole);
+		return "welcomePage";
+	}
+	/**
+        Display the Current User Logged Details 
+    */
+	public String loginuserPage(){
+		enableLoginUserDetails = true;
+		MarketPlaceDao marketPlaceDao=new MarketPlaceDaoImpl();
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userRole =  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		UserDao userDao = new UserDaoImpl();
+		if(userRole.equals("superadmin")){			
+			roleMap = userDao.getActiveRoleInMap(userRole);
+			countryMap= new MarketPlaceDaoImpl().getCountryMap();
+		}else{
+			operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+			roleMap = userDao.getActiveRoleInMap(userRole);
+			countryMap= new MarketPlaceDaoImpl().getCountryMap();
+		}
+		Map<String, String> statusMap = new LinkedHashMap<String, String>();
+		statusMap.put("Active", "1");
+		statusMap.put("Inactive", "0");
+		String editUserId =  context.getExternalContext().getRequestParameterMap().get("editUserId").toString();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		UserBean userBean =  userDao.getLoginUserDetails(editUserId,userrole);
+		String userId=userBean.getUserId();
+		List<Integer> marketIdList= marketPlaceDao.getMarketIDListForUser(userId);
+		String cntryId= userBean.getCountryId();
+		System.out.println("marketIdList==="+marketIdList);
+		getMarketForCountry(cntryId);
+		if(userBean.getUserDeviceInfo().size()==0){
+			UserDeviceInfo userDevice = new UserDeviceInfo();
+			userBean.getUserDeviceInfo().add(userDevice);
+		}
+		userBean.setEnableLoginUserDetails(enableLoginUserDetails);
+		userBean.setUserId(editUserId);
+		userBean.setAction("edit");
+		userBean.setMarketIdList(marketIdList);
+		context.getExternalContext().getSessionMap().put("statusMap",statusMap);
+		context.getExternalContext().getSessionMap().put("operatorMaplist", operatorMap);
+		context.getExternalContext().getSessionMap().put("roleMaplist", roleMap);
+		context.getExternalContext().getSessionMap().put("countryMapList", countryMap);
+		context.getExternalContext().getSessionMap().put("userBean", userBean);
+		context.getExternalContext().getSessionMap().put("marketIdList", marketIdList);
+		return "loginuserPagesuccess";		
+	}	
+	/**
+         Edit the Current User Logged Details 
+    */
+    public String editLoginUser(){
+    	System.out.println("Inside the funtion-=-----------------------");
+    	FacesContext context = FacesContext.getCurrentInstance();
+		UserDao userDao = new UserDaoImpl();
+		MarketPlaceDao marketPlaceDao= new  MarketPlaceDaoImpl();
+		String[] marketId = new String[marketIdList.size()];
+		marketId = marketIdList.toArray(marketId);
+		String userId =  context.getExternalContext().getRequestParameterMap().get("userIdEdit").toString();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+			if(userDeviceInfo.size() == 0){
+				context.getExternalContext().getRequestMap().put("failuremessage", "Please Enter Device Type,IMEI and Mobile Number");
+				return "userCreatedFailed";
+			}else{
+				for(int i =0;i< userDeviceInfo.size();i++){
+					UserDeviceInfo userDevice = userDeviceInfo.get(i);
+					if(userDevice.getDeviceType().equals("") || userDevice.getMobileNumber().equals("") ||userDevice.getImei().equals("")){
+						context.getExternalContext().getRequestMap().put("failuremessage", "Please Enter Device Type,IMEI and Mobile Number");
+						return "userCreatedFailed";
+					}else{
+						if( userDevice.getMobileNumber().trim().length()>17){
+							context.getExternalContext().getRequestMap().put("failuremessage", "Mobile Number Should be equals to 16 characters");
+							return "userCreatedFailed";
+						}
+						if(!TestCaseValidator.isInteger(userDevice.getImei()) || userDevice.getImei().trim().length()>15){
+							context.getExternalContext().getRequestMap().put("failuremessage", "IMEI Should be Numberic and not more than 15 characters");
+							return "userCreatedFailed";
+						}
+					}
+				}
+			}
+			userDao.profileEditUser(userId,email,role,userStatus,operatorId,userDeviceInfo,password,userrole,marketId,countryId);
+			String userIdLogged =  context.getExternalContext().getSessionMap().get("loggedInUserID").toString();
+//			if(userrole.equals("superadmin")){			
+				userList = userDao.listUser(userIdLogged,userrole);
+				operatorMap = new OperatorDaoImpl().getActiveOperatorsInMap();
+				roleMap = userDao.getActiveRoleInMap(userrole);
+			/*}else{
+				userList = userDao.listUserBasedOnOperator(new UserDaoImpl().getOperator(userIdLogged),userIdLogged);
+				roleMap = userDao.getActiveRoleInMap(userrole);
+				if(userIdLogged.equals(userId) && userStatus == 0 ){
+					FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+					return "userEditLogout";
+				}
+			}*/	
+			//userDeviceInfo.clear();
+			if(this.userDeviceInfo.size()==0){
+				UserDeviceInfo userDevice = new UserDeviceInfo();
+				this.userDeviceInfo.add(userDevice);
+				UserBean userBean=(UserBean) context.getExternalContext().getSessionMap().get("userBean");
+			    userBean.setUserDeviceInfo(userDeviceInfo);
+			    userBean.setAction("edit");
+			    context.getExternalContext().getSessionMap().put("userBean", userBean);
+			}else{
+				UserBean userBean=(UserBean) context.getExternalContext().getSessionMap().get("userBean");
+			    userBean.setUserDeviceInfo(userDeviceInfo);
+			    userBean.setAction("edit");
+			    context.getExternalContext().getSessionMap().put("userBean", userBean);
+			}
+			Map<String, String> statusMap = new LinkedHashMap<String, String>();
+			statusMap.put("Active", "1");
+			statusMap.put("Inactive", "0");
+			context.getExternalContext().getSessionMap().remove("statusMap");
+			context.getExternalContext().getSessionMap().put("statusMap",statusMap);
+			context.getExternalContext().getSessionMap().put("loggedInUserRoleID", userrole);
+			context.getExternalContext().getSessionMap().remove("userListSize");
+			context.getExternalContext().getSessionMap().remove("userListdetails");
+			context.getExternalContext().getSessionMap().put("userListSize", userList.size());
+			context.getExternalContext().getSessionMap().put("userListdetails", userList);
+			context.getExternalContext().getRequestMap().put("message", "User Updated Successfully");
+			return "loginUserEditSuccess"; 	
+    }	
+    
+    /** Function to Add the User Device info in the Profile Screen Page
+     * 
+     */
+    public String addLoginUserRowAction(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		UserBean userBean=(UserBean) context.getExternalContext().getSessionMap().get("userBean");
+		UserDeviceInfo userDev = new UserDeviceInfo();
+	    this.userDeviceInfo.add(userDev);
+	    userBean.setAction("edit");
+	    userBean.setUserDeviceInfo(userDeviceInfo);
+	    context.getExternalContext().getSessionMap().put("userBean", userBean);
+	    return "addRow";
+	}
+    
+    /** Function to remove  the User Device info from the list in the Profile Screen Page
+     * 
+     */
+    
+    public String loginRemoveRowAction(){
+    	String  removedStatus = "false";
+    	FacesContext context = FacesContext.getCurrentInstance();
+    		for(int i=0; i<userDeviceInfo.size();i++){
+    			if(userDeviceInfo.size()>1){
+    				if(userDeviceInfo.get(i).isSelected()){
+    					removedStatus = removeDeviceRowFromDb(userDeviceInfo.get(i).getDeviceId());
+    					this.userDeviceInfo.remove(i);
+    					i--;
+    				}
+    			}else{
+    				context.getExternalContext().getRequestMap().put("message", "Can't remove default value");
+    			}
+    		}
+    		
+    		UserBean userBean=(UserBean) context.getExternalContext().getSessionMap().get("userBean");
+    	    userBean.setAction("edit");
+    	    userBean.setUserDeviceInfo(userDeviceInfo);
+    	    context.getExternalContext().getSessionMap().put("userBean", userBean);		
+    		return "removeRow";
+    	}
+	public String welcomeMarketUser(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String userrole=  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		context.getExternalContext().getSessionMap().put("loggedInUserRoleID", userrole);
+		return "welcomeMarketUserPage";
+	}
+	  public void ajaxListener(AjaxBehaviorEvent event) {
+		  System.out.println("ajaxListener===");
+	        String result = "called by " + event.getComponent().getClass().getName();
+	        Map<String, String> marketPlaceMapForCountry = new LinkedHashMap<String, String>();
+	        
+			FacesContext context = FacesContext.getCurrentInstance();
+			String newValue =  (String) ((UIOutput)event.getSource()).getValue();
+			MarketPlaceDao marketPlaceDao = new MarketPlaceDaoImpl();
+			marketPlaceMapForCountry = marketPlaceDao.getMarketPlaceMapForCountry(newValue);
+			String otherMarket=marketPlaceDao.getOtherMarketId(countryId);
+			if(otherMarket!=null){
+				String otherMarketId[]=otherMarket.split(",");
+				UserBean userBean=(UserBean) context.getExternalContext().getSessionMap().get("userBean");
+				userBean.setMarketId(otherMarketId);
+				context.getExternalContext().getSessionMap().put("userBean", userBean);
+			}
+			context.getExternalContext().getSessionMap().put("marketPlaceMapForCountry",marketPlaceMapForCountry);
+	    }
+	  public void getMarketForCountry(String countryId) {
+		  System.out.println("getMarketForCountry===");
+	        //String result = "called by " + event.getComponent().getClass().getName();
+	        Map<String, String> marketPlaceMapForCountry = new LinkedHashMap<String, String>();
+			FacesContext context = FacesContext.getCurrentInstance();
+			//String newValue =  (String) ((UIOutput)event.getSource()).getValue();
+			MarketPlaceDao marketPlaceDao = new MarketPlaceDaoImpl();
+			marketPlaceMapForCountry = marketPlaceDao.getMarketPlaceMapForCountry(countryId);
+			context.getExternalContext().getSessionMap().put("marketPlaceMapForCountry",marketPlaceMapForCountry);
+	    }
+	  
+	  public void fetchSuperiorList(){
+		  FacesContext context = FacesContext.getCurrentInstance();
+		  Map<String,String> superiorUsersMap = new HashMap<String, String>();
+		  System.out.println("herrrrrrrrrrrrr"+role);
+		  String userRole =  context.getExternalContext().getSessionMap().get("loggedInUserRoleID").toString();
+		  System.out.println("operatorId----------"+operatorId);
+		  String userId =(String) context.getExternalContext().getSessionMap().get("loggedInUserID");
+		  System.out.println("userId--++---"+userRole);
+		  Set<String> userNameList = new UserDaoImpl().getUsersOfSuperior(userId,userRole);
+		  context.getExternalContext().getSessionMap().put("superiorRoleUsers",new UserDaoImpl().getSuperiorRoleUsersMap(userRole,role,operatorId,userNameList.toString().substring(1, userNameList.toString().length()-1)));
+		  
+	  }
+	
+}

@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/classes
+END
+Contact.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/classes/Contact.java
+END
+FileEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/classes/FileEvent.java
+END
+BrowserTestConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/classes/BrowserTestConfig.java
+END
+MTTestConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/classes/MTTestConfig.java
+END
+LoginResponse.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/classes/LoginResponse.java
+END
+UnCaughtException.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/classes/UnCaughtException.java
+END
+FTPTestConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/classes/FTPTestConfig.java
+END
+MOTestConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/classes/MOTestConfig.java
+END
+PingTestConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/classes/PingTestConfig.java
+END
+UDPTestConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/classes/UDPTestConfig.java
+END
+TestConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/classes/TestConfig.java
+END
+VOIPTestConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/classes/VOIPTestConfig.java
+END
+SignalStrengh.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/classes/SignalStrengh.java
+END

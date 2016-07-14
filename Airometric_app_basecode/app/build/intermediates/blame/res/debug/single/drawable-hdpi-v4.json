@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon.png",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\drawable-hdpi\\icon.png"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\folder.png",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\drawable-hdpi\\folder.png"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\file.png",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\drawable-hdpi\\file.png"
+    },
+    {
+        "merged": "E:\\Android_studio\\Airometric\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\titlebar_gradient.xml",
+        "source": "E:\\Android_studio\\Airometric\\app\\src\\main\\res\\drawable-hdpi\\titlebar_gradient.xml"
+    }
+]

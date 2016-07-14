@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="E:\Android_studio\Airometric\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="c95a12dac9317904fe93185a9edc466b73a68e43">
+        <dex dex="E:\Android_studio\Airometric\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_c02c32e0a47df4a838f8be3f897c664fc178962d\classes.dex" />
+    </item>
+    <item
+        jar="E:\Android_studio\Airometric\app\libs\commons-validator-1.4.0.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="42fa1046955ade59f5354a1876cfc523cea33815">
+        <dex dex="E:\Android_studio\Airometric\app\build\intermediates\transforms\dex\debug\folders\1000\2\commons-validator-1.4.0_3e2079e2443a946379470e39f5644492af227990\classes.dex" />
+    </item>
+    <item
+        jar="E:\Android_studio\Airometric\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="E:\Android_studio\Airometric\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.4.0_38c259a7e7141023fa37b5705d2235ae517b726a\classes.dex" />
+    </item>
+    <item
+        jar="E:\Android_studio\Airometric\app\libs\commons-lang3-3.1.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="905075e6c80f206bbe6cf1e809d2caa69f420c76">
+        <dex dex="E:\Android_studio\Airometric\app\build\intermediates\transforms\dex\debug\folders\1000\2\commons-lang3-3.1_d81561dc4e11547a68aabaf872fbca227e058a42\classes.dex" />
+    </item>
+    <item
+        jar="E:\Android_studio\Airometric\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\libs\internal_impl-23.4.0.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="E:\Android_studio\Airometric\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.4.0_5a33fc60b6904e1e6975f41ef082ba2481529578\classes.dex" />
+    </item>
+    <item
+        jar="E:\Android_studio\Airometric\app\libs\apache-mime4j-0.6.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="945007627e8d12275d755081a9e609c018e1210d">
+        <dex dex="E:\Android_studio\Airometric\app\build\intermediates\transforms\dex\debug\folders\1000\2\apache-mime4j-0.6_8d26420cdcfe7b6fd5999da6ac0282158795dc8c\classes.dex" />
+    </item>
+    <item
+        jar="E:\Android_studio\Airometric\app\libs\httpclient-4.5.1.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="7e3cecc566df91338c6c67883b89ddd05a17db43">
+        <dex dex="E:\Android_studio\Airometric\app\build\intermediates\transforms\dex\debug\folders\1000\2\httpclient-4.5.1_3593c5a2f1ca8e1908253c326a94d1350275e0c7\classes.dex" />
+    </item>
+    <item
+        jar="E:\Android_studio\Airometric\app\libs\commons-net-3.3.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="cd0d5510908225f76c5fe5a3f1df4fa44866f81e">
+        <dex dex="E:\Android_studio\Airometric\app\build\intermediates\transforms\dex\debug\folders\1000\2\commons-net-3.3_3438d1afcdd4237b267d7c5b27af217e7b2810ad\classes.dex" />
+    </item>
+    <item
+        jar="E:\Android_studio\Airometric\app\libs\httpmime-4.0.1.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="326bf4147f100e8a4fdd7f1867a87e969fb10812">
+        <dex dex="E:\Android_studio\Airometric\app\build\intermediates\transforms\dex\debug\folders\1000\2\httpmime-4.0.1_4f3b4ae957ec3e269dc12793d81659bd94c0b8d1\classes.dex" />
+    </item>
+    <item
+        jar="E:\Android_studio\Airometric\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="2a7014dde3a5e0dfd9376165e9270e8b23290127">
+        <dex dex="E:\Android_studio\Airometric\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_3a6c1c77b819e42f7ec72da03bcab971e302af74\classes.dex" />
+    </item>
+    <item
+        jar="E:\Android_studio\Airometric\app\libs\httpcore-4.4.3.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="e876a79d561e5c6207b78d347e198c8c4531a5e5">
+        <dex dex="E:\Android_studio\Airometric\app\build\intermediates\transforms\dex\debug\folders\1000\2\httpcore-4.4.3_6d19b37ceae89f7e00604c147e2e299545ca8ff6\classes.dex" />
+    </item>
+    <item
+        jar="E:\AndroidStudioSDK\extras\android\m2repository\com\android\support\support-annotations\23.4.0\support-annotations-23.4.0.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="E:\Android_studio\Airometric\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.4.0_521e8d0c94c1d84cf3b1a68fe5d5a4abef08f483\classes.dex" />
+    </item>
+
+</items>

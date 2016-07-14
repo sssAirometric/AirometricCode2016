@@ -1,0 +1,187 @@
+/*Data Connectivity Maps*/
+#dataConnectivityFirstMap {
+     width:49%;
+    height:300px;
+    float: left;
+ }
+ #dataConnectivitySecondMap {
+     width:49%;
+    height:300px;
+    float: right;
+    bottom: 40px;
+ }
+ #dataConnectivityThirdMap {
+   width:49%;
+    height:300px;
+    float: left;
+ }
+ #dataConnectivityFourthMap {
+     width:49%;
+    height:300px;
+    float: right;
+    bottom: 20px;
+ }
+ #dataConnectivityFifthMap {
+   width:49%;
+    height:300px;
+    float: left;
+ }
+ #dataConnectivitySixthMap {
+     width:49%;
+    height:300px;
+    float: right;
+    bottom: 20px;
+ }
+ #dataConnectivitySeventhMap {
+   width:49%;
+    height:300px;
+    float: left;
+ }
+ #dataConnectivityEightMap {
+     width:49%;
+    height:300px;
+    float: right;
+    bottom: 20px;
+ }
+ 
+ /*Voice Connectivity Maps*/
+ #voiceConnectivityFirstMap {
+    width:49%;
+    height:300px;
+    float: left;
+ }
+ #voiceConnectivitySecondMap {
+     width:49%;
+    height:300px;
+    float: right;
+    bottom: 40px;
+ }
+ #voiceConnectivityThirdMap {
+     width:49%;
+    height:300px;
+    float: left;
+ }
+ #voiceConnectivityFourthMap {
+      width:49%;
+    height:300px;
+    float: right;
+    bottom: 20px;
+ }
+ #voiceConnectivityFifthMap {
+    width:49%;
+    height:300px;
+    float: left;
+ }
+ #voiceConnectivitySixthMap {
+     width:49%;
+    height:300px;
+    float: right;
+    bottom: 40px;
+ }
+ #voiceConnectivitySeventhMap {
+     width:49%;
+    height:300px;
+    float: left;
+ }
+ #voiceConnectivityEigthMap {
+      width:49%;
+    height:300px;
+    float: right;
+    bottom: 20px;
+ }
+  /*Voice Quality Maps*/
+ 
+ #voiceQtyFirstMap {
+    width:49%;
+    height:300px;
+    float: left;
+ }
+  #voiceQtySecondMap {
+     width:49%;
+    height:300px;
+    float: right;
+    bottom: 19px;
+ }
+  #voiceQtyThirdMap {
+     width:49%;
+    height:300px;
+    float: left;
+ }
+  #voiceQtyFourthMap {
+    width:49%;
+    height:300px;
+    float: right;
+    bottom: 20px;
+ }
+ #voiceQtyFifthMap {
+    width:49%;
+    height:300px;
+    float: left;
+ }
+ #voiceQtySixthMap {
+    width:49%;
+    height:300px;
+    float: right;
+    bottom: 20px;
+ }
+  #voiceQtySeventhMap {
+    width:49%;
+    height:300px;
+    float: left;
+ }
+  #voiceQtyEightMap {
+    width:49%;
+    height:300px;
+    float: right;
+    bottom: 20px;
+ }
+ 
+   /*Voice and Data Quality Maps*/
+   
+   
+ #VoiceandDataFirstMap {
+    width:49%;
+    height:300px;
+    float: left;
+ }
+  #VoiceandDataSecondMap {
+     width:49%;
+    height:300px;
+    float: right;
+    bottom: 40px;
+ }
+  #VoiceandDataThirdMap {
+     width:49%;
+    height:300px;
+    float: left;
+ }
+  #VoiceandDataFourthMap {
+       width:49%;
+    height:300px;
+    float: right;
+    bottom: 20px;
+ }
+ 
+ #VoiceandDataFifthMap {
+    width:49%;
+    height:300px;
+    float: left;
+ }
+  #VoiceandDataSixthMap {
+     width:49%;
+    height:300px;
+    float: right;
+    bottom: 40px;
+ }
+  #VoiceandDataSeventhMap {
+     width:49%;
+    height:300px;
+    float: left;
+ }
+  #VoiceandDataEightMap {
+       width:49%;
+    height:300px;
+    float: right;
+    bottom: 20px;
+ }
+ 

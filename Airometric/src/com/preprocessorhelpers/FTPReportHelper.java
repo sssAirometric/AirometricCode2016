@@ -1,0 +1,378 @@
+package com.preprocessorhelpers;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.model.DBUtil;
+import com.to.DeviceInfoTO;
+
+public class FTPReportHelper {
+
+	public Float getAverageList(List<Float> list) {
+		Float averagevalue = new Float(0);
+		Float listSum = new Float(0);
+		try {
+			if (null != list) {
+				//// System.out.println("list-----++-----"+list.size());
+				for (int i = 0; i < list.size(); i++) {
+					listSum = listSum + list.get(i);
+				}
+				if (list.size() > 0) {
+					averagevalue = listSum / list.size();
+				} else {
+					averagevalue = null;
+				}
+			} else {
+				averagevalue = null;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return averagevalue;
+	}
+
+	public List<DeviceInfoTO> getThroughputForMaps(String testName,String eventName,String marketId) {
+		String query = "SELECT * FROM ftpcalculationtable WHERE TEST_NAME LIKE '"
+				+ testName + "%' AND EVENT_NAME LIKE '"+eventName+"' AND MARKET_ID = '"+marketId+"'ORDER BY TimeStamp";
+		System.out.println("getThroughputForMaps query--------"+query);
+		SimpleDateFormat newSdf = new SimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss.SSS");
+		List<DeviceInfoTO> mapsDetailsList = new ArrayList<DeviceInfoTO>();
+		Connection conn = DBUtil.openConn();
+		Statement stmt = null;
+		ResultSet rs = null;
+		String prevTestName = "";
+		String currentTestName = "";
+		String currentSnapShotId = "";
+		String prevSnapShotId = "";
+		int currentBytes = 0;
+		int prevBytes = 0;
+		long throughtPut = 0;
+
+		Date currentTime = null;
+		Date prevTime = null;
+
+		try {
+			stmt = conn.createStatement();;
+//			System.out.println(query);
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String networkType = rs.getString("NETWORK_TYPE");
+				int rsrp = 0;
+				if(rs.getString("SIGNALSTRENGTH_LTERSRP").equalsIgnoreCase("Empty")){
+					rsrp = rs.getInt("SIGNALSTRENGTH_LTERSRP");
+				}
+				if(!(networkType.contains("LTE"))||((networkType.contains("LTE"))&&rsrp<1000)){
+				DeviceInfoTO deviceInfos = new DeviceInfoTO();
+				currentTime = newSdf.parse(rs.getString("TimeStamp"));
+				currentTestName = rs.getString("TEST_NAME");
+				currentSnapShotId= rs.getString("SNAPSHOT_ID");
+				currentBytes = rs.getInt("EVENT_VALUE");
+				deviceInfos.setThroughputmain(new Long(0).toString());
+				deviceInfos.setSignalStrength(new Integer(rs
+						.getInt("SIGNALSTRENGTH")).toString());
+				deviceInfos.setSignalStrengthCDMA(rs
+						.getString("SIGNALSTRENGTH_CDMADBM"));
+				deviceInfos.setSignalStrengthEVDO(rs
+						.getString("SIGNALSTRENGTH_EVDODBM"));
+				deviceInfos.setSignalStrengthLTE(rs
+						.getString("SIGNALSTRENGTH_GSMSIGNALSTRENGTH"));
+				deviceInfos.setSignalStrengthLTERSRP(rs
+						.getString("SIGNALSTRENGTH_LTERSRP"));
+				deviceInfos.setNetworkType(rs.getString("NETWORK_TYPE"));
+				deviceInfos.setEventValue(rs.getString("EVENT_VALUE"));
+				deviceInfos.setEventName(rs.getString("EVENT_NAME"));
+				deviceInfos.setLattitude(rs.getDouble("GEOLOCATION_LATITUDE"));
+				deviceInfos.setLongitude(rs.getDouble("GEOLOCATION_LONGITUDE"));
+				deviceInfos
+						.setTimeStampForEachSample(rs.getString("TIME_STAMP_FOREACH_SAMPLE"));
+				deviceInfos.setCellLocationCID(rs.getString("CELLLOCATION_CID"));
+				
+				deviceInfos.setTestName(testName);
+				if (!currentSnapShotId.equalsIgnoreCase(prevSnapShotId)) {
+					throughtPut = currentBytes;
+				}
+
+				else {
+					if (null != currentTime && null != prevTime) {
+						long diff = (currentTime.getTime() - prevTime.getTime()) / 1000;
+						throughtPut = 0;
+						if(diff>0){
+							throughtPut = (currentBytes - prevBytes) / diff;
+						}
+						
+						deviceInfos.setThroughputmain(new Long(throughtPut).toString());
+						/*Code correction by Sheshadri, Removed hardcoded values like (U) and (D) and added dynamic values*/
+//						if(eventName.contains("TX")){
+//							deviceInfos.setEventName("(U)");
+//						}else if(eventName.contains("RX")){
+//							deviceInfos.setEventName("(D)");
+//						}
+						
+						mapsDetailsList.add(deviceInfos);
+					}
+				}
+//				if(currentSnapShotId.equalsIgnoreCase("1423112497534_356262053743197_05Feb15ftpDrive1file-2_36_16")){
+//					System.out.println("prevTime.getTime()-----"+prevTime.getTime());
+//					System.out.println("mapsDetailsList---"+mapsDetailsList.size());
+//					System.out.println("prevBytes-----"+prevBytes);
+//					System.out.println("prevBytes-----"+prevBytes);
+//					System.out.println("currentBytes-----"+currentBytes);
+//					System.out.println("eventName---------"+eventName);
+//					System.out.println("throughtPut-----++---"+deviceInfos.getThroughputmain());
+//				}
+				prevTestName = currentTestName;
+				prevTime = currentTime;
+				prevBytes = currentBytes;
+				prevSnapShotId = currentSnapShotId;
+				
+			}
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeConn();
+		}
+
+		return mapsDetailsList;
+
+	}
+	
+	public List<DeviceInfoTO> geAllFtpPointsForMaps(String testName) {
+		String query = "SELECT * FROM stg_device_info WHERE TEST_NAME LIKE '"
+				+ testName + "%'AND TEST_TYPE = 'FTP' ORDER BY TIME_STAMP_FOREACH_SAMPLE";
+		SimpleDateFormat newSdf = new SimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss.SSS");
+		List<DeviceInfoTO> mapsDetailsList = new ArrayList<DeviceInfoTO>();
+		Connection conn = DBUtil.openConn();
+		Statement stmt = null;
+		ResultSet rs = null;
+//System.out.println("testNameList----"+query);
+		try {
+			stmt = conn.createStatement();;
+//			System.out.println(query);
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String networkType = rs.getString("NETWORK_TYPE");
+				int rsrp = 0;
+				if(rs.getString("SIGNALSTRENGTH_LTERSRP").equalsIgnoreCase("Empty")){
+					rsrp = rs.getInt("SIGNALSTRENGTH_LTERSRP");
+				}
+				if(!(networkType.contains("LTE"))||((networkType.contains("LTE"))&&rsrp<1000)){
+				DeviceInfoTO deviceInfos = new DeviceInfoTO();
+				deviceInfos.setTestName(rs.getString("TEST_NAME"));
+				deviceInfos.setNetworkType(rs.getString("NETWORK_TYPE"));
+				deviceInfos.setNetworkDataState(rs
+						.getString("NETWORK_DATASTATE"));
+				deviceInfos.setNetworkRoaming(rs.getString("NETWORK_ROAMING"));
+				if(networkType.contains("LTE")){
+					deviceInfos.setSignalStrength(rs.getString("SIGNALSTRENGTH_LTERSRP"));
+				}
+				else{
+					deviceInfos.setSignalStrength(rs
+							.getString("SIGNALSTRENGTH_GSMSIGNALSTRENGTH"));
+				}
+				
+				/*
+				 * deviceInfos.setSignalStrength(rs
+				 * .getString("SIGNALSTRENGTH_LTERSRP"));
+				 */
+				deviceInfos.setSignalStrengthCDMA(rs
+						.getString("SIGNALSTRENGTH_CDMADBM"));
+				deviceInfos.setSignalStrengthEVDO(rs
+						.getString("SIGNALSTRENGTH_EVDODBM"));
+				deviceInfos.setLattitude(rs.getDouble("GEOLOCATION_LATITUDE"));
+				deviceInfos.setLongitude(rs.getDouble("GEOLOCATION_LANGITUDE"));
+				deviceInfos
+						.setCellLocationCID(rs.getString("CELLLOCATION_CID"));
+				deviceInfos
+						.setCellLocationLAC(rs.getString("CELLLOCATION_LAC"));
+				deviceInfos
+						.setDevicePhoneType(rs.getString("DEVICE_PHONETYPE"));
+				deviceInfos.setNetworkMCC(rs.getString("NETWORK_MCC"));
+				deviceInfos.setNetworkMNC(rs.getString("NETWORK_MNC"));
+				deviceInfos.setSignalStrengthSnr(rs
+						.getString("SIGNALSTRENGTH_EVDOSNR"));
+				deviceInfos.setTimeStampForEachSample(rs
+						.getString("TIME_STAMP_FOREACH_SAMPLE"));
+				deviceInfos.setNeighbourInfo(rs.getString("NEIGHBOUR_INFO"));
+				deviceInfos.setSignalStrengthCDMACIO(rs
+						.getString("SIGNALSTRENGTH_CDMACIO"));
+				deviceInfos.setSignalStrengthEVDOECIO(rs
+						.getString("SIGNALSTRENGTH_EVDOECIO"));
+				deviceInfos.setSignalStrengthLTE(rs
+						.getString("SIGNALSTRENGTH_LTERSRP"));
+				deviceInfos.setSignalStrengthLTERSRP(rs
+						.getString("SIGNALSTRENGTH_LTERSRP"));
+				deviceInfos.setSignalStrengthLTERSRQ(rs
+						.getString("SIGNALSTRENGTH_LTERSRQ"));
+				deviceInfos.setSignalStrengthLTERSSNR(rs
+						.getString("SIGNALSTRENGTH_LTERSSNR"));
+				
+//				deviceInfos.set
+				deviceInfos.setSignalStrengthLTECQI(rs
+						.getString("SIGNALSTRENGTH_LTECQI"));
+				
+				
+				deviceInfos.setPhoneNumber(rs
+						.getString("DEVICE_PHONENUMBER"));
+				deviceInfos.setPhoneType(rs
+						.getString("DEVICE_PHONETYPE"));
+				deviceInfos.setDeviceName(rs
+						.getString("DEVICE_MODEL"));
+				deviceInfos.setDeviceVersion(rs
+						.getString("DEVICE_VERSION"));
+				deviceInfos.setDeviceManufacturer(rs
+						.getString("DEVICE_MANUFACTURER"));
+				deviceInfos.setCellLocationCID(rs
+						.getString("CELLLOCATION_CID"));
+				deviceInfos.setCellLocationLAC(rs
+						.getString("CELLLOCATION_LAC"));
+				deviceInfos.setImei(rs
+						.getString("DEVICE_IMEI"));
+				
+				mapsDetailsList.add(deviceInfos);
+
+			}
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeConn();
+		}
+
+		return mapsDetailsList;
+
+	}
+
+	public Map<String, Map<String, List<Float>>> getAvgNetworkWiseThroughput(
+			List<DeviceInfoTO> mapsDetailsList) {
+		Map<String, List<Float>> networkWiseTxThroughPutMap = new HashMap<String, List<Float>>();
+		Map<String, List<Float>> networkWiseRxThroughPutMap = new HashMap<String, List<Float>>();
+
+		Map<String, List<Float>> networkWiseTxSSMap = new HashMap<String, List<Float>>();
+		Map<String, List<Float>> networkWiseRxSSMap = new HashMap<String, List<Float>>();
+
+		Map<String, Map<String, List<Float>>> transactionWiseMap = new HashMap<String, Map<String, List<Float>>>();
+		for (DeviceInfoTO deviceInfoTO : mapsDetailsList) {
+			if (deviceInfoTO.getEventName()
+					.equalsIgnoreCase("Current TX bytes")) {
+				List<Float> throughPutVals = networkWiseTxThroughPutMap
+						.get(deviceInfoTO.getNetworkType());
+				List<Float> signalStrengthList = networkWiseTxSSMap
+						.get(deviceInfoTO.getNetworkType());
+				if (null == throughPutVals) {
+					throughPutVals = new ArrayList<Float>();
+					signalStrengthList = new ArrayList<Float>();
+				}
+				signalStrengthList.add(new Float(deviceInfoTO
+						.getSignalStrength()));
+				throughPutVals.add(new Float(deviceInfoTO.getThroughputmain()));
+				networkWiseTxThroughPutMap.put(deviceInfoTO.getNetworkType(),
+						throughPutVals);
+				networkWiseTxSSMap.put(deviceInfoTO.getNetworkType(),
+						signalStrengthList);
+			} else if (deviceInfoTO.getEventName().equalsIgnoreCase(
+					"Current RX bytes")) {
+				List<Float> throughPutVals = networkWiseRxThroughPutMap
+						.get(deviceInfoTO.getNetworkType());
+				List<Float> signalStrengthList = networkWiseRxSSMap
+						.get(deviceInfoTO.getNetworkType());
+				if (null == throughPutVals) {
+					throughPutVals = new ArrayList<Float>();
+					signalStrengthList = new ArrayList<Float>();
+				}
+				signalStrengthList.add(new Float(deviceInfoTO
+						.getSignalStrength()));
+				throughPutVals.add(new Float(deviceInfoTO.getThroughputmain()));
+				networkWiseRxThroughPutMap.put(deviceInfoTO.getNetworkType(),
+						throughPutVals);
+				networkWiseRxSSMap.put(deviceInfoTO.getNetworkType(),
+						signalStrengthList);
+			}
+		}
+		transactionWiseMap.put("RxBytes", networkWiseRxThroughPutMap);
+		transactionWiseMap.put("TxBytes", networkWiseTxThroughPutMap);
+
+		transactionWiseMap.put("RxBytesSS", networkWiseRxSSMap);
+		transactionWiseMap.put("TxBytesSS", networkWiseTxSSMap);
+//System.out.println("----------"+transactionWiseMap);
+		return transactionWiseMap;
+	}
+
+	public Map<String, Map<String, Float>> getAvgNetworkWiseThroughput(
+			Map<String, Map<String, List<Float>>> transactionWiseMap) {
+		Map<String, Map<String, Float>> transactionWiseAvgMap = new HashMap<String, Map<String, Float>>();
+		Map<String, Float> networkWiseAvgRxMap = new HashMap<String, Float>();
+		Map<String, Float> networkWiseAvgRxSSMap = new HashMap<String, Float>();
+		Map<String, Float> networkWiseAvgTxMap = new HashMap<String, Float>();
+		Map<String, Float> networkWiseAvgTxSSMap = new HashMap<String, Float>();
+		Map<String, List<Float>> networkWiseMap = transactionWiseMap
+				.get("RxBytes");
+		Iterator<String> networkNamesItr = networkWiseMap.keySet().iterator();
+		while (networkNamesItr.hasNext()) {
+			String networkName = networkNamesItr.next();
+			List<Float> throughputs = networkWiseMap.get(networkName);
+			List<Float> signalStrength = transactionWiseMap.get("RxBytesSS")
+					.get(networkName);
+			networkWiseAvgRxMap.put(networkName, getAverageList(throughputs));
+			networkWiseAvgRxSSMap.put(networkName,
+					getAverageList(signalStrength));
+		}
+		networkWiseMap = transactionWiseMap.get("TxBytes");
+		networkNamesItr = networkWiseMap.keySet().iterator();
+		while (networkNamesItr.hasNext()) {
+			String networkName = networkNamesItr.next();
+			List<Float> throughputs = networkWiseMap.get(networkName);
+			List<Float> signalStrength = transactionWiseMap.get("TxBytesSS")
+					.get(networkName);
+			networkWiseAvgTxMap.put(networkName, getAverageList(throughputs));
+			networkWiseAvgTxSSMap.put(networkName,
+					getAverageList(signalStrength));
+		}
+		transactionWiseAvgMap.put("RxBytes", networkWiseAvgRxMap);
+		transactionWiseAvgMap.put("TxBytes", networkWiseAvgTxMap);
+		transactionWiseAvgMap.put("RxBytesSS", networkWiseAvgRxSSMap);
+		transactionWiseAvgMap.put("TxBytesSS", networkWiseAvgTxSSMap);
+		return transactionWiseAvgMap;
+	}
+
+	public static void main(String[] args) {
+//		new FTPReportHelper().getThroughputForMaps("g2","Current TX bytes","22");
+		SimpleDateFormat newSdf = new SimpleDateFormat(
+		"yyyy-MM-dd HH:mm:ss.SSS");
+		try{
+			Date prevTime = newSdf.parse("2015-01-23 13:58:09.414");
+			Date currentTime = newSdf.parse("2015-01-23 13:58:18.421");
+			long currentBytes = 137714;
+			long prevBytes = 409802;
+			
+			long diff = (currentTime.getTime() - prevTime.getTime()) / 1000;
+			long throughtPut = 0;
+			if(diff>0){
+				throughtPut = (currentBytes - prevBytes) / diff;
+			}
+//			System.out.println(new Long(throughtPut).toString());
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+	}
+}

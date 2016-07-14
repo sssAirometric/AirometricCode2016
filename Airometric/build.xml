@@ -1,0 +1,88 @@
+<project name="Airometric" default="war" basedir=".">
+	<description>
+        simple build file
+    </description>
+	<target name="init">
+		<buildnumber/>
+		<!-- set global properties for this build -->
+			<property name="src" location="${basedir}/src"/>
+			<property name="build" location="${basedir}/build"/>
+			<property name="build.classes.dir" value="${build}/WEB-INF/classes" />
+			<property name="web.dir" value="${basedir}/WebContent" />
+			<property name="dirs.base" value="${web.dir}/WEB-INF"/>
+			<property name="libdir" value="${dirs.base}/lib"/>
+			<property name="dist.dir" value="${basedir}/dist" />
+			<property name="Pages" value="${basedir}/WebContent/Pages"/>
+			<property name="resources" value="${basedir}/WebContent/resources"/>
+			<property name="META-INF" value="${basedir}/WebContent/META-INF"/>
+			<property name="war" value="Airometric.war"/>
+			<path id="classpath">
+			<pathelement location="${build}/classes" />
+			<fileset dir="${libdir}">
+				<include name="**/*.jar" />	
+			</fileset>
+		</path>
+	</target>
+
+	<target name="clean" depends="init">
+			<!-- delete the old files -->
+				<delete dir="${build}">
+				</delete>
+				<delete dir="${dist.dir}">
+				</delete>
+			
+			<!-- Create Web-inf and classes directories -->
+				<mkdir dir="${build.classes.dir}" />
+				<mkdir dir="${build}/WEB-INF/lib"/>
+				<mkdir dir="${dist.dir}"/>
+		 </target>
+
+
+	<target name="compile" depends="clean" description="compile the source">
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac destdir="${build}/WEB-INF/classes" includeantruntime="false">
+			<src path="${src}" />
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+	<target name="war" depends="war-prepare">
+		<war destfile="${dist.dir}/${war}" webxml="${build}/WEB-INF/web.xml">
+			<fileset dir="${build}">
+				<include name="**/*.*" />
+				<exclude name="**/*.bak" />
+				<exclude name="**/web.xml" />
+				<exclude name="**/MANIFEST.MF" />
+			</fileset>
+		</war>
+		<!--
+		<copy todir="" file="${dist.dir}/${war}" overwrite="true">
+		</copy>
+		-->
+	</target>
+
+	<target name="war-prepare" depends="compile">
+		<!-- first build the exploded war directory -->
+		<copy todir="${build}" overwrite="true">
+		<fileset dir="${web.dir}">
+		<filename name="**/*" />
+		<exclude name="**/*.class" />
+		</fileset>
+		</copy>
+		<copy todir="${build}/WEB-INF/classes" overwrite="true" preservelastmodified="true">
+		<fileset dir="${build.classes.dir}">
+		<filename name="**/*" />
+		</fileset>
+		<fileset dir="${src}">
+		<include name="**/*.properties" />
+		</fileset>
+		<fileset dir="${src}">
+		<include name="**/*.xml" />
+		</fileset>
+		</copy>
+		<copy todir="${build}/WEB-INF/lib" overwrite="true">
+		<fileset dir="${libdir}">
+		<filename name="*.jar" />
+		</fileset>
+		</copy>
+	</target>
+</project>

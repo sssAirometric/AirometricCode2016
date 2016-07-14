@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+	   xmlns:ui="http://java.sun.com/jsf/facelets"
+	   xmlns:f="http://java.sun.com/jsf/core"
+	   xmlns:h="http://java.sun.com/jsf/html"
+	   xmlns:a4j="http://richfaces.org/a4j"
+	   xmlns:c="http://java.sun.com/jsp/jstl/core"
+	   xmlns:rich="http://richfaces.org/rich">
+<body>
+	<ui:composition>
+		<h:form id="leftmenu">
+			<div class="btn-toolbar" style="position: relative;left: 30px;">
+			<c:if test="#{sessionScope['loggedInUserRoleID']=='admin'||sessionScope['loggedInUserRoleID']=='superadmin'}">
+					<h:commandLink id="Management" style="position :relative;left:12px;" action="#{userBean.welcomeUser}" >		
+						<button class="btn btn-medium" type="button">Management</button>
+					</h:commandLink>
+					</c:if>
+					<h:commandLink id="Configuration" style="position :relative;left:21px;" action="#{testCaseAction.createConfigPage}" >		
+						<button class="btn btn-medium btn-primary" type="button">Configuration</button>
+					</h:commandLink>
+					<h:commandLink id="reports" style="position :relative;left:32px;" action="#{reportBean.welcomeReports}" >		
+						<button class="btn btn-medium" type="button">Reports</button>
+					</h:commandLink>
+			</div>
+ 			<div  class="tabbable tabs-left" style="font-size: 14px;"> <!-- Only required for left/right tabs -->
+				<ul class="nav nav-tabs" style="height:590px">
+					<li style="width:139px;" id="CreateConfig">
+						<h:commandLink  data-toggle="tab" action="#{testCaseAction.createConfigPage}" immediate="true">
+							<h:outputText value="Create Configuration"/>
+						</h:commandLink>
+					</li>
+					<li style="width:139px;" id="EditConfig">
+						<h:commandLink  data-toggle="tab" immediate="true"  action="#{testCaseAction.testEditAssignConfig}">
+							<h:outputText value="Edit Configuration"/>
+						</h:commandLink>
+					</li>
+					<li style="width:139px;" id="AssignConfig">
+						<h:commandLink  data-toggle="tab" action="#{testCaseAction.testAssignConfigPage}" immediate="true">
+							<h:outputText value="Assign Configuration"/>
+						</h:commandLink>
+					</li>
+					<li style="width:139px;" id="Upload">
+						<h:commandLink  data-toggle="tab" action="#{testCaseAction.testUpload}" immediate="true">
+							<!-- <h:outputText value="Upload VQT/NetTest/QXDM"/> -->
+							<h:outputText value="Upload"/> 
+						</h:commandLink>
+					</li>
+					<c:if test="#{sessionScope['loggedInUserRoleID']!='engineer' }">
+					<li style="width:139px;" id="transferTest">
+					<h:commandLink  data-toggle="tab" action="#{testCaseAction.gototransferTestPage}" immediate="true">
+						<h:outputText value="Transfer Test"/>
+					</h:commandLink>
+					</li>
+					</c:if>
+					
+				</ul>
+			</div>
+		</h:form>
+	</ui:composition>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="id_name" type="id">name</item>
+    <item name="id_path" type="id">path</item>
+    
+    <item name="id_test_mo" type="id">test_mo</item>
+    <item name="id_test_mt" type="id">test_mt</item>
+    <item name="id_test_ftp" type="id">test_ftp</item>
+    <item name="id_test_udp" type="id">test_udp</item>
+    <item name="id_test_ping" type="id">test_ping</item>
+    <item name="id_test_browser" type="id">test_browser</item>
+    <item name="id_test_voip" type="id">test_voip</item>
+    <item name="id_test_external" type="id">test_external</item>
+
+    <item name="id_rn_test_mo" type="id">rn_test_mo</item>
+    <item name="id_rn_test_mt" type="id">rn_test_mt</item>
+    <item name="id_rn_test_ftp" type="id">rn_test_ftp</item>
+    <item name="id_rn_test_udp" type="id">rn_test_udp</item>
+    <item name="id_rn_test_ping" type="id">rn_test_ping</item>
+    <item name="id_rn_test_browser" type="id">rn_test_browser</item>
+    <item name="id_rn_test_voip" type="id">rn_test_voip</item>
+    <item name="id_rn_test_external" type="id">rn_test_external</item>
+    
+    <item name="id_retry" type="id">retry_upload</item>
+    <item name="id_failed" type="id">failed_upload</item>
+</resources>

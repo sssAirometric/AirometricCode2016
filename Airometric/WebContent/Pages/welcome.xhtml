@@ -1,0 +1,213 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+	   xmlns:ui="http://java.sun.com/jsf/facelets"
+	   xmlns:f="http://java.sun.com/jsf/core"
+	   xmlns:h="http://java.sun.com/jsf/html"
+	   xmlns:c="http://java.sun.com/jsp/jstl/core"
+	   xmlns:rich="http://richfaces.org/rich">
+<h:head>
+	<title>Airometric Wireless</title>
+	 
+	        <style type="text/css">
+		      /* html { height: 100% } */
+		      /* body { height: 90%; margin: 1; padding: 0 }  */
+		      #map_canvas { height: 100% }	
+		      
+	.scroll_div{
+	 overflow: scroll;
+	 width:100%;
+	 height:355px;
+	}
+	.fontlabel{
+	  cursor: pointer;none;
+	} 	
+	.scroll_div{
+	 overflow: scroll;
+	 width:100%;
+	 height:400px;
+	}   	
+    </style>
+   </h:head>
+   
+
+    <ui:composition template="template/common/commonLayout.xhtml">
+    	<ui:define name="content">   
+    	<body style="background-color: #f3f3f3;" onload="loadValues();"> 
+		<div id="wrap">
+			<div id="container" class="container" style="text-align: left;">
+			  <h:form id="listUserForm">
+					<div id="row1" class="row">
+							<div class="tab-content" style="position: relative;">	
+							
+								 <rich:panel header="Welcomes" >
+								      <p>#{sessionScope['loginName']}</p>
+								</rich:panel>
+							<!-- <div id="loginDiv"> -->
+								        <rich:panel header="Logged User Details" style="width: 99.3%;height: 450px;position: relative;overflow: scroll;"  
+								        	rendered="#{userBean.enableLoginUserDetails}">
+								    		<div class="scroll_div">
+								            <h:panelGrid columns="4" width="100%" rendered="#{userBean.enableLoginUserDetails}">								             
+									             
+												<h:outputText value="Username*" styleClass="fontlabel"/>
+												<h:inputText id="userName" style="width:172px;height:25px;"  readonly="true" name="userName" value="#{userBean.userName}" >
+								                </h:inputText>
+								                
+												<h:outputText value="Password*" styleClass="fontlabel"/>
+												<h:inputSecret id="password" style="width:172px;height:25px;" name="password" value="#{userBean.password}" redisplay="true" >
+								                </h:inputSecret>
+									             
+									             
+								                <h:outputText value="Email*" styleClass="fontlabel"/>
+												<h:inputText id="email"  style="width:172px;height:25px;" name="email" value="#{userBean.email}" >
+								                 <f:validator validatorId="com.validator.CreateUserValidator" styleClass="failurelabel"/>												
+								                </h:inputText>  
+								
+												
+												<h:outputText value="Role*" styleClass="fontlabel"/>
+								                  <h:selectOneListbox id="role" name="role" value="#{userBean.role}"  disabled="true" size="1" style="width:65%;height:25px;">
+									   					<f:selectItems value="#{sessionScope['roleMaplist']}" />   					  							
+												</h:selectOneListbox>
+										       
+										        
+												<h:outputText value="User Status*" styleClass="fontlabel"/>
+								                    <h:selectOneListbox id="userStatus" name="role" value="#{userBean.userStatus}" size="1" style="width:65%;height:25px;">
+								   						<f:selectItems value="#{sessionScope['statusMap']}" />
+												</h:selectOneListbox>
+												
+												<c:if test="#{(sessionScope['loggedInUserRoleID']=='admin')||(sessionScope['loggedInUserRoleID']=='manager')||(sessionScope['loggedInUserRoleID']=='engineer')}">
+												 	<h:outputText value="Country" styleClass="fontlabel"/>
+								                    <h:selectOneListbox id="country" name="country" value="#{userBean.countryId}" size="1" style="width:65%;height:25px;">
+									   					<f:selectItems value="#{sessionScope['countryMapList']}" /> 
+									   					<f:ajax listener="#{userBean.ajaxListener}" event="change"  render="marketId" />    					  							
+												    </h:selectOneListbox>
+												</c:if>
+												<c:if test="#{(sessionScope['loggedInUserRoleID']=='admin')||(sessionScope['loggedInUserRoleID']=='manager')||(sessionScope['loggedInUserRoleID']=='engineer')}">
+													<h:outputText value="Market Place*" styleClass="fontlabel"/>
+													<h:selectManyListbox class="form-control" id="marketId" name="marketId" value="#{userBean.marketIdList}" size="1" 
+															style="width:75%;height:90px;position:relative;top:20px;">
+										 					<f:selectItems value="#{sessionScope['marketPlaceMapForCountry']}" />   
+											  		 </h:selectManyListbox >
+												</c:if>	
+			
+												</h:panelGrid>
+												<div style="position: relative;float: left;left: 135px;top:30px; font-weight: 600;">
+												 <h:outputText value="IMEI limit is #{userBean.imeiLimit} and Counter is #{userBean.imeiCount}" styleClass="fontlabel"/>
+								          </div>     <br></br>
+												<h:panelGrid  style="width:70px;position:relative;top:34px;left:135px;" columns="1">
+									                <f:validateBean disabled="#{!empty param['disableValidation']}">
+									                 <h:dataTable id="dataTable"
+									                  value="#{userBean.userDeviceInfo}" var="userDevice" 
+									                 	styleClass="user-table" 
+									                 	headerClass="user-table-header" 
+									                 	rowClasses="user-table-odd-row,user-table-even-row">
+														<c:if test="#{sessionScope['loggedInUserRoleID']=='superadmin'}">
+														<h:column>
+										    			<f:facet name="header" style="color:black;">Select</f:facet>
+										    				 <h:selectBooleanCheckbox id="deviceId" value="#{userDevice.selected}" />
+							    							<f:attribute name="userDeviceRm" value="#{userDevice}" />
+										    			</h:column>
+										    			</c:if>									                
+										    			<h:column>
+										    				<f:facet name="header" style="color:black;">Device Type</f:facet>
+										    				 <h:inputText id="deviceType" style="width:172px;height:25px;"   value="#{userDevice.deviceType}" />
+										    			</h:column>
+										    			<h:column>
+										    				<f:facet name="header" style="color:black;">IMEI</f:facet>
+										    				 <h:inputText id="imei" style="width:172px;height:25px;"  value="#{userDevice.imei}" />
+										    			</h:column>
+										    			<h:column>
+										    				<f:facet name="header" style="color:black;">Mobile Number</f:facet>
+										    				 <h:inputText id="mobileNumber" style="width:172px;height:25px;" value="#{userDevice.mobileNumber}" />
+										    			</h:column>
+									    			</h:dataTable>
+									               </f:validateBean>       
+									             <h:panelGrid  width="50%" columns="4">   
+
+											         <h:commandLink style="width:70px;position:relative;left:150px;" action="#{userBean.addLoginUserRowAction}" >		
+														<h:graphicImage library="images" name="add.png" />
+														<font style="width:70px;position:relative;" color="green"><b>Add</b></font> 
+														<f:param name="disableValidation" value="true" />
+													  </h:commandLink>
+											    <c:if test="#{sessionScope['loggedInUserRoleID']=='superadmin'}">
+												  <h:commandLink 	 
+												  		style="width:70px;position:relative;left:150px;"  
+												  		action="#{userBean.loginRemoveRowAction}" >		
+														<h:graphicImage library="images" name="delete.png" />
+														<font style="width:70px;position:relative;" color="green"><b>Remove</b></font> 
+												</h:commandLink>	
+											    </c:if>
+											       	<h:commandLink style="width:70px;position:relative;left:150px;" action="#{userBean.editLoginUser}">		
+														<h:graphicImage library="images" name="action_save.gif" />
+														<font style="width:70px;position:relative;" color="green"><b>Save</b></font> 
+														<f:param name="userIdEdit" value="#{userBean.userId}" />
+													</h:commandLink>
+														  
+								                </h:panelGrid>                                                
+								            </h:panelGrid>
+								            
+								            <br></br>
+										  <h:message for="userName" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;"/><br></br>
+										  <h:message for="password" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;white-space: nowrap;" /><br></br>
+										  <h:message for="email" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;" /><br></br>
+										  <h:message for="operatorId" style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position :relative;"/><br></br>
+										  
+								            <div style="position: relative;float: right;right: 36px;bottom: 35px;">
+								            <h:outputText value=" * - is mandatory field" styleClass="fontlabel"/>
+								        </div>
+											<font  style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: green;position: relative;float: left;white-space: nowrap;" >#{requestScope['message']}</font> 
+                     						<font  style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position: relative;float: left;white-space: nowrap;">#{requestScope['failuremessage']}</font> 	
+ 											<c:if test="#{requestScope['LimitReachedmsg']=='LimitReached'}">
+                     						<font  style="font-family: Arial, Helvetica, Sans-Serif;font-size: 10pt;font-weight: bold;color: red;position: relative;float: left; white-space: nowrap;bottom: 10PX;">
+                     							You can not add more devices. Please contact Airometric.</font></c:if> 
+ 										</div>	
+										</rich:panel>
+									<!-- </div>	 -->								
+							</div>
+					</div>
+				<div id="bottom" class="bottomSpacerDiv"></div>
+		      </h:form>
+		    </div>
+			</div>
+			<script type="text/javascript">
+
+            function loadValues(){
+            if(#{sessionScope['loggedInUserRoleID']!='superadmin'}) MakeReadOnly();
+            }
+            function MakeReadOnly()
+    	   	{
+    		   var user1 = "#{sessionScope['userDeviceSize']}";
+    		   for(var i = 0;i &lt; parseInt(user1); i++)
+    			{
+    		   var imei = document.getElementById("listUserForm:dataTable:"+i+":imei");
+    		   if(imei.value!="")imei.setAttribute("readonly", true);
+    		   var deviceType = document.getElementById("listUserForm:dataTable:"+i+":deviceType");
+    		   if(deviceType.value!="")deviceType.setAttribute("readonly", true);
+    		   var mobileNumber = document.getElementById("listUserForm:dataTable:"+i+":mobileNumber");
+    		   if(mobileNumber.value!="")mobileNumber.setAttribute("readonly", true);
+    		   
+    	   		}
+    	   		}
+			
+			</script>	
+			        <script>window.jQuery || document.write(' <h:outputScript library="js" name="jquery-1.9.0.min.js" />')</script>
+        <h:outputScript library="js" name="plugins.js" />
+        <h:outputScript library="js" name="main.js" />
+		<h:outputScript library="js" name="bootstrap.js" />
+		<h:outputScript library="js" name="jquery-1.9.0.min.js" />
+		
+        <script>
+        
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+            
+            </script>
+          
+
+   </body>
+		</ui:define>
+	</ui:composition>
+
+</html>

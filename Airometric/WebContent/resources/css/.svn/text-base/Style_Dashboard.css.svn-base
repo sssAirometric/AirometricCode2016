@@ -1,0 +1,99 @@
+.topbar
+{
+	BACKGROUND: #333333;
+}
+
+.bottombar
+{
+	BACKGROUND: #DFDFDF;
+}
+
+
+.textbox
+{
+	BORDER: 1px solid #333333;
+	COLOR: #333333;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 11px;
+	LETTER-SPACING: -0.2pt;	
+}
+.menutable
+{
+	BORDER-RIGHT: 1px solid #DFDFDF;
+	BACKGROUND: #FCFCFC;
+	FONT-WEIGHT:none;
+}
+.table
+{
+	BORDER-RIGHT: 1px solid #DFDFDF;
+	BORDER-LEFT: 1px solid #DFDFDF;
+	BORDER-BOTTOM: 1px solid #DFDFDF;
+	BACKGROUND: #FCFCFC;
+	FONT-WEIGHT:none;
+}
+.menuheader
+{
+	COLOR: #CC0000;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;
+	FONT-WEIGHT: bold;
+	LETTER-SPACING: -0.2pt;
+}
+.text
+{
+	COLOR: #333333;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 11px;
+	LETTER-SPACING: -0.2pt;
+}
+.code
+{
+	COLOR: #333333;
+	FONT-FAMILY: Courier New;
+	FONT-SIZE: 12px;
+	LETTER-SPACING: -0.2pt;
+}
+.textbold
+{
+	COLOR: #333333;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 11px;
+	FONT-WEIGHT: bold;
+}
+.header
+{
+	COLOR: #CC0000;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;
+	FONT-WEIGHT: bold;
+	LETTER-SPACING: -0.2pt
+}
+
+.pagesummary
+{
+	COLOR: #333333;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;
+	LETTER-SPACING: -0.2pt
+}
+
+
+
+.headerwhite
+{
+	COLOR: #FFFFFF;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 8pt;
+	FONT-WEIGHT: bold;
+	LETTER-SPACING: -0.2pt;
+}
+
+
+
+.maroontext
+{
+	COLOR: #CC0000;
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 11px;
+	LETTER-SPACING: -0.2pt
+}

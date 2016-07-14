@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/listeners
+END
+CallReceiver.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/listeners/CallReceiver.java
+END
+SignalStrengthListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/listeners/SignalStrengthListener.java
+END
+GeoLocationListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/listeners/GeoLocationListener.java
+END
+OutgoingCallReceiver.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/listeners/OutgoingCallReceiver.java
+END
+BatteryChangeBroadcastReceiver.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/MobileProjects/!svn/ver/179/Android/Airometric/src/com/airometric/listeners/BatteryChangeBroadcastReceiver.java
+END
